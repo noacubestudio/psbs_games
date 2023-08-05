@@ -1,0 +1,58 @@
+# = wall
+0 = wall and border
+
+s = snake
+t = track and wall
+p = player and track and wall and init
+* = player and snake and cut:right and init
+
+u = snake and cut:up
+d = snake and cut:down
+l = snake and cut:left
+r = snake and cut:right
+
+h = snake and init_noMoreCon and cut:left and cut:right
+i = snake and init_noMoreCon and cut:up and cut:down
+
+c = snake and init_noMoreCon and cut:right and cut:up
+f = snake and init_noMoreCon and cut:right and cut:down
+q = snake and init_noMoreCon and cut:left and cut:down
+j = snake and init_noMoreCon and cut:left and cut:up
+
+a = snake and init_conAnotB
+b = snake and init_conBnotA
+
+w = win and border
+
+2 = snake and ball
+3 = snake and ball and cut:up
+4 = snake and ball and cut:down
+5 = snake and ball and cut:left
+6 = snake and ball and cut:right
+
+7 = snake and init_noMoreCon and cut:up
+8 = snake and init_noMoreCon and cut:down
+9 = snake and init_noMoreCon and cut:left
+- = snake and init_noMoreCon and cut:right
+
+; = track and wall and init_noMoreCon and trc:up
+, = track and wall and init_noMoreCon and trc:down
+{ = track and wall and init_noMoreCon and trc:left
+} = track and wall and init_noMoreCon and trc:right
+
+$ = snake and ball and init_noMoreCon and cut:up
+
+it_collides = wall or snake or snake:dirs
+init_connectRules = init_conAnotB or init_conBnotA
+
+it_canFly = player or ball
+
+(these items get removed with the snake over holes)
+(ball and player fall depending on if they are stationary, which is done via rules)
+it_canFall = con:dirs or cut:dirs or brokenplayer:dirs or brokenball:dirs
+
+it_movesOnSnake = snake or con:dirs or cut:dirs or ball or brokenplayer:dirs or brokenball:dirs or player or again_fly:dirs
+
+tempVisualObjects = vs_con_shadow:dirs or vs_snake_shadow or vs_player:dirs or vs_tail_from:dirs or vs_tail_to:dirs or vs_con_shadow:dirs:offs or vs_snake_shadow:offs or vs_tail_from:dirs:offs or vs_tail_to:dirs:offs or vs_cut_shadow:dirs or vs_cut_shadow:dirs:offs or vs_cut_base:dirs or vs_cut_base:dirs:offs or vs_player:dirs:offs or vs_cut_tail:dirs or vs_cut_tail:dirs:offs or vs_tail_shadow:dirs or vs_tail_shadow:dirs:offs or vs_track_floorext:dirs or vs_tail:dirs or vs_tail:dirs:offs
+
+any_move = move:dirs or turnMove:dirs

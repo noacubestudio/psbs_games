@@ -1,0 +1,10 @@
+gist_id: 14d08f4f438dc0d648637c76655b3144
+engine: https://clementsparrow.github.io/Pattern-Script/src/
+template: main.pss
+Build:
+  name: debug
+Images:
+  alpha: false
+  max_colors: 10
+Tiled:
+  generate_tileset: false

@@ -1,0 +1,9 @@
+sfx1 88453607:11 (snake split / eat)
+sfx2 70320807:13 (collide)
+sfx3 10671307:10 (push) 
+sfx4 5902408:10  (falling)
+sfx5 22278107:10 (snake connecting with snake)
+sfx6 33719604:8  (destroy)
+sfx7 17689803:10  (powerup)
+
+endlevel 37864003:5 (win)

@@ -1,0 +1,1146 @@
+(INTRO) 
+message U/Z to Undo. R to Restart. Arrows to Play.
+message > Fly
+
+(NEW: MOVE TO REORIENT AND SHOOT)
+(move / move backwards to launch, switch between launchers)
+0000000000000000
+0##############0
+0#########...##0
+0###ttl.##...ttw
+0#*tt##.##...##0
+0#####..tt.l.##0
+0#########...##0
+0##############0
+0000000000000000
+
+(become launcher that was in the way)
+0000000000
+0########0
+0##....##0
+0pt..l.##0
+0##t#..##0
+0##ttl.##0
+0####t###0
+0####t###0
+00000w0000
+
+(move out of the way, then switch back)
+00000000000
+0###p#####0
+0###t#####0
+0##....###0
+0##.u..###0
+0##..#.###0
+0##..tu.ttw
+0#####.###0
+0#########0
+00000000000
+
+(move around so you can go backwards in right direction)
+0000000000
+0########0
+0##...###0
+0##.#..ttw
+0pt.l.l##0
+0##.#.###0
+0##...###0
+0########0
+0000000000
+
+(transition)
+00000000000
+0#########0
+0##ttt####0
+0##t#t####0
+0ptt#t#tttw
+0####t#t##0
+0####ttt##0
+0#########0
+00000000000
+
+(PUSHING/ HOLES)
+message > Fill
+
+(NEW: PUSHABLE BLOCKS, HOLE)
+(push out of the way)
+(multipush into hole)
+00000000000000
+0############0
+0##...#....##0
+0pt.l.#.~~.ttw
+0###.##.~~.##0
+0##.s#.....##0
+0##.....s..##0
+0########..##0
+0############0
+00000000000000
+
+(NEW: MULTIBLOCKS)
+(push into hole at once)
+(fly over hole)
+( 0000000000000 )
+( 0###########0 )
+( 0##..#.~~.ttw )
+( 0##.s#~~~~##0 )
+( 0##.s.~..~##0 )
+( 0ptl......##0 )
+( 0##.......##0 )
+( 0###########0 )
+( 0000000000000 )
+
+(use big one to push smaller one that would otherwise not be pushable because of hole)
+0000000000000
+0###########0
+0##......###0
+0##.a.bb.###0
+0##......###0
+0pt.l..~~~##0
+0##.....~~##0
+0##...~~~~##0
+0#####~~~~ttw
+0###########0
+0000000000000
+
+(push in right order into holes to get launch platform)
+000000000000
+0##########0
+0##......##0
+0##..aa..##0
+0##..a...##0
+0pt.l..b.##0
+0##...bb.##0
+0##~~~~~~##0
+0##~~~~~~##0
+0##~~~~~~##0
+0##~~~~~~ttw
+0##########0
+000000000000
+
+(use hook to move block north from hole)
+( 000000000000 )
+( 0##########0 )
+( 0###~~~~.ttw )
+( 0###ss...##0 )
+( 0###.ss..##0 )
+( 0##......##0 )
+( 0pt.l..s~##0 )
+( 0##....~~##0 )
+( 0##########0 )
+( 000000000000 )
+
+(remote push)
+( 0000000000000 )
+( 0###########0 )
+( 0pt.l.#~~~ttw )
+( 0##...#.~~##0 )
+( 0##.aa..~.##0 )
+( 0##.bb..~.##0 )
+( 0####...####0 )
+( 0###########0 )
+( 0000000000000 )
+
+(NEW: push self to stop reorienting)
+000000000000
+0##########0
+0##.~~...##0
+0##~~~.~.ttw
+0##.~~...##0
+0##...ss.##0
+0pt.l.s..##0
+0##...ss.##0
+0##......##0
+0##########0
+000000000000
+
+(transition)
+00000000000
+0#########0
+0ptttttt##0
+0######t##0
+0##ttttt##0
+0##t######0
+0##tttttttw
+0#########0
+00000000000
+
+message > Juggle
+
+(learn: can also push open shapes into hole!)
+(swap between pushing and snake move to get into place)
+0000000000000
+0###########0
+0######.~.ttw
+0##.d.#...##0
+0pt...l...##0
+0##.......##0
+0###########0
+0000000000000
+
+(simple, too similar?)
+( 0000000000 )
+( 0########0 )
+( 0ptl..~ttw )
+( 0##u##.##0 )
+( 0#......#0 )
+( 0#......#0 )
+( 0########0 )
+( 0000000000 )
+
+(trick: cant cross without flying, get destination snake in place)
+000000000000
+0##########0
+0#######.##0
+0ptt.l...##0
+0###..#~~##0
+0##..l#~~##0
+0##...u..ttw
+0##########0
+000000000000
+
+(WIP, cool tests with juggling snakes in sliders)
+( 00000000000 )
+( 0#########0 )
+( 0##.....##0 )
+( 0pt.l.l.ttw )
+( 0##.....##0 )
+( 0##ss..s##0 )
+( 0##s...s##0 )
+( 0##sssss##0 )
+( 0#########0 )
+( 00000000000 )
+
+(transition)
+00000000000
+0#########0
+0##ttt####0
+0##t#t####0
+0ptt#t#tttw
+0####t#t##0
+0####ttt##0
+0#########0
+00000000000
+
+message > Build
+
+(CONNECTING SHAPES)
+
+(avoid connecting shape so it can sink in hole) 
+00000000000
+0#########0
+0##.....##0
+0pt.l.l.##0
+0##.....##0
+0####r.###0
+0####.~tttw
+0#########0
+00000000000
+
+(connect shapes before pushing over hole)
+000000000000
+0##########0
+0##......##0
+0pt.l..l.##0
+0##...l~.##0
+0######~~ttw
+0##########0
+000000000000
+
+(quarter turn rail influences pusher parity)
+00000000000
+0#########0
+0###tttt##0
+0###t##t##0
+0#....#t##0
+0#..d.tt##0
+0#....####0
+0##...####0
+0pt.l.l.ttw
+0##~~~~~##0
+0#########0
+00000000000
+
+(connecting shapes right on top of hole)
+00000000000
+0#########0
+0ptt.l.###0
+0###...###0
+0###r.l###0
+0##....###0
+0##..~..##0
+0##~~~..##0
+0##~~~~~ttw
+0#########0
+00000000000
+
+(connect one that can't leave)
+( 0000000000 )
+( 0########0 )
+( 0##....##0 )
+( 0##...l##0 )
+( 0pt.l.~##0 )
+( 0##...l##0 )
+( 0##~~~~ttw )
+( 0########0 )
+( 0000000000 )
+
+(transition)
+00000000000
+0#########0
+0ptttttt##0
+0######t##0
+0##ttttt##0
+0##t######0
+0##tttttttw
+0#########0
+00000000000
+
+
+(NEW: PIPE PIECES - use as paths)
+(introduce open pipes, make sure no extra snakes in these levels)
+
+message > Steer
+
+(use curve piece as path)
+00000000000
+0#########0
+0##...~~##0
+0##.#.~~ttw
+0##...~~##0
+0##...f.##0
+0pt.l...##0
+0##.....##0
+0#########0
+00000000000
+
+(combine corners to make path and also have something to push)
+000000000000
+0##########0
+0##....~~##0
+0pt.l#.~~ttw
+0##....~~##0
+0##......##0
+0##.c.q..##0
+0##......##0
+0##########0
+000000000000
+
+
+(connect, but only used to have something to push)
+0000000000
+0########0
+0##.r.l##0
+0pt...lttw
+0##.h..##0
+0##....##0
+0########0
+0000000000
+
+(put shape in hole that works as launchpad)
+(L piece)
+(straight pieces)
+00000000000000000
+0###############0
+0##.....#~~~~~##0
+0pt.l.h.#~~~~~ttw
+0##.....#~~~~~##0
+0##..r..#.h.h.##0
+0##..l..#..h..##0
+0##~~~~~~.....##0
+0###~~~~~..l.###0
+0###############0
+00000000000000000
+
+(open slider test)
+( 00000000000 )
+( 0#########0 )
+( 0##~~~~~##0 )
+( 0##~...~##0 )
+( 0##~~.~~##0 )
+( 0##...ls##0 )
+( 0pt.ll.sttw )
+( 0##...ls##0 )
+( 0##sr...##0 )
+( 0##s..h.##0 )
+( 0##sr...##0 )
+( 0#########0 )
+( 00000000000 )
+
+(transition)
+00000000000
+0#########0
+0##ttt####0
+0##t#t####0
+0ptt#t#tttw
+0####t#t##0
+0####ttt##0
+0#########0
+00000000000
+
+(NEW: BECOME SNAKE)
+
+message > pilot
+
+(big snake but no place to move....mysterious...)
+(close big snake and only use to have something to push)
+00000000000
+0#########0
+0##...#s##0
+0##...lsttw
+0pt.l...##0
+0##....l##0
+0####...##0
+0#########0
+00000000000
+
+(reveal)
+(flip and connect to make snake, then leave wall)
+000000000000
+0##########0
+0###....###0
+0##......##0
+0pt.l.l.lttw
+0##.....l##0
+0###....###0
+0##########0
+000000000000
+
+(use longer snake to launch from tile that's still hole)
+(same thing, but reduce hole first)
+00000000000
+0#########0
+0###sd####0
+0##.....##0
+0pt...l.##0
+0##.....##0
+0##~~~~~ttw
+0##~~~~~##0
+0#########0
+00000000000
+
+(reshape, then drop)
+( 00000000000 )
+( 0#########0 )
+( 0##.....##0 )
+( 0pt.l.u.##0 )
+( 0##...s.##0 )
+( 0##...s.##0 )
+( 0##~~~~~##0 )
+( 0##~~~~~ttw )
+( 0#########0 )
+( 00000000000 )
+
+(shape into hook to leave wall, then shape it again to actually use as bridge)
+000000000000
+0##########0
+0####ssr..#0
+0##.......#0
+0pt...l..##0
+0##......##0
+0##~~~~~~##0
+0##~~~~~~ttw
+0##########0
+000000000000
+
+( 0000000000 )
+( 0########0 )
+( 0##.ds.##0 )
+( 0##....##0 )
+( 0pt.l..##0 )
+( 0##....##0 )
+( 0##~~.~##0 )
+( 0##~~~~ttw )
+( 0########0 )
+( 0000000000 )
+
+( 0000000000 )
+( 0########0 )
+( 0##...###0 )
+( 0pt..l.##0 )
+( 0###t#.##0 )
+( 0##.u~.##0 )
+( 0##.s~.##0 )
+( 0##.s~.##0 )
+( 0###~~~ttw )
+( 0########0 )
+( 0000000000 )
+
+(triple: drop single one, use the rest to orient right)
+( 0000000000 )
+( 0########0 )
+( 0pt.l..##0 )
+( 0##..u.##0 )
+( 0##.ss.##0 )
+( 0###~~.##0 )
+( 0###~~~##0 )
+( 0###~.~##0 )
+( 0###~~~ttw )
+( 0########0 )
+( 0000000000 )
+
+(triple: make shape that can be pushed around over holes)
+( 0000000000 )
+( 0########0 )
+( 0pt.l..##0 )
+( 0##..u.##0 )
+( 0##..s.##0 )
+( 0##..s.##0 )
+( 0###.~~##0 )
+( 0###.~~##0 )
+( 0###~~~ttw )
+( 0########0 )
+( 0000000000 )
+
+(INSERT level where you push the bridge piece to connect with the corner 1tile snake)
+(to make it possible to become that snake and clear the exit)
+
+( 000000000000 )
+( 0##########0 )
+( 0#####...##0 )
+( 0#####r..##0 )
+( 0##..h~l.ttw )
+( 0pt.l.~..##0 )
+( 0##########0 )
+( 0##########0 )
+( 000000000000 )
+
+( 00000000000 )
+( 0#########0 )
+( 0##~~~~~ttw )
+( 0##.....##0 )
+( 0pt.l.f.##0 )
+( 0##.....##0 )
+( 0##~~u~~##0 )
+( 0#########0 )
+( 00000000000 )
+
+( 00000000000 )
+( 0#########0 )
+( 0##.....##0 )
+( 0##...c.##0 )
+( 0##.....##0 )
+( 0##...~~##0 )
+( 0pt.l.~lttw )
+( 0#########0 )
+( 00000000000 )
+
+(INSERT level where you actually have to close two snakes instead of using them)
+(one snake is longer and still not useful over the hole...)
+
+( 000000000000000 )
+( 0#############0 )
+( 0##.......####0 )
+( 0pt.l.l.ls####0 )
+( 0##.......####0 )
+( 0##.......~.##0 )
+( 0########~~.ttw )
+( 0#############0 )
+( 000000000000000 )
+
+(slide to grow self to not fall)
+(currently doesn't require connecting right over the hole, maybe it should?)
+000000000
+0#######0
+0##...##0
+0pt.~lttw
+0##...##0
+0##ss.##0
+0##s..##0
+0##ss.##0
+0##...##0
+0##.~h##0
+0##...##0
+0#######0
+000000000
+
+(find correct orieentation to go with when using C)
+0000000000
+0########0
+0##~~~tttw
+0##~.~###0
+0##~.~###0
+0##ss.###0
+0##s..###0
+0##ss.###0
+0##....##0
+0pt.lss##0
+0##....##0
+0########0
+0000000000
+
+(double snake moving in double size C)
+( 000000000000000 )
+( 0#############0 )
+( 0ptl####ttttttw )
+( 0##s####t#####0 )
+( 0#s..s..~~...#0 )
+( 0#s..s~~.~...#0 )
+( 0#ssss.......#0 )
+( 0#############0 )
+( 000000000000000 )
+
+(transition)
+00000000000
+0#########0
+0ptttttt##0
+0######t##0
+0##ttttt##0
+0##t######0
+0##tttttttw
+0#########0
+00000000000
+
+
+(THEME: REORIENT BIG SNAKE IN SMALL SPACE, CLAUSTROPHOBIA)
+
+message > let go
+
+(find direction so oriented right way)
+00000000000
+0#########0
+0pt....lttw
+0##.#.#s##0
+0##sssss##0
+0#########0
+00000000000
+
+(SPLIT TO CHANGE LENGTH)
+
+(SPLIT)
+(split to get shorter)
+0000000000
+0########0
+0##....##0
+0pt.lss##0
+0##...s##0
+0####.###0
+0###..tttw
+0########0
+0000000000
+
+(length math....wip, explain this better)
+(split and combine to get different length)
+0000000000000
+0###########0
+0##......s##0
+0##....lss##0
+0pt.ls....##0
+0##.......##0
+0###.###.###0
+0###~~~~~tttw
+0###########0
+0000000000000
+
+(
+wip teach splitting granularily for different lengths, 
+maybe a bunch of forced examples?
+one with two orientations or mirroring, one with rotation...
+one with different ends to get the same shape
+one where possible target lengths per starting length are explored
+)
+
+(teach)
+0000000000000000
+0##############0
+0##ds~~###..###0
+0##7d.~##...lttw
+0###t####.s.~##0
+0##....###s####0
+0pt.l..ttls####0
+0##....########0
+0####.#########0
+0##ds.~~#######0
+0##7r..~~######0
+0##############0
+0000000000000000
+
+
+(SPLIT TO MAKE SHAPE)
+
+(split to throw into hole, len 2)
+(idea: allows turning over the hole while having a return platform)
+00000000000
+0#########0
+0##~~~~~##0
+0##~~~~~ttw
+0##~~~~~##0
+0##..s..##0
+0##..s..##0
+0pt.ls..##0
+0#########0
+00000000000
+
+
+(SPLIT AND CARE ABOUT OPENINGS)
+
+(split to use corner)
+0000000000
+0########0
+0###,,.ttw
+0##....##0
+0##...s##0
+0##...s##0
+0pt..ls##0
+0########0
+0000000000
+
+
+(connect with existing piece)
+(variation: make hook)
+(the corners make this more difficult, can't use L shape, only S)
+(maybe do variant that explores both?)
+00000000000
+0#########0
+0pt.lss###0
+0##...s.##0
+0##.....##0
+0##.....##0
+0###...jttw
+0#########0
+00000000000
+
+(variation: fill the hole, actually avoid connection)
+0000000000
+0########0
+0##....##0
+0##.ss.##0
+0##..s.##0
+0pt..l.##0
+0###r~~##0
+0###su~##0
+0#####.##0
+0####..ttw
+0########0
+0000000000
+
+(variation: make long to exit without falling)
+( 00000000000 )
+( 0#########0 )
+( 0##.....##0 )
+( 0pt...l.##0 )
+( 0##.....##0 )
+( 0##ssssu##0 )
+( 0##~~.~~##0 )
+( 0##~~~~~##0 )
+( 0###~~~###0 )
+( 0###~~~###0 )
+( 0###~~~###0 )
+( 0##..{{tttw )
+( 0#########0 )
+( 00000000000 )
+
+(SPLIT TO PUSH SELF)
+(splitting possible but not always present, actually...)
+
+(6 len - self pushing)
+
+(sideways shape, stays entirely connected)
+(no way to use the C and approach the wall)
+00000000000000
+0############0
+0##......####0
+0##......lsttw
+0##..sss.#d##0
+0pt..l-l.####0
+0##......####0
+0############0
+00000000000000
+
+(disconnect head)
+00000000000
+0#########0
+0##.ds~~~#0
+0##.7s~.~#0
+0pt.ls...#0
+0##...#u##0
+0##...lsttw
+0##...####0
+0#########0
+00000000000
+
+(transition)
+00000000000
+0#########0
+0##ttt####0
+0##t#t####0
+0ptt#t#tttw
+0####t#t##0
+0####ttt##0
+0#########0
+00000000000
+
+message Thank you for testing this far =)
+
+message > make whole
+message WIP section, incomplete!
+
+(exit is blocked, connect to it with sliding and then split self to be able to leave)
+00000000000
+0#########0
+0##.....##0
+0pt.ls.lstw
+0##.....##0
+0##.....##0
+0##.sss.##0
+0##.s...##0
+0##.sss.##0
+0##.....##0
+0#########0
+00000000000
+
+(get extra length into position first, use split to make right shape needed to leave)
+000000000000000
+0#############0
+0##...########0
+0pt.l.ls~~~~ttw
+0##...##~~~~##0
+0##sss..~~..##0
+0##s....h...##0
+0##sss......##0
+0##.....######0
+0#############0
+000000000000000
+
+(obstacle course, find where to split)
+0000000000000
+0###########0
+0##s#....###0
+0##s..#~.tttw
+0##rss##.###0
+0pt.9s#...##0
+0##sss#...##0
+0###########0
+0000000000000
+
+(transition)
+00000000000
+0#########0
+0ptttttt##0
+0######t##0
+0##ttttt##0
+0##t######0
+0##tttttttw
+0#########0
+00000000000
+
+message > dance
+message WIP Section, incomplete and somewhat unsorted!
+
+(new: ball)
+(launch ball to kick boxes)
+000000000000000
+0#############0
+0##....~~~~~##0
+0##..6.~~~~~##0
+0##...#~~.~~ttw
+0pt..l.~~s.~##0
+0##....~...~##0
+0#############0
+000000000000000
+
+(new: ball in closed shapes, hole to launch)
+000000000000
+0##########0
+0##......##0
+0pt.l.~~sttw
+0##...~~~##0
+0##.2.~~~##0
+0##.s.~~~##0
+0##......##0
+0##......##0
+0##########0
+000000000000
+
+( 00000000000 )
+( 0#########0 )
+( 0pt..l..##0 )
+( 0##.....##0 )
+( 0##..2s.##0 )
+( 0##..s..##0 )
+( 0##.....##0 )
+( 0##.....##0 )
+( 0##.....ttw )
+( 0#########0 )
+( 00000000000 )
+
+(U shape with ball: parity)
+000000000000
+0##########0
+0###..#..##0
+0###.s.s.ttw
+0####~.~###0
+0####~~~###0
+0##..~.~###0
+0pt.l...###0
+0##..sss.##0
+0##..2.s.##0
+0##.....###0
+0##########0
+000000000000
+
+(new: can also fly into ball itself to move that snake)
+(launch ball to catch, launch self to kick)
+00000000000
+0#########0
+0##.....##0
+0pt.l.4.##0
+0##.....##0
+0##.~~~.##0
+0###~u~###0
+0###~~~###0
+0###...tttw
+0#########0
+00000000000
+
+(launch ball to catch, launch self to kick)
+00000000000
+0#########0
+0##.....##0
+0##.4...##0
+0pt...l.##0
+0##.....##0
+0###t#t###0
+0##~~~~~##0
+0##.u~u.ttw
+0##~~~~~##0
+0#########0
+00000000000
+
+(avoid kicking of one into wall by removing other first?)
+000000000000000
+0#############0
+0#####~~~tttttw
+0#####~.~#####0
+0##...6..5..##0
+0pt..l......##0
+0##.........##0
+0#############0
+000000000000000
+
+(find place to get rid of ball so that snake can be turned around)
+0000000000000
+0###########0
+0##..~~~~~##0
+0pt.l.....##0
+0##....4..##0
+0####.....##0
+0####~~.~~ttw
+0####$$$$$##0
+0###########0
+0000000000000
+
+(WIP)
+(INSERT level about moving a snake with ball around for far enough with bounces until there is a way to actually PUSH it into a wall facing spot, so the ball can escape)
+
+(new: balls actually also pilot snakes)
+(new: use a ball to hit a ball to avoid dying)
+(launch ball to catch, launch another to kick)
+0000000000000
+0###########0
+0##.....#.##0
+0##.6...#s##0
+0pt...l..lttw
+0##.6...####0
+0##.....####0
+0###########0
+0000000000000
+
+(place catcher for the automatic return of player after snake change)
+000000000000
+0##########0
+0##......##0
+0##.7##..##0
+0##..#2~~##0
+0pt.l.l.~##0
+0##....~~##0
+0##.....~##0
+0######~~##0
+0####.~~~ttw
+0##########0
+000000000000
+
+(place snake so that both catchers will work, after each shape change)
+0000000000000
+0###########0
+0#######4###0
+0##.......##0
+0pt.l.us..##0
+0##....2..##0
+0#6.......##0
+0##.......##0
+0##~~~~~~~##0
+0##~~~~~~~##0
+0##~~~~~~~##0
+0######.u.##0
+0######.~.ttw
+0######...##0
+0###########0
+0000000000000
+
+(double balls that hit each other in middle of a shape just bounce back)
+
+(double ball in snake causes double movement)
+0000000000000
+0###########0
+0##....##tttw
+0pt.l...#t##0
+0##..2....##0
+0##..s...~##0
+0##..2...~##0
+0##......~##0
+0##.......##0
+0###########0
+0000000000000
+
+(balls in end of corner piece allow changing it into different straight piece)
+(wait, why does the one next to the wall survive? long enough from the snake move?)
+000000000000000
+0#############0
+0##.......####0
+0##.......####0
+0##.......####0
+0##~~~.....lttw
+0##.....2..s##0
+0pt.l..2s..2##0
+0##.........##0
+0#############0
+000000000000000
+
+(test)
+0000000000000000
+0##############0
+0##......######0
+0##......######0
+0##.2ss.~~~~lttw
+0##...2.~~~~.##0
+0pt.l...#######0
+0##.....#######0
+0##############0
+0000000000000000
+
+(push snake right so it moves left automatically, away from wall)
+(by using a double mover that has a ball bounce back)
+( 0000000000000 )
+( 0###########0 )
+( 0#####~~ttttw )
+( 0####d2~####0 )
+( 0##....#####0 )
+( 0pt..l..####0 )
+( 0##.....####0 )
+( 0#...u2.####0 )
+( 0#.s....####0 )
+( 0#.s.22..~~#0 )
+( 0###########0 )
+( 0000000000000 )
+
+(connect self with snake that has ball in it)
+00000000000
+0#########0
+0##....~##0
+0pt.l..l.tw
+0##....s##0
+0##.ss.2##0
+0##.s...##0
+0##.ss..##0
+0###....##0
+0#########0
+00000000000
+
+(open slider combination lock test)
+( 00000000000000000 )
+( 0###p###########0 )
+( 0###t##..sss...#0 )
+( 0###t##..48d...#0 )
+( 0###t###....u..#0 )
+( 0###t#tt....ss.#0 )
+( 0###t#t#.....d.#0 )
+( 0#.u777u.......#0 )
+( 0#.sssss.......#0 )
+( 0############t##0 )
+( 0############t##0 )
+( 0000000000000w000 )
+
+(opposite flying machines)
+(doesn't always move when it should hmm)
+( 000000000000000 )
+( 0############00 )
+( 0########...tww )
+( 0##...rhq.~~#00 )
+( 0##...s2i.~~#00 )
+( 0##.......~~#00 )
+( 0pt..l....~~#00 )
+( 0##.......~~#00 )
+( 0##...s2.i~~#00 )
+( 0##...rhhj~~#00 )
+( 0############00 )
+( 000000000000000 )
+
+( 000000000 )
+( 0#######0 )
+( 0##...##0 )
+( 0ptlss#tw )
+( 0##...##0 )
+( 0##sd.##0 )
+( 0##s..##0 )
+( 0##d..##0 )
+( 0##i2.##0 )
+( 0##us.##0 )
+( 0##...##0 )
+( 0#######0 )
+( 000000000 )
+
+(transition)
+00000000000
+0#########0
+0##ttt####0
+0##t#t####0
+0ptt#t#tttw
+0####t#t##0
+0####ttt##0
+0#########0
+00000000000
+
+
+(WIP Playground)
+message That's all for now!
+message Levels beyond this point are merely for testing.
+
+
+
+00000000000000000
+0###############0
+0##...........##0
+0##...........##0
+0##..2d.......##0
+0##.....2s.2s.##0
+0##..2u..s..s.##0
+0pt.l....s..2.##0
+0##.....2s....ttw
+0##...........##0
+0##...6..5....##0
+0##...........##0
+0##.2s.u..2...##0
+0##..s.2..srss##0
+0##.2s.......s##0
+0##.........ss##0
+0###############0
+00000000000000000
+
+(WIP exit of 3 rooms)
+0000000000000
+0###########0
+0###.~ttttttw
+0###.~######0
+0###.~######0
+0pt..l..tt##0
+0##.....#t##0
+0##d#d#d#t##0
+0##t#t#t#t##0
+0##t#t#t#t##0
+0##......u##0
+0##......u##0
+0#######.u##0
+0###########0
+0000000000000
+
+message That's all for now!

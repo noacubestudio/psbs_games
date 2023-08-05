@@ -1,0 +1,14 @@
+dirs = up down left right
+offs = up down left right
+hor = left right
+ver = up down
+
+( notUp = left down right )
+( notLeft = up down right )
+( notDown = up left right )
+( notRight = up left down )
+
+( MAPPINGS )
+
+( dirs => otherdirs )
+( up down left right -> notUp notLeft notDown notRight )

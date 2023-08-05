@@ -1,0 +1,70 @@
+background
+--
+hole
+--
+vs_hole_radius
+--
+bridge, floor
+--
+dirs -> vs_hole_edge:dirs
+--
+wall
+win
+--
+track
+--
+dirs -> vs_wall_edge:dirs
+--
+dirs -> vs_shadow:dirs
+--
+dirs -> trc:dirs
+--
+dirs -> vs_trackcut:dirs
+dirs -> vs_track_floorext:dirs
+--
+vs_snake_shadow, vs_snake_shadow:offs
+--
+dirs -> vs_con_shadow:dirs, vs_con_shadow:dirs:offs, vs_tail_shadow:dirs, vs_tail_shadow:dirs:offs
+--
+snake, snake:offs
+dirs -> vs_tail:dirs, vs_tail:dirs:offs
+--
+dirs -> con:dirs, con:dirs:offs
+--
+vs_tail_from:dirs, vs_tail_from:dirs:offs
+dirs -> vs_tail_to:dirs, vs_tail_to:dirs:offs
+--
+dirs -> vs_cut_base:dirs, vs_cut_base:dirs:offs, vs_cut_tail:dirs, vs_cut_tail:dirs:offs
+--
+dirs -> vs_cut_shadow:dirs, vs_cut_shadow:dirs:offs
+dirs -> cut:dirs, cut:dirs:offs
+--
+player
+ball, ball:offs
+vs_player:dirs, vs_player:dirs:offs
+--
+border
+dirs -> vs_border_corner:dirs
+--
+anim_col:dirs
+--
+brokenplayer:dirs, brokenball:dirs, brokenplayer:dirs:offs, brokenball:dirs:offs
+--
+(invsible markers)
+init
+playerFacing:dirs
+init_conAnotB, init_conBnotA
+init_noMoreCon
+dirs -> again_fly:dirs
+again_col
+again_gravity
+push:dirs
+supported
+otherPushFailed
+dirs -> any:dirs
+dirs -> wantsToFlyTo:dirs
+
+turnMove:dirs, wasTurnMoved:dirs
+move:dirs, wasMoved:dirs
+dirs -> correctConnectDir:dirs
+follow:dirs

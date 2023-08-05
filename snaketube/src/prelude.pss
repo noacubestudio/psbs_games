@@ -1,0 +1,12 @@
+title Snake-Tube
+author noa =)
+run_rules_on_level_start
+again_interval 0.08
+
+sprite_size 16x16
+background_color #303040
+text_color #9090F0 
+author_color #D06000
+title_color #D06000
+
+( flickscreen 16x12 )
