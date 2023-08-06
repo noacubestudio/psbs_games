@@ -4,9 +4,9 @@ run_rules_on_level_start
 again_interval 0.08
 
 sprite_size 16x16
-background_color #213859
-text_color #7a9c44 
+background_color #13344f
+text_color #b1e354 
 author_color #b1e354
-title_color #b1e354
+title_color #ffffff
 
 ( flickscreen 16x12 )
