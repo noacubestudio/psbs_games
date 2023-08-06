@@ -8,12 +8,18 @@ bridge, floor
 --
 dirs -> vs_hole_edge:dirs
 --
+dirs -> vs_wall_shadow:dirs
+--
+dirs -> vs_wall_shadow_corner:dirs
+--
 wall
 win
 --
 track
 --
 dirs -> vs_wall_edge:dirs
+--
+dirs -> vs_wall_corner:dirs
 --
 dirs -> vs_shadow:dirs
 --

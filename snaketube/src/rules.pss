@@ -15,6 +15,8 @@
 
 (wall border)
 [init] [wall no border no trc:> | no wall] -> [init] [wall vs_shadow:> vs_wall_edge:> | ]
+[init] [vs_shadow:v | wall no track no vs_shadow:v] -> [init] [vs_shadow:v | wall vs_wall_corner:>]
+[init] [vs_trackcut:v | wall no track no vs_shadow:v] -> [init] [vs_trackcut:v | wall vs_wall_corner:>]
 (hole border)
 [init] [no border no hole no bridge] -> [init] [floor]
 [init] [floor | hole] -> [init] [floor | vs_hole_edge:< hole]
@@ -290,7 +292,9 @@ dirs [wasTurnMoved:< cut:dirs] -> [wasTurnMoved:< cut:> correctConnectDir:>]
 [player no vs_player:dirs] -> [player vs_player:right]
 
 (design around holes)
-[vs_trackcut:> | no hole] -> [vs_trackcut:> vs_track_floorext:> | ]
+[vs_shadow:> | no hole] -> [vs_shadow:> vs_wall_shadow:> | ]
+[vs_wall_shadow:> vs_wall_shadow:v] -> [vs_wall_shadow:> vs_wall_shadow:v vs_wall_shadow_corner:>]
+[vs_trackcut:> | no hole] -> [vs_trackcut:> | vs_track_floorext:<]
 
 (animate tiles in collision by replacing them with offset variants)
 [anim_col:> snake                       ] -> [anim_col:> snake:>]
