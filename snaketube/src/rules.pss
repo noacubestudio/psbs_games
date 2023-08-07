@@ -21,6 +21,7 @@
 [init] [no border no hole no bridge] -> [init] [floor]
 [init] [floor | hole] -> [init] [floor | vs_hole_edge:< hole]
 [init] [floor no wall | hole] -> [init] [floor vs_hole_radius | hole]
+[init] [floor trc:> | hole] -> [init] [floor trc:> vs_hole_radius | hole]
 
 (level border rounded corners)
 vertical [init] [border | no border no vs_border_corner:vertical] -> [init] [border | vs_border_corner:< vs_border_corner:^]
