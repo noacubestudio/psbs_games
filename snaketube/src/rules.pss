@@ -20,8 +20,9 @@
 (hole border)
 [init] [no border no hole no bridge] -> [init] [floor]
 [init] [floor | hole] -> [init] [floor | vs_hole_edge:< hole]
-[init] [floor no wall | hole] -> [init] [floor vs_hole_radius | hole]
-[init] [floor trc:> | hole] -> [init] [floor trc:> vs_hole_radius | hole]
+[init] [floor no wall | hole] -> [init] [floor vs_floor_hole_shadow | hole]
+[init] [floor trc:> | hole] -> [init] [floor trc:> vs_floor_hole_shadow | hole]
+[init] [floor wall no trc:> | hole] -> [init] [floor wall vs_wall_hole_shadow | hole]
 
 (level border rounded corners)
 vertical [init] [border | no border no vs_border_corner:vertical] -> [init] [border | vs_border_corner:< vs_border_corner:^]
@@ -65,7 +66,7 @@ vertical [init] [border | no border no vs_border_corner:vertical] -> [init] [bor
 
 
 (update edge of hole)
-[bridge |      hole] -> [bridge vs_hole_radius | hole vs_hole_edge:<]
+[bridge |      hole] -> [bridge vs_floor_hole_shadow | hole vs_hole_edge:<]
 [bridge | no bridge] -> [bridge vs_hole_edge:> | ]
 
 (revert collision)

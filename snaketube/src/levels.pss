@@ -740,8 +740,8 @@ one where possible target lengths per starting length are explored
 0####.7s.~.~###0
 0pttt.ls....###0
 0####....#u####0
-0####....lsttttw
-0####....######0
+0#####...lsttttw
+0#####...######0
 0##############0
 0##############0
 0000000000000000
@@ -1018,7 +1018,7 @@ message WIP Section, incomplete and somewhat unsorted!
 0000000000000000
 0##############0
 0##############0
-0#####....~####0
+0#####~~~~~####0
 0##ttt.l..l.tttw
 0ptt##....s####0
 0#####.ss.2####0

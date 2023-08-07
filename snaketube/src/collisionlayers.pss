@@ -2,7 +2,7 @@ background
 --
 hole
 --
-vs_hole_radius
+vs_floor_hole_shadow, vs_wall_hole_shadow
 --
 bridge, floor
 --
