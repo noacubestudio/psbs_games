@@ -1,6 +1,6 @@
 (INTRO) 
 message U/Z to Undo. R to Restart. Arrows to Play.
-message > Fly
+message > launch
 
 (NEW: MOVE TO REORIENT AND SHOOT)
 (move / move backwards to launch, switch between launchers)
@@ -60,76 +60,52 @@ message > Fly
 0000000000000000
 
 (PUSHING/ HOLES)
-message > Drop
+message > bridge
 
-(NEW: PUSHABLE BLOCKS, HOLE)
-(push out of the way)
-(multipush into hole)
-0000000000000000
-0##############0
-0##############0
-0###...#....###0
-0ptt.l.#.~~.tttw
-0####.##.~~.###0
-0###.s#.....###0
-0###.....s..###0
-0#########..###0
-0##############0
-0##############0
-0000000000000000
-
-(NEW: MULTIBLOCKS)
-(push into hole at once)
+(NEW: HOLE)
 (fly over hole)
-( 0000000000000 )
-( 0###########0 )
-( 0##..#.~~.ttw )
-( 0##.s#~~~~##0 )
-( 0##.s.~..~##0 )
-( 0ptl......##0 )
-( 0##.......##0 )
-( 0###########0 )
-( 0000000000000 )
+0000000000000000
+0##############0
+0##tt~~~~~~tt##0
+0##t##..~~##t##0
+0##.....~~~~.##0
+0##~~.#....~.ttw
+0pt~~..l##.~u##0
+0##~~~~~#r.~..#0
+0##..u~~~..~~##0
+0##.##~~~~~~~##0
+0##############0
+0000000000000000
+
+(NEW: PUSHABLE BLOCKS)
+(multipush into hole)
+(push in right order into hole to make launch platform)
+0000000000000000
+0##############0
+0##..~~~.a...##0
+0##.s.~.aabb.##0
+0##..~~~..b..##0
+0pt.9##~.....##0
+0##..##~~~~~###0
+0######~~~~~#ttw
+0######~~~~~#t#0
+0######~~~~~tt#0
+0##############0
+0000000000000000
 
 (use big one to push smaller one that would otherwise not be pushable because of hole)
 0000000000000000
 0##############0
 0###......#####0
 0###.a.bb.#####0
-0pt#......#####0
+0###......#####0
 0#tt.l..~~~####0
-0###.....~~####0
-0###...~~~~####0
-0######~~~~ttttw
+0#t#.....~~##ttw
+0pt#...~~~~##t#0
+0######~~~~ttt#0
 0##############0
 0##############0
 0000000000000000
-
-(push in right order into holes to get launch platform)
-0000000000000000
-0##############0
-0###........###0
-0###....abb.###0
-0ptt.l.aab..###0
-0###........###0
-0######~~~~~###0
-0######~~~~~###0
-0######~~~~~###0
-0######~~~~~tttw
-0##############0
-0000000000000000
-
-(use hook to move block north from hole)
-( 000000000000 )
-( 0##########0 )
-( 0###~~~~.ttw )
-( 0###ss...##0 )
-( 0###.ss..##0 )
-( 0##......##0 )
-( 0pt.l..s~##0 )
-( 0##....~~##0 )
-( 0##########0 )
-( 000000000000 )
 
 (remote push)
 ( 0000000000000 )
@@ -141,22 +117,6 @@ message > Drop
 ( 0####...####0 )
 ( 0###########0 )
 ( 0000000000000 )
-
-(NEW: push self to stop reorienting)
-0000000000000000
-0##############0
-0####.~~...####0
-0####~~~.~.ttt#0
-0####.~~...##t#0
-0####...ss.##t#0
-0#ttt.l.s..##ttw
-0#t##...ss.####0
-0#t##......####0
-0pt############0
-0##############0
-0000000000000000
-
-message > Juggle
 
 (learn: can also push open shapes into hole!)
 (swap between pushing and snake move to get into place)
@@ -189,27 +149,43 @@ message > Juggle
 0##############0
 0########.#####0
 0pttt.l...#####0
-0####..#~~##tttw
-0###..l#~~##t##0
-0###...u..ttt##0
+0####..#~~#####0
+0###..l#~~#####0
+0###...u..tttttw
 0##############0
 0##############0
 0##############0
 0000000000000000
 
-(WIP, cool tests with juggling snakes in sliders)
-( 00000000000 )
-( 0#########0 )
-( 0##.....##0 )
-( 0pt.l.l.ttw )
-( 0##.....##0 )
-( 0##ss..s##0 )
-( 0##s...s##0 )
-( 0##sssss##0 )
-( 0#########0 )
-( 00000000000 )
+(NEW: push self to stop reorienting)
+0000000000000000
+0##############0
+0####.~~...####0
+0####~~~.~.ttttw
+0####.~~...####0
+0####...ss.####0
+0##tt.l.s..####0
+0ptt#...ss.####0
+0####......####0
+0##############0
+0##############0
+0000000000000000
 
-message > Build
+(find position in slider that works)
+000000000000000
+0#############0
+0###~~~~~~~###0
+0ptt~~.l.~~tt#0
+0###~~.#.~~#t#0
+0###~ss..~~#ttw
+0####s.ss.####0
+0####s....####0
+0####s..l.####0
+0####ss..#####0
+0#############0
+000000000000000
+
+message > connect
 
 (CONNECTING SHAPES)
 
@@ -283,7 +259,7 @@ message > Build
 (NEW: PIPE PIECES - use as paths)
 (introduce open pipes, make sure no extra snakes in these levels)
 
-message > Steer
+message > redirect
 
 (use curve piece as path)
 0000000000000000
@@ -359,7 +335,7 @@ message > Steer
 
 (NEW: BECOME SNAKE)
 
-message > pilot
+message > lead
 
 (big snake but no place to move....mysterious...)
 (close big snake and only use to have something to push)
@@ -558,7 +534,7 @@ message > pilot
 
 (THEME: REORIENT BIG SNAKE IN SMALL SPACE, CLAUSTROPHOBIA)
 
-message > let go
+message > leave behind
 
 (find direction so oriented right way)
 0000000000000000
@@ -746,10 +722,9 @@ one where possible target lengths per starting length are explored
 0##############0
 0000000000000000
 
-message Thank you for testing this far =)
-
-message > make whole
-message WIP section, incomplete!
+message > close
+message Thank you for testing this far! =)
+message WIP section: incomplete
 
 (exit is blocked, connect to it with sliding and then split self to be able to leave)
 0000000000000000
@@ -793,7 +768,7 @@ message WIP section, incomplete!
 0##############0
 0000000000000000
 
-message > dance
+message > bounce
 message WIP Section, incomplete and somewhat unsorted!
 
 (new: ball)
@@ -1089,10 +1064,9 @@ message WIP Section, incomplete and somewhat unsorted!
 
 (WIP Playground)
 message That's all for now!
-message Levels beyond this point are merely for testing.
 
-
-
+(message Levels beyond this point are merely for testing.)
+(
 00000000000000000
 0###############0
 0##...........##0
@@ -1128,5 +1102,4 @@ message Levels beyond this point are merely for testing.
 0#######.u##0
 0###########0
 0000000000000
-
-message That's all for now!
+)
