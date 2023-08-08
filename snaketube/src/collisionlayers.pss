@@ -5,6 +5,8 @@ hole
 vs_floor_hole_shadow, vs_wall_hole_shadow
 --
 bridge, floor
+dirs -> vs_bridge_con:dirs
+vs_bridge_dot
 --
 dirs -> vs_hole_edge:dirs
 --
