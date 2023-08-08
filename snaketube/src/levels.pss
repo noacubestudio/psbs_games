@@ -940,19 +940,34 @@ message WIP Section, incomplete and somewhat unsorted!
 0##############0
 0000000000000000
 
-(place snake so that both catchers will work, after each shape change)
+(align snake before adding ball so it works in the desired direction)
+000000000000000
+0#############0
+0###.......###0
+0###...d.4.###0
+0###~~~~~~~###0
+0###~~~.~~~###0
+0###~~~s~~~###0
+0ptt.~~l~~.tttw
+0###~~~.~~~###0
+0###~~~.~~~###0
+0#############0
+000000000000000
+
+(align snake and catchers for the perfect loop that fills in the ground)
 0000000000000000
 0##############0
 0##############0
-0##.....~~~~~##0
-0#6.....~~~l.##0
-0##.s2.~~~~..##0
-0##.l..~~~#.~ttw
-0pt...l~~~#####0
-0##....~~~#####0
-0#####3########0
+0##.....~~#...#0
+0##6.s2.~~#.#.#0
+0##..r..~~~~..#0
+0###....~~f~.##0
+0ptt.l..~~j..ttw
+0###.......####0
+0######.3..####0
 0##############0
 0000000000000000
+
 
 (double balls that hit each other in middle of a shape just bounce back)
 
@@ -963,8 +978,8 @@ message WIP Section, incomplete and somewhat unsorted!
 0####....##ttttw
 0##tt.l...#t###0
 0##t#..2....###0
-0ptt#..s...~###0
-0####..2...~###0
+0##t#..s...~###0
+0ptt#..2...~###0
 0####......~###0
 0####.......###0
 0##############0
