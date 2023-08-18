@@ -1,3 +1,16 @@
+(# Palette #)
+(% set color_white  = "#ffffff" %)
+(% set color_accent = "#ffad3b" %)
+(% set color_black  = "#0d001c" %)
+
+(% set color_fg    = "#85cf40" %)
+(% set color_bg    = "#117860" %)
+(% set color_outer = "#52ba3d" %)
+
+(% set color_purple_fg    = "#b45eff" %)
+(% set color_purple_bg    = "#5932c2" %)
+(% set color_purple_outer = "#9340f7" %)
+
 (% include "prelude.pss" %)
 
 =====

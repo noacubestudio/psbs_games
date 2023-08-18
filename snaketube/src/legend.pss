@@ -1,5 +1,5 @@
 # = wall
-0 = wall and border
+0 = wall (WIP)
 
 s = snake
 t = track and wall
@@ -22,7 +22,7 @@ j = snake and init_noMoreCon and cut:left and cut:up
 a = snake and init_conAnotB
 b = snake and init_conBnotA
 
-w = win and border
+w = win and track and wall (WIP)
 
 2 = snake and ball
 3 = snake and ball and cut:up
@@ -42,17 +42,16 @@ w = win and border
 
 $ = snake and ball and init_noMoreCon and cut:up
 
-it_collides = wall or snake or snake:dirs
-init_connectRules = init_conAnotB or init_conBnotA
-
+it_collides = wall or snake
 it_canFly = player or ball
+init_connectRules = init_conAnotB or init_conBnotA
 
 (these items get removed with the snake over holes)
 (ball and player fall depending on if they are stationary, which is done via rules)
-it_canFall = con:dirs or cut:dirs or brokenplayer:dirs or brokenball:dirs
+it_canFall = any:dirs or brokenplayer:dirs or brokenball:dirs or con:dirs or cut:dirs
 
 it_movesOnSnake = snake or con:dirs or cut:dirs or ball or brokenplayer:dirs or brokenball:dirs or player or again_fly:dirs
 
-tempVisualObjects = vs_con_shadow:dirs or vs_snake_shadow or vs_player:dirs or vs_tail_from:dirs or vs_tail_to:dirs or vs_con_shadow:dirs:offs or vs_snake_shadow:offs or vs_tail_from:dirs:offs or vs_tail_to:dirs:offs or vs_cut_shadow:dirs or vs_cut_shadow:dirs:offs or vs_cut_base:dirs or vs_cut_base:dirs:offs or vs_player:dirs:offs or vs_cut_tail:dirs or vs_cut_tail:dirs:offs or vs_tail_shadow:dirs or vs_tail_shadow:dirs:offs or vs_track_floorext:dirs or vs_tail:dirs or vs_tail:dirs:offs or vs_wall_shadow:dirs or vs_wall_shadow_corner:dirs
+tempVisualObjects = vs_any_under:dirs or vs_snake_under or vs_player:dirs or vs_any_under:dirs:offs or vs_snake_under:offs or vs_player:dirs:offs or vs_snake_opening:dirs or vs_snake_opening:dirs:offs or vs_snake_edge:dirs or vs_snake_edge:dirs:offs or vs_con:dirs or vs_con:dirs:offs or vs_active_under or vs_active_under:offs or vs_con_active:dirs or vs_con_active:dirs:offs
 
 any_move = move:dirs or turnMove:dirs

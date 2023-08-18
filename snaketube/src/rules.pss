@@ -7,35 +7,26 @@
 [init] [player con:> | con:< init_connectRules] -> [init] [player | ]
 
 (connect tracks, tracks = solid pipes in walls)
-[init] [track | track] -> [init] [track trc:> | track]
+[init] [track] -> [init] [track vs_track_bg]
+[init] [track | track] -> [init] [track trc:> vs_trc_under:> | track] 
 [init] [track no init_noMoreCon | no wall] -> [init] [track trc:> | ]
-[init] [track | border] -> [init] [track trc:> | border]
-(add ends of tracks)
-[init] [trc:> | no trc:< no win no border] -> [init] [trc:> vs_trackcut:> | ]
+[init] [trc:> no trc:v no trc:^] -> [init] [trc:< trc:>]
 
-(wall border)
-[init] [wall no border no trc:> | no wall] -> [init] [wall vs_shadow:> vs_wall_edge:> | ]
-[init] [vs_shadow:v | wall no track no vs_shadow:v] -> [init] [vs_shadow:v | wall vs_wall_corner:>]
-[init] [vs_trackcut:v | wall no track no vs_shadow:v] -> [init] [vs_trackcut:v | wall vs_wall_corner:>]
+(wall edge)
+[init] [wall no trc:> | no wall] -> [init] [wall  vs_wall_inner:> vs_wall_edge:>    | ]
+[init] [        trc:> | no wall] -> [init] [trc:> vs_wall_inner:> vs_wall_opening:> | ]
+[init] [vs_wall_inner:v | wall no vs_wall_inner:v] -> [init] [vs_wall_inner:v | wall vs_wall_inner_corner:>]
+
 (hole border)
-[init] [no border no hole no bridge] -> [init] [floor]
+[init] [no hole] -> [init] [floor]
 [init] [floor | hole] -> [init] [floor | vs_hole_edge:< hole]
-[init] [floor no wall | hole] -> [init] [floor vs_floor_hole_shadow | hole]
-[init] [floor trc:> | hole] -> [init] [floor trc:> vs_floor_hole_shadow | hole]
-[init] [floor wall no trc:> | hole] -> [init] [floor wall vs_wall_hole_shadow | hole]
-
-(level border rounded corners)
-vertical [init] [border | no border no vs_border_corner:vertical] -> [init] [border | vs_border_corner:< vs_border_corner:^]
-[init] [no border | vs_border_corner:dirs | no border] -> [init] [ | | ]
-[init] [vs_border_corner:^ | border] -> [init] [ | border]
-[init] [vs_border_corner:< | border] -> [init] [ | border]
 
 (starting direction eye is facing)
 [init player con:> no con:<] -> [init playerFacing:> player con:>]
-[init player trc:> no trc:<] -> [init playerFacing:> player trc:>]
+[init player trc:> | trc:<] -> [init playerFacing:> player trc:> | trc:<]
 
 (also set move direction to start with here)
-[init] [border | trc:< player] -> [init playerFacing:>] [border player again_fly:> | trc:<]
+[init] [player trc:> | trc:<] -> [init playerFacing:>] [player again_fly:> trc:> | trc:<]
 
 (end init) 
 (start of first player turn or again turn ends init)
@@ -58,24 +49,18 @@ vertical [init] [border | no border no vs_border_corner:vertical] -> [init] [bor
 
 (stuff on snake falls into hole)
 (ball and player fall into hole if not flying)
-dirs [any:dirs   again_gravity hole             ] -> [again_gravity hole vs_bridge_con:dirs]
 [it_canFall again_gravity hole                  ] -> [again_gravity hole]
-[ball       again_gravity hole no again_fly:dirs] -> [again_gravity hole vs_bridge_dot]
-[player     again_gravity hole no again_fly:dirs] -> [again_gravity hole vs_bridge_dot]
-(replace snake and hole itself with bridge tile)
-[snake again_gravity hole] -> [bridge]
-
+[ball       again_gravity hole no again_fly:dirs] -> [again_gravity hole]
+[player     again_gravity hole no again_fly:dirs] -> [again_gravity hole]
+(replace snake and hole itself with floor)
+[snake again_gravity hole] -> [floor]
 
 (update edge of hole)
-[bridge |      hole] -> [bridge vs_floor_hole_shadow | hole vs_hole_edge:<]
-[bridge | no bridge] -> [bridge vs_hole_edge:> | ]
-(connect bridges)
-([bridge no vs_hole_edge:> | no vs_hole_edge:< bridge] -> [bridge vs_bridge_con:> | bridge vs_bridge_con:<])
+[floor | hole] -> [floor vs_hole_edge:> | hole]
 
 (revert collision)
 (swap the shifted collision anim objects out with the regular ones)
 (other objects get regenerated every turn anyway & don't need to be swapped back here)
-[again_col] [snake:offs            ] -> [again_col] [snake]
 [again_col] [ball:offs             ] -> [again_col] [ball]
 dirs [again_col] [con:dirs:offs         ] -> [again_col] [con:dirs]
 dirs [again_col] [cut:dirs:offs         ] -> [again_col] [cut:dirs]
@@ -123,11 +108,11 @@ dirs [again_col] [brokenball:dirs:offs  ] -> [again_col] [brokenball:dirs]
 (if flying into snake end, steer)
 [stationary again_fly:> it_canFly snake no any:>] -> [anim_col:> it_canFly snake]
 (if flying into level border, remove)
-[stationary again_fly:> player | border no win] -> [ | border]
-[stationary again_fly:> ball   | border       ] -> [ | border]
+[stationary again_fly:> player trc:> | wall no win no trc:<] -> [trc:> | wall]
+[stationary again_fly:> ball   trc:> | wall        no trc:<] -> [trc:> | wall]
 (if flying into wall, remove and leave broken effect)
-[stationary again_fly:> player | wall no any:<] -> [ | brokenplayer:< wall] sfx6 (breaking sound)
-[stationary again_fly:> ball   | wall no any:<] -> [ | brokenball:<   wall] sfx6 (breaking sound)
+[stationary again_fly:> player | wall no win no any:<] -> [ | brokenplayer:< wall] sfx6 (breaking sound)
+[stationary again_fly:> ball   | wall no win no any:<] -> [ | brokenball:<   wall] sfx6 (breaking sound)
 (if flying into snake, try to push the snake)
 [stationary again_fly:> player | snake no any:<] -> [ | brokenplayer:< snake move:>] sfx6 (breaking sound)
 [stationary again_fly:> ball   | snake no any:<] -> [ | brokenball:<   snake move:>] sfx6 (breaking sound)
@@ -278,48 +263,37 @@ dirs [wasTurnMoved:< cut:dirs] -> [wasTurnMoved:< cut:> correctConnectDir:>]
 
 [tempVisualObjects] -> []
 
-(cuts)
-[cut:>] -> [cut:> vs_cut_shadow:> vs_cut_base:>]
+(layer more detail on snakes)
 
-(tail)
-(start tail visual from it_canFly in end position)
-[it_canFly snake any:> no any:< no any:perpendicular] -> [it_canFly snake any:> vs_tail:> vs_tail_from:>]
-(visualize the tail at the front, if min length 2)
-[vs_tail_from:> con:> | ] -> [vs_tail_from:> con:> | vs_tail_to:>]
-
-(shadows)
-[any:> snake]     -> [any:> snake     vs_con_shadow:>]
-[any:> vs_tail:dirs] -> [any:> vs_tail:dirs vs_tail_shadow:>]
-[snake] -> [snake vs_snake_shadow]
+(default/ active)
+[snake] -> [snake vs_snake_under]
+[player snake] -> [player snake vs_active_under]
+(spread)
+[vs_active_under con:> | ] -> [vs_active_under con:> | vs_active_under]
+(connect/cut)
+[any:> snake] -> [any:> snake vs_any_under:> vs_con:>]
+[any:> vs_active_under] -> [any:> vs_active_under vs_any_under:> vs_con_active:>]
+[cut:>] -> [cut:> vs_snake_opening:>]
+[snake no con:> no cut:>] -> [snake vs_snake_edge:>]
 
 (direction for eye)
 [playerFacing:>] [player] -> [playerFacing:>] [player vs_player:>]
 [player no vs_player:dirs] -> [player vs_player:right]
 
-(design around holes)
-[vs_shadow:> | no hole] -> [vs_shadow:> vs_wall_shadow:> | ]
-[vs_wall_shadow:> vs_wall_shadow:v] -> [vs_wall_shadow:> vs_wall_shadow:v vs_wall_shadow_corner:>]
-[vs_trackcut:> | no hole] -> [vs_trackcut:> | vs_track_floorext:<]
-
 (animate tiles in collision by replacing them with offset variants)
-[anim_col:> snake                       ] -> [anim_col:> snake:>]
-[anim_col:> ball                        ] -> [anim_col:> ball:>]
-[anim_col:> vs_snake_shadow             ] -> [anim_col:> vs_snake_shadow:>]
-dirs [anim_col:> con:dirs                    ] -> [anim_col:> con:dirs:>]
-dirs [anim_col:> cut:dirs                    ] -> [anim_col:> cut:dirs:>]
-dirs [anim_col:> brokenplayer:dirs           ] -> [anim_col:> brokenplayer:dirs:>]
-dirs [anim_col:> brokenball:dirs             ] -> [anim_col:> brokenball:dirs:>]
-dirs [anim_col:> vs_tail:dirs                ] -> [anim_col:> vs_tail:dirs:>]
-dirs [anim_col:> vs_tail_from:dirs           ] -> [anim_col:> vs_tail_from:dirs:>]
-dirs [anim_col:> vs_tail_to:dirs             ] -> [anim_col:> vs_tail_to:dirs:>]
-dirs [anim_col:> vs_con_shadow:dirs no track ] -> [anim_col:> vs_con_shadow:dirs:>]
-dirs [anim_col:> vs_tail_shadow:dirs no track] -> [anim_col:> vs_tail_shadow:dirs:>]
-dirs [anim_col:> vs_cut_shadow:dirs          ] -> [anim_col:> vs_cut_shadow:dirs:>]
-dirs [anim_col:> vs_cut_base:dirs            ] -> [anim_col:> vs_cut_base:dirs:>]
-dirs [anim_col:> vs_cut_tail:dirs            ] -> [anim_col:> vs_cut_tail:dirs:>]
-dirs [anim_col:> vs_player:dirs              ] -> [anim_col:> vs_player:dirs:>]
-
-
+[anim_col:> ball           ] -> [anim_col:> ball:>]
+[anim_col:> vs_snake_under ] -> [anim_col:> vs_snake_under:>]
+[anim_col:> vs_active_under] -> [anim_col:> vs_active_under:>]
+dirs [anim_col:> con:dirs          ] -> [anim_col:> con:dirs:>]
+dirs [anim_col:> cut:dirs          ] -> [anim_col:> cut:dirs:>]
+dirs [anim_col:> brokenplayer:dirs ] -> [anim_col:> brokenplayer:dirs:>]
+dirs [anim_col:> brokenball:dirs   ] -> [anim_col:> brokenball:dirs:>]
+dirs [anim_col:> vs_any_under:dirs ] -> [anim_col:> vs_any_under:dirs:>]
+dirs [anim_col:> vs_con:dirs       ] -> [anim_col:> vs_con:dirs:>]
+dirs [anim_col:> vs_con_active:dirs] -> [anim_col:> vs_con_active:dirs:>]
+dirs [anim_col:> vs_player:dirs    ] -> [anim_col:> vs_player:dirs:>]
+dirs [anim_col:> vs_snake_edge:dirs] -> [anim_col:> vs_snake_edge:dirs:>]
+dirs [anim_col:> vs_snake_opening:dirs] -> [anim_col:> vs_snake_opening:dirs:>]
 
 (----START AGAIN TURNS----)
 
