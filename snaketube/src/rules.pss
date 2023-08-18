@@ -86,7 +86,9 @@ dirs [again_col] [brokenball:dirs:offs  ] -> [again_col] [brokenball:dirs]
 (move out of connector starts slide)
 [> player any:>] -> [player any:> again_fly:>]
 
-(pilot a snake)
+(move in any other direction, trying to pilot the object)
+[> player wall] -> [stationary player wall anim_col:>] nosave
+(works for snake)
 [> player] -> [player turnMove:>]
 
 
@@ -249,6 +251,17 @@ dirs [wasTurnMoved:< cut:dirs] -> [wasTurnMoved:< cut:> correctConnectDir:>]
 
 (reconnect cuts)
 [cut:> | cut:<] -> [con:> | con:<]
+
+(WIP: TESTING THIS)
+(cuts facing track openings turn make the snake become wall)
+[snake cut:> | vs_wall_opening:< trc:<] -> [action snake trc:> vs_trc_under:> vs_track_bg | trc:<]
+[action snake con:> | con:< snake] -> [action snake trc:> vs_trc_under:> vs_track_bg | trc:< vs_trc_under:< vs_track_bg action snake]
+[action snake cut:>] -> [action snake trc:> vs_wall_opening:>]
+[action snake no trc:> | no wall] -> [action snake vs_wall_inner:> vs_wall_edge:> | ]
+[action snake no trc:> | vs_wall_edge:<] -> [action snake vs_wall_inner:> vs_wall_edge:> | vs_wall_edge:<]
+[action snake] -> [wall]
+(TODO:)
+(should probably still look like snake and be able to split of when in the head tile)
 
 (find which snake multiblocks are partially not over a hole)
 [supported] -> []
