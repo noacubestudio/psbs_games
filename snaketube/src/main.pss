@@ -5,7 +5,7 @@
 
 (% set color_fg    = "#85cf40" %)
 (% set color_bg    = "#117860" %)
-(% set color_outer = "#52ba3d" %)
+(% set color_outer = "#48b031" %)
 
 (% set color_purple_fg    = "#b45eff" %)
 (% set color_purple_bg    = "#5932c2" %)

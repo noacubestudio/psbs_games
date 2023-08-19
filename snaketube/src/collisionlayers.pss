@@ -11,10 +11,10 @@ vs_track_bg
 --
 dirs -> vs_wall_inner:dirs
 dirs -> vs_wall_inner_corner:dirs
+dirs -> vs_trc_under:dirs
 --
 dirs -> vs_wall_edge:dirs, vs_wall_opening:dirs
 --
-dirs -> vs_trc_under:dirs
 dirs -> trc:dirs
 --
 
