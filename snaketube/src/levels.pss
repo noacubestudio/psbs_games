@@ -57,15 +57,14 @@ message > bridge
 (NEW: HOLE)
 (fly over hole)
 ##############
-#####....#####
-##ttt.~~.ttt##
-##t##.~~.##t##
-##t#...~..#t##
-##.~.~.~~...tw
-pt.~..l...~u##
-##..u.###...##
-##.###########
 ##############
+#####.....####
+###~.u.....###
+###~..~~~~~###
+###~..~~~~~#tw
+ptt~.l~~.l~tt#
+###~~~~~..~###
+####~~~~######
 
 (NEW: PUSHABLE BLOCKS)
 (multipush into hole)
@@ -102,6 +101,23 @@ pt#...~~~~##t#
 ( ####...#### )
 ( ########### )
 
+(
+    potential uses of open blocks for puzzles:
+    - can be pushed as usual, but also inhabited.
+    - push to:
+        - push into hole to fill and create more floor
+        - get into position for entry
+    - move within to:
+        - recover from wall
+        - use to launch somewhere else
+    - entry side effects/ requirements:
+        - leaves other open block (usually with opposite orientation, parity)
+        - at least two open tiles in the direction of the opening
+    - exit side effects/ requirements:
+        - need another block to fly to
+        - need one space to move even just to reorient (L-Shape)
+)
+
 (learn: can also push open shapes into hole!)
 (swap between pushing and snake move to get into place)
 ##############
@@ -126,8 +142,8 @@ ptt...l...####
 (trick: cant cross without flying, get destination snake in place)
 ##############
 ##############
-########.#####
-pttt.l...#####
+########..####
+pttt.l....####
 ####..#~~#####
 ###..l#~~#####
 ###...u..ttttw

@@ -14,7 +14,7 @@
 
 (wall edge)
 [init] [wall no trc:> | no wall] -> [init] [wall  vs_wall_inner:> vs_wall_edge:>    | ]
-[init] [        trc:> | no wall] -> [init] [trc:> vs_wall_inner:> vs_wall_opening:> | ]
+[init] [        trc:> | no wall] -> [init] [trc:> vs_wall_inner:> | ] (vs_wall_opening:> is added dynamically later)
 [init] [vs_wall_inner:v | wall no vs_wall_inner:v] -> [init] [vs_wall_inner:v | wall vs_wall_inner_corner:>]
 
 (hole border)
@@ -107,8 +107,9 @@ dirs [again_col] [brokenball:dirs:offs  ] -> [again_col] [brokenball:dirs]
 (check what should happen this turn) 
 (if there's a match, skip all remaining cases using a temporary action marker)
 
-(if flying into snake end, steer)
+(if flying into snake end, stop and collide)
 [stationary again_fly:> it_canFly snake no any:>] -> [anim_col:> it_canFly snake]
+[anim_col:dirs fixed] -> [fixed] sfx2
 (if flying into level border, remove)
 [stationary again_fly:> player trc:> | wall no win no trc:<] -> [trc:> | wall]
 [stationary again_fly:> ball   trc:> | wall        no trc:<] -> [trc:> | wall]
@@ -166,7 +167,7 @@ dirs [again_col] [brokenball:dirs:offs  ] -> [again_col] [brokenball:dirs]
 [follow:dirs] -> [] (just in case)
 
 (propagate forward from a pusher)
-[turnMove:> | snake] -> [turnMove:> | snake move:>]
+[turnMove:> | snake no fixed] -> [turnMove:> | snake move:>]
 
 (loop to propagate regular move forward and also through connections whenever possible.)
 (in forward direction-so with actual pressure, it can even affect the snake head doing the push, such as in a C shape)
@@ -200,8 +201,8 @@ dirs [anim_col:dirs con:> | con:< no anim_col:dirs] -> [anim_col:dirs con:> | co
 
 (add turnMove markers behind the first one, starting from the follow:>)
 (exclude anything that already moved)
-[     no snake | con:<    follow:<      no wasMoved:dirs no wasTurnMoved:dirs] -> [              | con:< turnMove:<]
-[turnMove:dirs | con:< no turnMove:dirs no wasMoved:dirs no wasTurnMoved:dirs] -> [turnMove:dirs | con:< turnMove:<]
+[     no snake | con:<    follow:<      no wasMoved:dirs no wasTurnMoved:dirs no fixed] -> [              | con:< turnMove:<]
+[turnMove:dirs | con:< no turnMove:dirs no wasMoved:dirs no wasTurnMoved:dirs no fixed] -> [turnMove:dirs | con:< turnMove:<]
 
 (move the tail following the tile )
 (this assumes there is always one tile that can move, and moves them in order )
@@ -227,6 +228,7 @@ dirs [wasTurnMoved:< cut:dirs] -> [wasTurnMoved:< cut:> correctConnectDir:>]
 (new cuts are created, this makes a splitting sound )
 [    wasMoved:dirs con:> | no con:<] -> [    wasMoved:dirs cut:> | ] sfx1
 [wasTurnMoved:dirs con:> | no con:<] -> [wasTurnMoved:dirs cut:> | ] sfx1
+[fixed con:> | no con:<] -> [fixed cut:> | ] sfx1
 
 (a moved flying item will start flying if there is an open end that direction)
 [    wasMoved:> con:> it_canFly no again_fly:dirs] -> [wasMoved:> con:> it_canFly again_fly:>]
@@ -252,16 +254,6 @@ dirs [wasTurnMoved:< cut:dirs] -> [wasTurnMoved:< cut:> correctConnectDir:>]
 (reconnect cuts)
 [cut:> | cut:<] -> [con:> | con:<]
 
-(WIP: TESTING THIS)
-(cuts facing track openings turn make the snake become wall)
-[snake cut:> | vs_wall_opening:< trc:<] -> [action snake trc:> vs_trc_under:> vs_track_bg | trc:<]
-[action snake con:> | con:< snake] -> [action snake trc:> vs_trc_under:> vs_track_bg | trc:< vs_trc_under:< vs_track_bg action snake]
-[action snake cut:>] -> [action snake trc:> vs_wall_opening:>]
-[action snake no trc:> | ] -> [action snake vs_wall_inner:> vs_wall_edge:> | ]
-[action snake] -> [wall]
-(TODO:)
-(should probably still look like snake and be able to split of when in the head tile)
-
 (find which snake multiblocks are partially not over a hole)
 [supported] -> []
 [snake no hole] -> [snake supported]
@@ -269,6 +261,11 @@ dirs [wasTurnMoved:< cut:dirs] -> [wasTurnMoved:< cut:> correctConnectDir:>]
 (the rest fall into hole)
 [snake no supported] -> [snake again_gravity] 
 
+(find which blocks are totally fixed and will not even show collision bounce)
+[fixed] -> []
+[wall] -> [wall fixed]
+[fixed trc:> | cut:<] -> [fixed trc:> | cut:< fixed]
+[fixed con:> | con:<] -> [fixed con:> | con:< fixed]
 
 
 (----VISUAL ONLY----)
@@ -287,6 +284,11 @@ dirs [wasTurnMoved:< cut:dirs] -> [wasTurnMoved:< cut:> correctConnectDir:>]
 [any:> vs_active_under] -> [any:> vs_active_under vs_any_under:> vs_con_active:>]
 [cut:>] -> [cut:> vs_snake_opening:>]
 [snake no con:> no cut:>] -> [snake vs_snake_edge:>]
+
+(temporarily hide wall opening and snake opening to make them look connected)
+[trc:> | no wall] -> [trc:> vs_wall_opening:> | ]
+[vs_wall_opening:> | vs_snake_opening:<] -> [vs_con:> | ]
+
 
 (direction for eye)
 [playerFacing:>] [player] -> [playerFacing:>] [player vs_player:>]

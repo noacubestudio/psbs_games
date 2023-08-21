@@ -73,6 +73,7 @@ anim_col:dirs
 
 push:dirs
 supported
+fixed
 otherPushFailed
 dirs -> any:dirs
 dirs -> wantsToFlyTo:dirs
