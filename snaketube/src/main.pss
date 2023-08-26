@@ -1,7 +1,7 @@
 (# Palette #)
 (% set color_white  = "#ffffff" %)
 (% set color_accent = "#ffad3b" %)
-(% set color_black  = "#0d001c" %)
+(% set color_black  = "#0a0a1a" %)
 
 (% set color_fg    = "#85cf40" %)
 (% set color_bg    = "#117860" %)

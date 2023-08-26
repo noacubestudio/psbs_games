@@ -1,6 +1,7 @@
 gist_id: 14d08f4f438dc0d648637c76655b3144
 engine: https://clementsparrow.github.io/Pattern-Script/src/
 template: main.pss
+user_extensions: [scripts/compactFilter.py]
 Build:
   name: debug
 Images:
