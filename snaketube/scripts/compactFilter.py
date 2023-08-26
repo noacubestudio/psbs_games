@@ -1,12 +1,16 @@
 from psbs.extension import Extension
 import re
 
-class Example(Extension):
+class Decompact(Extension):
     def __init__(self, config):
         super().__init__(config)
-        self.register_filter("compactToPatternScript", self.compactToPatternScript)
+        self.register_filter("relaxRules", self.compactToPatternScript)
 
     def _decompactLine(self, line):
+        # return original line if it is already in [left] -> [right] format, or doesn't contain a rule to begin with
+        if "->" in line or "[" not in line or "]" not in line:
+            return line
+
         lhs = []
         rhs = []
 
@@ -23,6 +27,7 @@ class Example(Extension):
 
         currentMode = "BOTH"
         for word in line.split(" "):
+            # always use the last keyword to determine whether or not to add to the left, right, or both sides
             currentMode = modes_dict.get(word, currentMode)
 
             if word == "add" or word == "is" or word == "was":
@@ -40,13 +45,8 @@ class Example(Extension):
 
         result = " ".join(lhs) + " -> " + " ".join(rhs)
         return re.sub(r'\s+', ' ', result) # clean multi spaces
-    
-    def _customNamingSchemeToPatternScript(self, input_string):
-        return input_string.replace(".", "_")
 
     def compactToPatternScript(self, input_string):
-        # remove dots with underscores or :, depending on text
-        input_string = self._customNamingSchemeToPatternScript(input_string)
         # separate blocks into left and right side
         new_lines = [self._decompactLine(line) for line in input_string.rstrip().split('\n')]
         new_string = '\n'.join(new_lines)
