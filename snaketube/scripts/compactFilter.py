@@ -14,33 +14,40 @@ class Decompact(Extension):
         lhs = []
         rhs = []
 
-        modes_dict = {
-            "no": "LEFT",
-            "add": "RIGHT",
-            "was": "LEFT", 
-            "del": "RIGHT",
-            "is": "BOTH", 
-            "[": "BOTH",
-            "|": "BOTH",
-            "]": "BOTH"
-        }
+        include_words_left = True
+        include_words_right = True
+        current_prefix = ""
 
-        currentMode = "BOTH"
         for word in line.split(" "):
-            # always use the last keyword to determine whether or not to add to the left, right, or both sides
-            currentMode = modes_dict.get(word, currentMode)
 
-            if word == "add" or word == "is" or word == "was":
-                continue
-            elif currentMode == "LEFT":
+            # check if this word should appear on the left or right, determined by the last keyword
+            if word in ["[", "|", "]", "is"]:
+                include_words_left = True
+                include_words_right = True
+            elif word in ["no", "was"]:
+                include_words_left = True
+                include_words_right = False
+            elif word in ["add", "del"]:
+                include_words_left = False
+                include_words_right = True
+            # else, keep as last keyword
+
+            # keywords are either normally included, as a prefix in front of each one, or never
+            if word in ["no", "del"]:
+                current_prefix = "no"
+                word = ""
+            elif word in ["add", "is", "was"]:
+                current_prefix = ""
+                word = ""
+            elif word in ["[", "|", "]"]:
+                current_prefix = ""
+            elif current_prefix != "": # normal keyword after a prefix
+                word = current_prefix + " " + word
+            
+            # add the word to the sides
+            if include_words_left:
                 lhs.append(word)
-            elif currentMode == "RIGHT":
-                if word == "del":
-                    rhs.append("no")
-                else:
-                    rhs.append(word)
-            else:
-                lhs.append(word)
+            if include_words_right:
                 rhs.append(word)
 
         result = " ".join(lhs) + " -> " + " ".join(rhs)
