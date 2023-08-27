@@ -3,72 +3,70 @@
 (do these at the start of the turn, then remove the init marker.)
 
 (connect any snakes in level)
-[init] [snake no init_conBnotA no init_noMoreCon no cut:> | snake no init_conBnotA no cut:< no init_noMoreCon] -> [init] [snake con:> | con:< snake]
-[init] [snake no init_conAnotB no init_noMoreCon no cut:> | snake no init_conAnotB no cut:< no init_noMoreCon] -> [init] [snake con:> | con:< snake]
-[init] [player con:> | con:< init_connectRules] -> [init] [player | ]
+[ init ] [ snake no init_conBnotA init_noMoreCon cut:> add con:> | snake no init_conBnotA init_noMoreCon cut:< add con:< ]
+[ init ] [ snake no init_conAnotB init_noMoreCon cut:> add con:> | snake no init_conAnotB init_noMoreCon cut:< add con:< ]
+[ init ] [ player was con:> | was con:< init_connectRules ]
 
 (connect tracks, tracks = solid pipes in walls)
-[init] [track] -> [init] [track vs_track_bg]
-[init] [track | track] -> [init] [track trc:> vs_trc_under:> | track] 
-[init] [track no init_noMoreCon | no wall] -> [init] [track trc:> vs_trc_under:> | ]
-[init] [trc:> no trc:v no trc:^] -> [init] [trc:< vs_trc_under:< trc:>]
+[ init ] [ track add vs_track_bg ]
+[ init ] [ track add trc:> vs_trc_under:> | track ]
+[ init ] [ track add trc:> vs_trc_under:> no init_noMoreCon | no wall ]
+[ init ] [ trc:> no trc:v trc:^ add trc:< vs_trc_under:< ]
 
 (wall edge)
-[init] [wall no trc:> | no wall] -> [init] [wall  vs_wall_inner:> vs_wall_edge:>    | ]
-[init] [        trc:> | no wall] -> [init] [trc:> vs_wall_inner:> | ] (vs_wall_opening:> is added dynamically later)
-[init] [vs_wall_inner:v | wall no vs_wall_inner:v] -> [init] [vs_wall_inner:v | wall vs_wall_inner_corner:>]
+[ init ] [ wall no trc:> add vs_wall_inner:> vs_wall_edge:> | no wall ]
+[ init ] [      is trc:> add vs_wall_inner:>                | no wall ] (vs_wall_opening:> is added dynamically later)
+[ init ] [ vs_wall_inner:v | wall no vs_wall_inner:v add vs_wall_inner_corner:> ]
 
 (hole border)
-[init] [no hole] -> [init] [floor]
-[init] [floor | hole] -> [init] [floor | vs_hole_edge:< hole]
+[ init ] [ no hole add floor ]
+[ init ] [ hole add vs_hole_edge:> | floor ]
 
 (starting direction eye is facing)
-[init player con:> no con:<] -> [init playerFacing:> player con:>]
-[init player trc:> | trc:<] -> [init playerFacing:> player trc:> | trc:<]
+[ init player con:> no con:< add playerFacing:> ]
+[ init player trc:>          add playerFacing:> | trc:< ]
 
 (also set move direction to start with here)
-[init] [player trc:> | trc:<] -> [init playerFacing:>] [player again_fly:> trc:> | trc:<]
+[ init add playerFacing:> ] [ player trc:> add again_fly:> | trc:< ]
 
 (end init) 
 (start of first player turn or again turn ends init)
-[init] [> player] -> [playerFacing:>] [> player] 
-[init] [again_fly:>] -> [] [again_fly:>]
-(% endfilter %)
+[ > player    ] [ was init add playerFacing:> ] 
+[ again_fly:> ] [ was init ]
 
 (------------------)
 
 (on every player turn after, also reorient the playerFacing marker)
-[> player] [playerFacing:dirs] -> [> player] [playerFacing:>]
+[ > player ] [ was playerFacing:dirs add playerFacing:> ]
+
 (init stuff I can't remove earlier, not sure why)
-[> player] [init_conBnotA]  -> [> player] []
-[> player] [init_conAnotB]  -> [> player] []
-[> player] [init_noMoreCon] -> [> player] []
-
-
+[ > player ] [ was init_conAnotB ]
+[ > player ] [ was init_conBnotA ]
+[ > player ] [ was init_noMoreCon ]
 
 (----AGAIN TURN----)
 (these are in a previously started again turn)
 
 (stuff on snake falls into hole)
 (ball and player fall into hole if not flying)
-[it_canFall again_gravity hole                  ] -> [again_gravity hole]
-[ball       again_gravity hole no again_fly:dirs] -> [again_gravity hole]
-[player     again_gravity hole no again_fly:dirs] -> [again_gravity hole]
+[ hole again_gravity was it_canFall ]
+[ hole again_gravity no again_fly:dirs was ball ]
+[ hole again_gravity no again_fly:dirs was player ]
 (replace snake and hole itself with floor)
-[snake again_gravity hole] -> [floor]
+[ was hole again_gravity snake add floor ]
 
 (update edge of hole)
-[floor | hole] -> [floor vs_hole_edge:> | hole]
+[ floor add vs_hole_edge:> | hole ]
 
 (revert collision)
 (swap the shifted collision anim objects out with the regular ones)
 (other objects get regenerated every turn anyway & don't need to be swapped back here)
-[again_col] [ball:offs             ] -> [again_col] [ball]
-dirs [again_col] [con:dirs:offs         ] -> [again_col] [con:dirs]
-dirs [again_col] [cut:dirs:offs         ] -> [again_col] [cut:dirs]
-dirs [again_col] [brokenplayer:dirs:offs] -> [again_col] [brokenplayer:dirs]
-dirs [again_col] [brokenball:dirs:offs  ] -> [again_col] [brokenball:dirs]
-[again_col] -> []
+[ again_col ] [ was ball:offs add ball ]
+dirs [ again_col ] [ was con:dirs:offs          add con:dirs ]
+dirs [ again_col ] [ was cut:dirs:offs          add cut:dirs ]
+dirs [ again_col ] [ was brokenplayer:dirs:offs add brokenplayer:dirs ]
+dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
+[ was again_col ]
 
 
 
@@ -76,23 +74,22 @@ dirs [again_col] [brokenball:dirs:offs  ] -> [again_col] [brokenball:dirs]
 
 (any markers, these are used to sometimes ignore which kind of connections are actually present)
 (but record the directions of connection for later in the turn)
-[any:dirs] -> []
-[con:>] -> [con:> any:>]
-[cut:>] -> [cut:> any:>]
-[trc:>] -> [trc:> any:>]
-
+[ was any:dirs ]
+[ con:> add any:> ]
+[ cut:> add any:> ]
+[ trc:> add any:> ]
 
 
 (----PLAYER INPUT---)
 
 (move out of connector starts slide)
-[> player any:>] -> [player any:> again_fly:>]
+[ any:> was >.player add stationary.player again_fly:> ]
 
 (move in any other direction, trying to pilot the object)
-[> player wall] -> [stationary player wall anim_col:>] nosave
-(works for snake)
-[> player] -> [player turnMove:>]
+[ wall was >.player add stationary.player anim_col:> ] nosave
 
+(works for snake)
+[ was >.player add stationary.player turnMove:> ]
 
 
 (----FLY----)
@@ -100,58 +97,58 @@ dirs [again_col] [brokenball:dirs:offs  ] -> [again_col] [brokenball:dirs]
 (reorient sliding direction based on pipe around)
 (the stationary makes sure they can only do this once)
 (if anything else, like pushing leads to flying, on the initial turn this isn't done...)
-[stationary again_fly:> any:v no wasMoved:>] -> [v again_fly:v any:v]
-[stationary again_fly:> any:^ no wasMoved:>] -> [^ again_fly:^ any:^]
+[ any:v no wasMoved:> was stationary.again_fly:> add v.again_fly:v ]
+[ any:^ no wasMoved:> was stationary.again_fly:> add ^.again_fly:^ ]
+
 (reset temporary marker)
-[again_fly:dirs] -> [stationary again_fly:dirs]
+[ was again_fly:dirs add stationary.again_fly:dirs ]
 
 
 (check what should happen this turn) 
 (if there's a match, skip all remaining cases using a temporary action marker)
 
 (if flying into snake end, stop and collide)
-[stationary again_fly:> it_canFly snake no any:>] -> [anim_col:> it_canFly snake]
-[anim_col:dirs fixed] -> [fixed] sfx2
+[ it_canFly snake no any:> was stationary.again_fly:> add anim_col:> ]
+[ fixed was anim_col:dirs ] sfx2
 (if flying into level border, remove)
-[stationary again_fly:> player trc:> | wall no win no trc:<] -> [trc:> | wall]
-[stationary again_fly:> ball   trc:> | wall        no trc:<] -> [trc:> | wall]
+[ trc:> was stationary.again_fly:> player | wall no trc:< win ]
+[ trc:> was stationary.again_fly:> ball   | wall no trc:< ]
 (if flying into wall, remove and leave broken effect)
-[stationary again_fly:> player | wall no win no any:<] -> [ | brokenplayer:< wall] sfx6 (breaking sound)
-[stationary again_fly:> ball   | wall no win no any:<] -> [ | brokenball:<   wall] sfx6 (breaking sound)
+[ was stationary.again_fly:> player | wall no win any:< add brokenplayer:< ] sfx6 (breaking sound)
+[ was stationary.again_fly:> ball   | wall no win any:< add brokenball:<   ] sfx6 (breaking sound)
 (if flying into snake, try to push the snake)
-[stationary again_fly:> player | snake no any:<] -> [ | brokenplayer:< snake move:>] sfx6 (breaking sound)
-[stationary again_fly:> ball   | snake no any:<] -> [ | brokenball:<   snake move:>] sfx6 (breaking sound)
+[ was stationary.again_fly:> player | snake no any:< add brokenplayer:< move:> ] sfx6 (breaking sound)
+[ was stationary.again_fly:> ball   | snake no any:< add brokenball:<   move:> ] sfx6 (breaking sound)
 (if flying into another flying object, both repel)
-[stationary again_fly:> it_canFly | stationary again_fly:< it_canFly] -> [action again_fly:< it_canFly | action again_fly:> it_canFly] sfx7
+[ it_canFly was stationary.again_fly:> add action.again_fly:< | it_canFly was stationary.again_fly:< add action.again_fly:> ] sfx7
 (if flying into stationary object at snake end, repel and steer)
-[stationary again_fly:> it_canFly | it_canFly snake no any:> no any:perpendicular] -> [action again_fly:< it_canFly | it_canFly snake turnMove:>] sfx7
+[ it_canFly was stationary.again_fly:> add action.again_fly:< | snake it_canFly no any:> any:perpendicular add turnMove:> ] sfx7
 (if flying into stationary object that could move, both repel)
-[stationary again_fly:> it_canFly | it_canFly] -> [action again_fly:< it_canFly | action again_fly:> it_canFly] sfx7
+[ it_canFly was stationary.again_fly:> add action.again_fly:< | it_canFly add action.again_fly:> ] sfx7
 (if flying into empty space that another object wants to fly into)
 (first place directional markers in the empty space)
-[stationary again_fly:> it_canFly | ] -> [stationary again_fly:> it_canFly | wantsToFlyTo:>]
+[ it_canFly stationary.again_fly:> | add wantsToFlyTo:> ]
 (remove the markers if there is overlap)
-[wantsToFlyTo:< wantsToFlyTo:>] -> []
-[wantsToFlyTo:> wantsToFlyTo:perpendicular] -> []
+[ was wantsToFlyTo:< was wantsToFlyTo:> ]
+[ was wantsToFlyTo:> was wantsToFlyTo:perpendicular ]
 (now check for moving into empty space with the marker missing)
-[stationary again_fly:> it_canFly | no wantsToFlyTo:>] -> [action again_fly:< it_canFly | ]
+[ it_canFly was stationary.again_fly:> add action.again_fly:> | no wantsToFlyTo:> ]
 (clear the markers)
-[wantsToFlyTo:dirs] -> []
+[ was wantsToFlyTo:dirs ]
 (if flying into any other tile, just move one tile)
-[stationary again_fly:> it_canFly | ] -> [ | action again_fly:> it_canFly]
+[ was it_canFly stationary.again_fly:> | add it_canFly action.again_fly:> ]
 
 
 (----FLYING DONE----)
 
 (reset temporary markers)
-[again_fly:dirs] -> [stationary again_fly:dirs]
+[ was again_fly:dirs add stationary.again_fly:dirs ]
 
 (if flying, set player facing)
-[player again_fly:>] [playerFacing:dirs] -> [player again_fly:>] [playerFacing:>]
+[ player again_fly:> ] [ was playerFacing:dirs add playerFacing:> ]
 
 (spread collisions)
-[anim_col:dirs con:> | ] -> [anim_col:dirs con:> | anim_col:dirs]
-
+[ anim_col:dirs con:> | add anim_col:dirs ]
 
 
 (----MOVE OBJECTS----)
@@ -164,160 +161,163 @@ dirs [again_col] [brokenball:dirs:offs  ] -> [again_col] [brokenball:dirs]
 )
 
 (remove temp from last time)
-[wasMoved:dirs] -> []
-[wasTurnMoved:dirs] -> []
-[follow:dirs] -> [] (just in case)
+[ was wasMoved:dirs ]
+[ was wasTurnMoved:dirs ]
+[ was follow:dirs ] (just in case)
 
 (propagate forward from a pusher)
-[turnMove:> | snake no fixed] -> [turnMove:> | snake move:>]
+[ turnMove:> | snake no fixed add move:> ]
 
 (loop to propagate regular move forward and also through connections whenever possible.)
 (in forward direction-so with actual pressure, it can even affect the snake head doing the push, such as in a C shape)
 (otherwise, through a connection only spread if there is no turnMove:dirs there)
-[move:> | snake] -> [move:> | snake move:>]
-+ [move:dirs con:> | con:< no turnMove:dirs] -> [move:dirs con:> | con:< move:dirs] 
+[ move:> | snake add move:> ]
++ [ move:dirs con:> | con:< no turnMove:dirs add move:dirs ]
 
 (however, IF the shape itself is pushed and it now has both turnMove and move, currently it then spreads to the whole tail.)
 (so for now, in that case there should be no snake movement at all and the whole thing just translates.)
-[move:dirs] -> [move:dirs no turnMove:dirs]
+[ move:dirs del turnMove:dirs ]
 
 (so far there are tiles being moved and possibly a head tile with a turnMove.)
 (check collision now, show animation and cancel any actual movement if so)
-[    move:> | no move:> it_collides] -> [anim_col:> | it_collides] nosave
-[turnMove:> | no move:> it_collides] -> [anim_col:> | it_collides] nosave
+[ was     move:> add anim_col:> | it_collides no move:> ] nosave
+[ was turnMove:> add anim_col:> | it_collides no move:> ] nosave
 (collision animation, remove all markers)
-dirs [anim_col:>] [turnMove:dirs] -> [anim_col:>] [anim_col:dirs]
-dirs [anim_col:>] [move:dirs    ] -> [anim_col:>] [anim_col:dirs]
+dirs [ anim_col:> ] [ was turnMove:dirs add anim_col:dirs ]
+dirs [ anim_col:> ] [ was     move:dirs add anim_col:dirs ]
 (also spread through tiles that weren't moved if they are connected)
-dirs [anim_col:dirs con:> | con:< no anim_col:dirs] -> [anim_col:dirs con:> | con:< anim_col:dirs]
+dirs [ anim_col:dirs con:> | con:< no anim_col:dirs add anim_col:dirs ]
 
 (add marker to indicate in what direction and where the snake should be followed)
-[no move:dirs con:> | con:< turnMove:dirs] -> [follow:> con:> | con:< turnMove:dirs]
+[ con:> no move:dirs add follow:> | con:< turnMove:dirs ]
 
 (do the movement)
 (use markers to move all items in those tiles)
-[    move:> it_movesOnSnake | no any_move] -> [    move:> | it_movesOnSnake]
-+ [    move:>                 | no any_move] -> [           |      wasMoved:>] sfx3
-+ [turnMove:> it_movesOnSnake | no any_move] -> [turnMove:> | it_movesOnSnake] 
-+ [turnMove:>                 | no any_move] -> [           |  wasTurnMoved:>]
+  [     move:> was it_movesOnSnake | no any_move add it_movesOnSnake ]
++ [            was move:>          | no any_move add wasMoved:>      ] sfx3
++ [ turnMove:> was it_movesOnSnake | no any_move add it_movesOnSnake ]
++ [            was turnMove:>      | no any_move add wasTurnMoved:>  ]
 
 (add turnMove markers behind the first one, starting from the follow:>)
 (exclude anything that already moved)
-[     no snake | con:<    follow:<      no wasMoved:dirs no wasTurnMoved:dirs no fixed] -> [              | con:< turnMove:<]
-[turnMove:dirs | con:< no turnMove:dirs no wasMoved:dirs no wasTurnMoved:dirs no fixed] -> [turnMove:dirs | con:< turnMove:<]
+[      no snake | con:< no wasMoved:dirs wasTurnMoved:dirs fixed  was follow:< add turnMove:< ]
+[ turnMove:dirs | con:< no wasMoved:dirs wasTurnMoved:dirs fixed turnMove:dirs add turnMove:< ]
 
 (move the tail following the tile )
 (this assumes there is always one tile that can move, and moves them in order )
 startloop
-[turnMove:> it_movesOnSnake | no any_move] -> [turnMove:> | it_movesOnSnake]
-random [turnMove:> | no any_move] -> [ | wasTurnMoved:>]
+[ turnMove:> was it_movesOnSnake | no any_move add it_movesOnSnake ]
+random [ was turnMove:> | no any_move add wasTurnMoved:> ]
 endloop
 
 (fix the connections of the turning pieces )
 (former "forward" connection should now point at the front again )
 (if that one already exist, just keep it )
-dirs [wasTurnMoved:< | wasTurnMoved:dirs con:<]    -> [wasTurnMoved:< | wasTurnMoved:dirs con:< correctConnectDir:<]
-dirs [wasTurnMoved:< | wasTurnMoved:dirs con:dirs no correctConnectDir:<] -> [wasTurnMoved:< | wasTurnMoved:dirs con:< correctConnectDir:<]
+dirs [ wasTurnMoved:< | wasTurnMoved:dirs                                      is con:< add correctConnectDir:< ]
+dirs [ wasTurnMoved:< | wasTurnMoved:dirs no correctConnectDir:< was con:dirs add con:< add correctConnectDir:< ]
 (if there is another connection or cut, make it face backwards again )
-dirs [wasTurnMoved:< con:dirs no correctConnectDir:dirs] -> [wasTurnMoved:< con:> correctConnectDir:>]
-dirs [wasTurnMoved:< cut:dirs] -> [wasTurnMoved:< cut:> correctConnectDir:>]
-[correctConnectDir:dirs] -> []
+dirs [ wasTurnMoved:< no correctConnectDir:dirs was con:dirs add con:> correctConnectDir:> ]
+dirs [ wasTurnMoved:<                           was cut:dirs add cut:> correctConnectDir:> ]
+[ was correctConnectDir:dirs ]
 
 (a moved cut next to a stationary one will make a sound because it reconnects )
 [    wasMoved:dirs cut:> | cut:< no wasMoved:dirs no wasTurnMoved:dirs] -> sfx5
 [wasTurnMoved:dirs cut:> | cut:< no wasMoved:dirs no wasTurnMoved:dirs] -> sfx5
 
 (new cuts are created, this makes a splitting sound )
-[    wasMoved:dirs con:> | no con:<] -> [    wasMoved:dirs cut:> | ] sfx1
-[wasTurnMoved:dirs con:> | no con:<] -> [wasTurnMoved:dirs cut:> | ] sfx1
-[fixed con:> | no con:<] -> [fixed cut:> | ] sfx1
+[     wasMoved:dirs was con:> add cut:> | no con:< ] sfx1
+[ wasTurnMoved:dirs was con:> add cut:> | no con:< ] sfx1
+[             fixed was con:> add cut:> | no con:< ] sfx1
 
 (a moved flying item will start flying if there is an open end that direction)
-[    wasMoved:> con:> it_canFly no again_fly:dirs] -> [wasMoved:> con:> it_canFly again_fly:>]
-[    wasMoved:> cut:> it_canFly no again_fly:dirs] -> [wasMoved:> cut:> it_canFly again_fly:>]
-[wasTurnMoved:> con:> it_canFly no again_fly:dirs | no it_canFly] -> [wasTurnMoved:> con:> it_canFly again_fly:> | ]
-[wasTurnMoved:> cut:> it_canFly no again_fly:dirs | no it_canFly] -> [wasTurnMoved:> cut:> it_canFly again_fly:> | ]
+[     wasMoved:> con:> it_canFly no again_fly:dirs add again_fly:> ]
+[     wasMoved:> cut:> it_canFly no again_fly:dirs add again_fly:> ]
+[ wasTurnMoved:> con:> it_canFly no again_fly:dirs add again_fly:> | no it_canFly ]
+[ wasTurnMoved:> cut:> it_canFly no again_fly:dirs add again_fly:> | no it_canFly ]
+
 (for turnMoved, perpendicular is fine too, as in when a ball was dragged around a corner of the snake)
-[wasTurnMoved:perpendicular con:> it_canFly no again_fly:dirs | no it_canFly] -> [wasTurnMoved:perpendicular con:> it_canFly again_fly:> | ]
-[wasTurnMoved:perpendicular cut:> it_canFly no again_fly:dirs | no it_canFly] -> [wasTurnMoved:perpendicular cut:> it_canFly again_fly:> | ]
+[ wasTurnMoved:perpendicular con:> it_canFly no again_fly:dirs add again_fly:> | no it_canFly ]
+[ wasTurnMoved:perpendicular cut:> it_canFly no again_fly:dirs add again_fly:> | no it_canFly ]
 
 (remove effect of broken player/ball if snake was turnmoved)
-[wasTurnMoved:> brokenplayer:dirs] -> [wasTurnMoved:>]
-[wasTurnMoved:> brokenball:dirs  ] -> [wasTurnMoved:>]
+[ wasTurnMoved:> was brokenplayer:dirs ]
+[ wasTurnMoved:> was brokenball:dirs ]
 
 (----AFTER MOVE IS DONE----)
 
 ("any" markers indicate every kind of connection, reset those for the next turn)
-[any:dirs] -> []
-[con:>] -> [con:> any:>]
-[cut:>] -> [cut:> any:>]
-[trc:>] -> [trc:> any:>]
+[ was any:dirs ]
+[ con:> add any:> ]
+[ cut:> add any:> ]
+[ trc:> add any:> ]
 
 (reconnect cuts)
-[cut:> | cut:<] -> [con:> | con:<]
+[ was cut:> add con:> | was cut:< add con:< ]
 
 (find which snake multiblocks are partially not over a hole)
-[supported] -> []
-[snake no hole] -> [snake supported]
-[supported con:> | con:<] -> [supported con:> | con:< supported]
+[ was supported ]
+[ snake no hole add supported ]
+[ supported con:> | con:< add supported ]
+
 (the rest fall into hole)
-[snake no supported] -> [snake again_gravity] 
+[ snake no supported add again_gravity ]
 
 (find which blocks are totally fixed and will not even show collision bounce)
-[fixed] -> []
-[wall] -> [wall fixed]
-[fixed trc:> | cut:<] -> [fixed trc:> | cut:< fixed]
-[fixed con:> | con:<] -> [fixed con:> | con:< fixed]
+[ was fixed ]
+[ wall add fixed ]
+[ fixed trc:> | cut:< add fixed ]
+[ fixed con:> | con:< add fixed ]
 
 
 (----VISUAL ONLY----)
 
-[tempVisualObjects] -> []
+[ was tempVisualObjects ]
 
 (layer more detail on snakes)
 
 (default/ active)
-[snake] -> [snake vs_snake_under]
-[player snake] -> [player snake vs_active_under]
+[        snake add vs_snake_under ]
+[ player snake add vs_active_under ]
 (spread)
-[vs_active_under con:> | ] -> [vs_active_under con:> | vs_active_under]
+[ vs_active_under con:> | add vs_active_under ]
 (connect/cut)
-[any:> snake] -> [any:> snake vs_any_under:> vs_con:>]
-[any:> vs_active_under] -> [any:> vs_active_under vs_any_under:> vs_con_active:>]
-[cut:>] -> [cut:> vs_snake_opening:>]
-[snake no con:> no cut:>] -> [snake vs_snake_edge:>]
-
+[ any:>           snake add vs_any_under:> vs_con:> ]
+[ any:> vs_active_under add vs_any_under:> vs_con_active:> ]
+[ cut:> add vs_snake_opening:> ]
+[ snake no con:> no cut:> add vs_snake_edge:> ]
 (temporarily hide wall opening and snake opening to make them look connected)
-[trc:> | no wall] -> [trc:> vs_wall_opening:> | ]
-[vs_wall_opening:> | vs_snake_opening:<] -> [vs_con:> | ]
+[ trc:> add vs_wall_opening:> | no wall ]
+[ was vs_wall_opening:> add vs_con:> | was vs_snake_opening:< ]
 
 
 (direction for eye)
-[playerFacing:>] [player] -> [playerFacing:>] [player vs_player:>]
-[player no vs_player:dirs] -> [player vs_player:right]
+[ playerFacing:> ] [ player add vs_player:> ] 
+[ player no vs_player:dirs add vs_player:right ]
 
 (animate tiles in collision by replacing them with offset variants)
-[anim_col:> ball           ] -> [anim_col:> ball:>]
-[anim_col:> vs_snake_under ] -> [anim_col:> vs_snake_under:>]
-[anim_col:> vs_active_under] -> [anim_col:> vs_active_under:>]
-dirs [anim_col:> con:dirs          ] -> [anim_col:> con:dirs:>]
-dirs [anim_col:> cut:dirs          ] -> [anim_col:> cut:dirs:>]
-dirs [anim_col:> brokenplayer:dirs ] -> [anim_col:> brokenplayer:dirs:>]
-dirs [anim_col:> brokenball:dirs   ] -> [anim_col:> brokenball:dirs:>]
-dirs [anim_col:> vs_any_under:dirs ] -> [anim_col:> vs_any_under:dirs:>]
-dirs [anim_col:> vs_con:dirs       ] -> [anim_col:> vs_con:dirs:>]
-dirs [anim_col:> vs_con_active:dirs] -> [anim_col:> vs_con_active:dirs:>]
-dirs [anim_col:> vs_player:dirs    ] -> [anim_col:> vs_player:dirs:>]
-dirs [anim_col:> vs_snake_edge:dirs] -> [anim_col:> vs_snake_edge:dirs:>]
-dirs [anim_col:> vs_snake_opening:dirs] -> [anim_col:> vs_snake_opening:dirs:>]
+[ anim_col:> was ball            add ball:> ] 
+[ anim_col:> was vs_snake_under  add vs_snake_under:> ] 
+[ anim_col:> was vs_active_under add vs_active_under:> ] 
+dirs [ anim_col:> was con:dirs              add con:dirs:> ]
+dirs [ anim_col:> was cut:dirs              add cut:dirs:> ]
+dirs [ anim_col:> was brokenplayer:dirs     add brokenplayer:dirs:> ]
+dirs [ anim_col:> was brokenball:dirs       add brokenball:dirs:> ]
+dirs [ anim_col:> was vs_any_under:dirs     add vs_any_under:dirs:> ]
+dirs [ anim_col:> was vs_con:dirs           add vs_con:dirs:> ]
+dirs [ anim_col:> was vs_con_active:dirs    add vs_con_active:dirs:> ]
+dirs [ anim_col:> was vs_player:dirs        add vs_player:dirs:> ]
+dirs [ anim_col:> was vs_snake_edge:dirs    add vs_snake_edge:dirs:> ]
+dirs [ anim_col:> was vs_snake_opening:dirs add vs_snake_opening:dirs:> ]
 
 (----START AGAIN TURNS----)
 
 (fall into hole after shown over it)
-[again_gravity] -> sfx4 again
+[ again_gravity ] -> sfx4 again
 
 (fly again)
-[again_fly:> it_canFly] -> again
+[ again_fly:> it_canFly ] -> again
 
 (to go back from the collision animation to default state)
-[anim_col:dirs] -> [again_col] sfx2 again
+[ was anim_col:dirs add again_col ] sfx2 again
+
+(% endfilter %)

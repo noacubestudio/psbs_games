@@ -17,11 +17,25 @@ class Decompact(Extension):
         include_words_left = True
         include_words_right = True
         current_prefix = ""
+        pattern_closed = False
+        patterns_started = False
 
         for word in line.split(" "):
 
+            # everything after end of block is at the end of a line and thus only on the RHS.
+            # likewise, everything before a block start is only on the LHS.
+            if word == "[":
+                pattern_closed = False
+                patterns_started = True
+
             # check if this word should appear on the left or right, determined by the last keyword
-            if word in ["[", "|", "]", "is"]:
+            if not patterns_started:
+                include_words_left = True
+                include_words_right = False
+            elif pattern_closed:
+                include_words_left = False
+                include_words_right = True
+            elif word in ["[", "|", "]", "is"]:
                 include_words_left = True
                 include_words_right = True
             elif word in ["no", "was"]:
@@ -43,12 +57,19 @@ class Decompact(Extension):
                 current_prefix = ""
             elif current_prefix != "": # normal keyword after a prefix
                 word = current_prefix + " " + word
+
+            # since spaces between "stationary player" and such would be a problem with recognizing where each object starts...
+            # allow some new syntax. also some replacements for convenience using characters otherwise not allowed in object names.
+            word = word.replace('.', ' ').replace('-', '_')
             
             # add the word to the sides
             if include_words_left:
                 lhs.append(word)
             if include_words_right:
                 rhs.append(word)
+            
+            if word == "]":
+                pattern_closed = True
 
         result = " ".join(lhs) + " -> " + " ".join(rhs)
         return re.sub(r'\s+', ' ', result) # clean multi spaces
