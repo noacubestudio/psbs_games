@@ -3,8 +3,7 @@
 (do these at the start of the turn, then remove the init marker.)
 
 (connect any snakes in level)
-[ init ] [ snake no init_conBnotA init_noMoreCon cut:> add con:> | snake no init_conBnotA init_noMoreCon cut:< add con:< ]
-[ init ] [ snake no init_conAnotB init_noMoreCon cut:> add con:> | snake no init_conAnotB init_noMoreCon cut:< add con:< ]
+[ init ] [ snake no init_conBnotA/init_conAnotB init_noMoreCon cut:> add con:> | snake no init_conBnotA/init_conAnotB init_noMoreCon cut:< add con:< ]
 [ init ] [ player was con:> | was con:< init_connectRules ]
 
 (connect tracks, tracks = solid pipes in walls)
@@ -40,9 +39,7 @@
 [ > player ] [ was playerFacing:dirs add playerFacing:> ]
 
 (init stuff I can't remove earlier, not sure why)
-[ > player ] [ was init_conAnotB ]
-[ > player ] [ was init_conBnotA ]
-[ > player ] [ was init_noMoreCon ]
+[ > player ] [ was init_conAnotB/init_conBnotA/init_noMoreCon ]
 
 (----AGAIN TURN----)
 (these are in a previously started again turn)
@@ -50,8 +47,7 @@
 (stuff on snake falls into hole)
 (ball and player fall into hole if not flying)
 [ hole again_gravity was it_canFall ]
-[ hole again_gravity no again_fly:dirs was ball ]
-[ hole again_gravity no again_fly:dirs was player ]
+[ hole again_gravity no again_fly:dirs was ball/player ]
 (replace snake and hole itself with floor)
 [ was hole again_gravity snake add floor ]
 
@@ -75,9 +71,7 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 (any markers, these are used to sometimes ignore which kind of connections are actually present)
 (but record the directions of connection for later in the turn)
 [ was any:dirs ]
-[ con:> add any:> ]
-[ cut:> add any:> ]
-[ trc:> add any:> ]
+[ con:>/cut:>/trc:> add any:> ]
 
 
 (----PLAYER INPUT---)
@@ -110,31 +104,35 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 (if flying into snake end, stop and collide)
 [ it_canFly snake no any:> was stationary.again_fly:> add anim_col:> ]
 [ fixed was anim_col:dirs ] sfx2
+
 (if flying into level border, remove)
-[ trc:> was stationary.again_fly:> player | wall no trc:< win ]
-[ trc:> was stationary.again_fly:> ball   | wall no trc:< ]
+[ trc:> was stationary.again_fly:> player/ball | wall no trc:< win/. ]
+
 (if flying into wall, remove and leave broken effect)
-[ was stationary.again_fly:> player | wall no win any:< add brokenplayer:< ] sfx6 (breaking sound)
-[ was stationary.again_fly:> ball   | wall no win any:< add brokenball:<   ] sfx6 (breaking sound)
+[ was stationary.again_fly:> player/ball | wall no win any:< add brokenplayer:</brokenball:< ] sfx6 (breaking sound)
+
 (if flying into snake, try to push the snake)
-[ was stationary.again_fly:> player | snake no any:< add brokenplayer:< move:> ] sfx6 (breaking sound)
-[ was stationary.again_fly:> ball   | snake no any:< add brokenball:<   move:> ] sfx6 (breaking sound)
+[ was stationary.again_fly:> player/ball | snake no any:< add brokenplayer:</brokenball:< move:> ] sfx6 (breaking sound)
+
 (if flying into another flying object, both repel)
 [ it_canFly was stationary.again_fly:> add action.again_fly:< | it_canFly was stationary.again_fly:< add action.again_fly:> ] sfx7
+
 (if flying into stationary object at snake end, repel and steer)
 [ it_canFly was stationary.again_fly:> add action.again_fly:< | snake it_canFly no any:> any:perpendicular add turnMove:> ] sfx7
+
 (if flying into stationary object that could move, both repel)
 [ it_canFly was stationary.again_fly:> add action.again_fly:< | it_canFly add action.again_fly:> ] sfx7
+
 (if flying into empty space that another object wants to fly into)
 (first place directional markers in the empty space)
 [ it_canFly stationary.again_fly:> | add wantsToFlyTo:> ]
 (remove the markers if there is overlap)
-[ was wantsToFlyTo:< was wantsToFlyTo:> ]
-[ was wantsToFlyTo:> was wantsToFlyTo:perpendicular ]
+[ was wantsToFlyTo:> was wantsToFlyTo:</wantsToFlyTo:perpendicular ]
 (now check for moving into empty space with the marker missing)
 [ it_canFly was stationary.again_fly:> add action.again_fly:> | no wantsToFlyTo:> ]
 (clear the markers)
 [ was wantsToFlyTo:dirs ]
+
 (if flying into any other tile, just move one tile)
 [ was it_canFly stationary.again_fly:> | add it_canFly action.again_fly:> ]
 
@@ -161,9 +159,7 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 )
 
 (remove temp from last time)
-[ was wasMoved:dirs ]
-[ was wasTurnMoved:dirs ]
-[ was follow:dirs ] (just in case)
+[ was wasMoved:dirs/wasTurnMoved:dirs/follow:dirs ]
 
 (propagate forward from a pusher)
 [ turnMove:> | snake no fixed add move:> ]
@@ -180,11 +176,9 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 
 (so far there are tiles being moved and possibly a head tile with a turnMove.)
 (check collision now, show animation and cancel any actual movement if so)
-[ was     move:> add anim_col:> | it_collides no move:> ] nosave
-[ was turnMove:> add anim_col:> | it_collides no move:> ] nosave
+[ was move:>/turnMove:> add anim_col:> | it_collides no move:> ] nosave
 (collision animation, remove all markers)
-dirs [ anim_col:> ] [ was turnMove:dirs add anim_col:dirs ]
-dirs [ anim_col:> ] [ was     move:dirs add anim_col:dirs ]
+dirs [ anim_col:> ] [ was move:dirs/turnMove:dirs add anim_col:dirs ]
 (also spread through tiles that weren't moved if they are connected)
 dirs [ anim_col:dirs con:> | con:< no anim_col:dirs add anim_col:dirs ]
 
@@ -206,8 +200,8 @@ dirs [ anim_col:dirs con:> | con:< no anim_col:dirs add anim_col:dirs ]
 (move the tail following the tile )
 (this assumes there is always one tile that can move, and moves them in order )
 startloop
-[ turnMove:> was it_movesOnSnake | no any_move add it_movesOnSnake ]
-random [ was turnMove:> | no any_move add wasTurnMoved:> ]
+    [ turnMove:> was it_movesOnSnake | no any_move add it_movesOnSnake ]
+    random [ was turnMove:> | no any_move add wasTurnMoved:> ]
 endloop
 
 (fix the connections of the turning pieces )
@@ -221,35 +215,26 @@ dirs [ wasTurnMoved:<                           was cut:dirs add cut:> correctCo
 [ was correctConnectDir:dirs ]
 
 (a moved cut next to a stationary one will make a sound because it reconnects )
-[    wasMoved:dirs cut:> | cut:< no wasMoved:dirs no wasTurnMoved:dirs] -> sfx5
-[wasTurnMoved:dirs cut:> | cut:< no wasMoved:dirs no wasTurnMoved:dirs] -> sfx5
+[ wasMoved:dirs/wasTurnMoved:dirs cut:> | cut:< no wasMoved:dirs no wasTurnMoved:dirs] -> sfx5
 
 (new cuts are created, this makes a splitting sound )
-[     wasMoved:dirs was con:> add cut:> | no con:< ] sfx1
-[ wasTurnMoved:dirs was con:> add cut:> | no con:< ] sfx1
-[             fixed was con:> add cut:> | no con:< ] sfx1
+[ wasMoved:dirs/wasTurnMoved:dirs/fixed was con:> add cut:> | no con:< ] sfx1
 
 (a moved flying item will start flying if there is an open end that direction)
-[     wasMoved:> con:> it_canFly no again_fly:dirs add again_fly:> ]
-[     wasMoved:> cut:> it_canFly no again_fly:dirs add again_fly:> ]
-[ wasTurnMoved:> con:> it_canFly no again_fly:dirs add again_fly:> | no it_canFly ]
-[ wasTurnMoved:> cut:> it_canFly no again_fly:dirs add again_fly:> | no it_canFly ]
+[     wasMoved:> con:>/cut:> it_canFly no again_fly:dirs add again_fly:> ]
+[ wasTurnMoved:> con:>/cut:> it_canFly no again_fly:dirs add again_fly:> | no it_canFly ]
 
 (for turnMoved, perpendicular is fine too, as in when a ball was dragged around a corner of the snake)
-[ wasTurnMoved:perpendicular con:> it_canFly no again_fly:dirs add again_fly:> | no it_canFly ]
-[ wasTurnMoved:perpendicular cut:> it_canFly no again_fly:dirs add again_fly:> | no it_canFly ]
+[ wasTurnMoved:perpendicular con:>/cut:> it_canFly no again_fly:dirs add again_fly:> | no it_canFly ]
 
 (remove effect of broken player/ball if snake was turnmoved)
-[ wasTurnMoved:> was brokenplayer:dirs ]
-[ wasTurnMoved:> was brokenball:dirs ]
+[ wasTurnMoved:> was brokenplayer:dirs/brokenball:dirs ]
 
 (----AFTER MOVE IS DONE----)
 
 ("any" markers indicate every kind of connection, reset those for the next turn)
 [ was any:dirs ]
-[ con:> add any:> ]
-[ cut:> add any:> ]
-[ trc:> add any:> ]
+[ con:>/cut:>/trc:> add any:> ]
 
 (reconnect cuts)
 [ was cut:> add con:> | was cut:< add con:< ]
@@ -265,8 +250,7 @@ dirs [ wasTurnMoved:<                           was cut:dirs add cut:> correctCo
 (find which blocks are totally fixed and will not even show collision bounce)
 [ was fixed ]
 [ wall add fixed ]
-[ fixed trc:> | cut:< add fixed ]
-[ fixed con:> | con:< add fixed ]
+[ fixed trc:>/con:> | cut:</con:< add fixed ]
 
 
 (----VISUAL ONLY----)
@@ -276,15 +260,16 @@ dirs [ wasTurnMoved:<                           was cut:dirs add cut:> correctCo
 (layer more detail on snakes)
 
 (default/ active)
-[        snake add vs_snake_under ]
-[ player snake add vs_active_under ]
+[ snake ./player add vs_snake_under/vs_active_under ]
+
 (spread)
 [ vs_active_under con:> | add vs_active_under ]
+
 (connect/cut)
-[ any:>           snake add vs_any_under:> vs_con:> ]
-[ any:> vs_active_under add vs_any_under:> vs_con_active:> ]
+[ any:> snake/vs_active_under add vs_any_under:> vs_con:>/vs_con_active:> ]
 [ cut:> add vs_snake_opening:> ]
-[ snake no con:> no cut:> add vs_snake_edge:> ]
+[ snake no con:> cut:> add vs_snake_edge:> ]
+
 (temporarily hide wall opening and snake opening to make them look connected)
 [ trc:> add vs_wall_opening:> | no wall ]
 [ was vs_wall_opening:> add vs_con:> | was vs_snake_opening:< ]

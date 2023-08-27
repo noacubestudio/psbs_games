@@ -6,6 +6,42 @@ class Decompact(Extension):
         super().__init__(config)
         self.register_filter("relaxRules", self.compactToPatternScript)
 
+    def _cloneMutateLine(self, line):
+        if "[" not in line or "]" not in line or "/" not in line:
+            return [line]
+        
+        # temporarily remove comments so they dont get processed
+        comment = ""
+        if "(" in line:
+            index = line.index("(")
+            comment = line[index:]
+            line = line[:index].strip()
+
+        # take a line and make copies of it that each use different parameters in a a/b/c notation of objects
+        # find out how many mutations to include
+        variants_count = 1
+        for word in line.split(" "):
+            variants_count = max(word.count("/") + 1, variants_count)
+
+        # clone the line and choose the next mutation each time
+        lines = []
+        for i in range(variants_count):
+            mutatedLine = line.split(" ")
+
+            # choose the right mutations for this copy of the line
+            for j, word in enumerate(mutatedLine):
+                variants = word.split("/")
+                variants = [var if var != '.' else '' for var in variants] # dots mean empty
+                mutatedLine[j] = variants[i % len(variants)]
+
+            # add comment to the first copy
+            if i == 0:
+                mutatedLine += " " + comment
+
+            lines.append(" ".join(mutatedLine))
+        
+        return lines
+
     def _decompactLine(self, line):
         # return original line if it is already in [left] -> [right] format, or doesn't contain a rule to begin with
         if "->" in line or "[" not in line or "]" not in line:
@@ -73,9 +109,25 @@ class Decompact(Extension):
 
         result = " ".join(lhs) + " -> " + " ".join(rhs)
         return re.sub(r'\s+', ' ', result) # clean multi spaces
+    
+    def _mutateLinesArray(self, lines):
+        # mutate lines with / to create variants
+        result = []
+        for line in lines:
+            mutated_lines = self._cloneMutateLine(line)
+            result.extend(mutated_lines)
+        return result
 
     def compactToPatternScript(self, input_string):
-        # separate blocks into left and right side
-        new_lines = [self._decompactLine(line) for line in input_string.rstrip().split('\n')]
-        new_string = '\n'.join(new_lines)
-        return new_string
+
+        linesArray = input_string.rstrip().split('\n')
+
+        # split lines with "/" into mutated copies
+        linesArray = self._mutateLinesArray(linesArray)
+        # clean up extra spaces
+        linesArray = [re.sub(r'\s+', ' ', line) for line in linesArray]
+
+        # separate compact blocks into left and right side
+        linesArray = [self._decompactLine(line) for line in linesArray]
+
+        return '\n'.join(linesArray)
