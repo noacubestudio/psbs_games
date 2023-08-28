@@ -1,15 +1,11 @@
 (# Palette #)
-(% set color_white  = "#ffffff" %)
-(% set color_accent = "#ffad3b" %)
-(% set color_black  = "#0a0a1a" %)
+(% set color_white    = "#ffffff" %)
+(% set color_black    = "#111018" %)
+(% set color_fg       = "#6fdec8" %)
+(% set color_bg       = "#036965" %)
+(% set color_outer_fg = "#f5ad73" %)
+(% set color_outer_bg = "#c75c2a" %)
 
-(% set color_fg    = "#85cf40" %)
-(% set color_bg    = "#117860" %)
-(% set color_outer = "#48b031" %)
-
-(% set color_purple_fg    = "#b45eff" %)
-(% set color_purple_bg    = "#5932c2" %)
-(% set color_purple_outer = "#9340f7" %)
 
 (% include "prelude.pss" %)
 

@@ -12,10 +12,16 @@
 [ init ] [ track add trc:> vs_trc_under:> no init_noMoreCon | no wall ]
 [ init ] [ trc:> no trc:v trc:^ add trc:< vs_trc_under:< ]
 
+(connect walls)
+[ init ] [ wall add vs_any_under:> vs_wall_con:> ]
+[ init ] [ wall was vs_any_under:> vs_wall_con:> | no wall ]
+
 (wall edge)
 [ init ] [ wall no trc:> add vs_wall_inner:> vs_wall_edge:> | no wall ]
 [ init ] [      is trc:> add vs_wall_inner:>                | no wall ] (vs_wall_opening:> is added dynamically later)
 [ init ] [ vs_wall_inner:v | wall no vs_wall_inner:v add vs_wall_inner_corner:> ]
+
+[ init ] [ vs_wall_inner:^ add vs_wall_edge_2:^ | vs_wall_inner:^ add vs_wall_edge_1:^ ]
 
 (hole border)
 [ init ] [ no hole add floor ]

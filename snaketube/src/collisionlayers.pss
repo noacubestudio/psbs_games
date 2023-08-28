@@ -7,15 +7,21 @@ floor (color based on world)
 dirs -> vs_hole_edge:dirs
 --
 wall (color based on world)
+--
+dirs -> vs_wall_con:dirs
 vs_track_bg
 --
 dirs -> vs_wall_inner:dirs
-dirs -> vs_wall_inner_corner:dirs
 dirs -> vs_trc_under:dirs
+--
+dirs -> trc:dirs
 --
 dirs -> vs_wall_edge:dirs, vs_wall_opening:dirs
 --
-dirs -> trc:dirs
+dirs -> vs_wall_edge_1:dirs
+dirs -> vs_wall_edge_2:dirs
+--
+dirs -> vs_wall_inner_corner:dirs
 --
 
 (SNAKE: STATIONARY)
