@@ -9,14 +9,10 @@ dirs -> vs_hole_edge:dirs
 wall (color based on world)
 --
 dirs -> vs_wall_con:dirs
-vs_track_bg
 --
 dirs -> vs_wall_inner:dirs
-dirs -> vs_trc_under:dirs
 --
-dirs -> trc:dirs
---
-dirs -> vs_wall_edge:dirs, vs_wall_opening:dirs
+dirs -> vs_wall_edge:dirs
 --
 dirs -> vs_wall_edge_1:dirs
 dirs -> vs_wall_edge_2:dirs
@@ -38,6 +34,8 @@ dirs -> vs_snake_opening:dirs
 --
 dirs -> vs_snake_edge:dirs
 --
+vs_meta_pipe:dirs
+--
 
 (SNAKE: ANIMATED)
 dirs -> vs_any_under:dirs:offs
@@ -53,7 +51,8 @@ dirs -> vs_snake_opening:dirs:offs
 --
 dirs -> vs_snake_edge:dirs:offs
 --
-
+vs_meta_pipe:dirs:offs
+--
 
 ball, ball:offs
 vs_player:dirs, vs_player:dirs:offs
@@ -62,9 +61,8 @@ brokenplayer:dirs, brokenball:dirs, brokenplayer:dirs:offs, brokenball:dirs:offs
 --
 
 (invsible markers)
-win
+win, spawnpoint
 snake
-track
 player
 
 init
@@ -79,7 +77,6 @@ anim_col:dirs
 
 push:dirs
 supported
-fixed
 otherPushFailed
 dirs -> any:dirs
 dirs -> wantsToFlyTo:dirs

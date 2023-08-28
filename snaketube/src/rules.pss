@@ -6,19 +6,15 @@
 [ init ] [ snake no init_conBnotA/init_conAnotB init_noMoreCon cut:> add con:> | snake no init_conBnotA/init_conAnotB init_noMoreCon cut:< add con:< ]
 [ init ] [ player was con:> | was con:< init_connectRules ]
 
-(connect tracks, tracks = solid pipes in walls)
-[ init ] [ track add vs_track_bg ]
-[ init ] [ track add trc:> vs_trc_under:> | track ]
-[ init ] [ track add trc:> vs_trc_under:> no init_noMoreCon | no wall ]
-[ init ] [ trc:> no trc:v trc:^ add trc:< vs_trc_under:< ]
+(spawnpoints/win)
+[ init ] [ spawnpoint/win no con:dirs cut:dirs add cut:> | no wall ]
 
 (connect walls)
 [ init ] [ wall add vs_any_under:> vs_wall_con:> ]
 [ init ] [ wall was vs_any_under:> vs_wall_con:> | no wall ]
 
 (wall edge)
-[ init ] [ wall no trc:> add vs_wall_inner:> vs_wall_edge:> | no wall ]
-[ init ] [      is trc:> add vs_wall_inner:>                | no wall ] (vs_wall_opening:> is added dynamically later)
+[ init ] [ wall add vs_wall_inner:> vs_wall_edge:> | no wall ]
 [ init ] [ vs_wall_inner:v | wall no vs_wall_inner:v add vs_wall_inner_corner:> ]
 
 [ init ] [ vs_wall_inner:^ add vs_wall_edge_2:^ | vs_wall_inner:^ add vs_wall_edge_1:^ ]
@@ -28,11 +24,10 @@
 [ init ] [ hole add vs_hole_edge:> | floor ]
 
 (starting direction eye is facing)
-[ init player con:> no con:< add playerFacing:> ]
-[ init player trc:>          add playerFacing:> | trc:< ]
+[ init player con:>/cut:> add playerFacing:> ]
 
 (also set move direction to start with here)
-[ init add playerFacing:> ] [ player trc:> add again_fly:> | trc:< ]
+[ init add playerFacing:> ] [ player spawnpoint con:>/cut:> add again_fly:> ]
 
 (end init) 
 (start of first player turn or again turn ends init)
@@ -77,7 +72,7 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 (any markers, these are used to sometimes ignore which kind of connections are actually present)
 (but record the directions of connection for later in the turn)
 [ was any:dirs ]
-[ con:>/cut:>/trc:> add any:> ]
+[ con:>/cut:> add any:> ]
 
 
 (----PLAYER INPUT---)
@@ -109,10 +104,6 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 
 (if flying into snake end, stop and collide)
 [ it_canFly snake no any:> was stationary.again_fly:> add anim_col:> ]
-[ fixed was anim_col:dirs ] sfx2
-
-(if flying into level border, remove)
-[ trc:> was stationary.again_fly:> player/ball | wall no trc:< win/. ]
 
 (if flying into wall, remove and leave broken effect)
 [ was stationary.again_fly:> player/ball | wall no win any:< add brokenplayer:</brokenball:< ] sfx6 (breaking sound)
@@ -168,7 +159,7 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 [ was wasMoved:dirs/wasTurnMoved:dirs/follow:dirs ]
 
 (propagate forward from a pusher)
-[ turnMove:> | snake no fixed add move:> ]
+[ turnMove:> | snake add move:> ]
 
 (loop to propagate regular move forward and also through connections whenever possible.)
 (in forward direction-so with actual pressure, it can even affect the snake head doing the push, such as in a C shape)
@@ -200,8 +191,8 @@ dirs [ anim_col:dirs con:> | con:< no anim_col:dirs add anim_col:dirs ]
 
 (add turnMove markers behind the first one, starting from the follow:>)
 (exclude anything that already moved)
-[      no snake | con:< no wasMoved:dirs wasTurnMoved:dirs fixed  was follow:< add turnMove:< ]
-[ turnMove:dirs | con:< no wasMoved:dirs wasTurnMoved:dirs fixed turnMove:dirs add turnMove:< ]
+[      no snake | con:< no wasMoved:dirs wasTurnMoved:dirs  was follow:< add turnMove:< ]
+[ turnMove:dirs | con:< no wasMoved:dirs wasTurnMoved:dirs turnMove:dirs add turnMove:< ]
 
 (move the tail following the tile )
 (this assumes there is always one tile that can move, and moves them in order )
@@ -224,7 +215,7 @@ dirs [ wasTurnMoved:<                           was cut:dirs add cut:> correctCo
 [ wasMoved:dirs/wasTurnMoved:dirs cut:> | cut:< no wasMoved:dirs no wasTurnMoved:dirs] -> sfx5
 
 (new cuts are created, this makes a splitting sound )
-[ wasMoved:dirs/wasTurnMoved:dirs/fixed was con:> add cut:> | no con:< ] sfx1
+[ wasMoved:dirs/wasTurnMoved:dirs was con:> add cut:> | no con:< ] sfx1
 
 (a moved flying item will start flying if there is an open end that direction)
 [     wasMoved:> con:>/cut:> it_canFly no again_fly:dirs add again_fly:> ]
@@ -240,7 +231,7 @@ dirs [ wasTurnMoved:<                           was cut:dirs add cut:> correctCo
 
 ("any" markers indicate every kind of connection, reset those for the next turn)
 [ was any:dirs ]
-[ con:>/cut:>/trc:> add any:> ]
+[ con:>/cut:> add any:> ]
 
 (reconnect cuts)
 [ was cut:> add con:> | was cut:< add con:< ]
@@ -252,11 +243,6 @@ dirs [ wasTurnMoved:<                           was cut:dirs add cut:> correctCo
 
 (the rest fall into hole)
 [ snake no supported add again_gravity ]
-
-(find which blocks are totally fixed and will not even show collision bounce)
-[ was fixed ]
-[ wall add fixed ]
-[ fixed trc:>/con:> | cut:</con:< add fixed ]
 
 
 (----VISUAL ONLY----)
@@ -276,14 +262,13 @@ dirs [ wasTurnMoved:<                           was cut:dirs add cut:> correctCo
 [ cut:> add vs_snake_opening:> ]
 [ snake no con:> cut:> add vs_snake_edge:> ]
 
-(temporarily hide wall opening and snake opening to make them look connected)
-[ trc:> add vs_wall_opening:> | no wall ]
-[ was vs_wall_opening:> add vs_con:> | was vs_snake_opening:< ]
-
-
 (direction for eye)
 [ playerFacing:> ] [ player add vs_player:> ] 
 [ player no vs_player:dirs add vs_player:right ]
+
+(start/win)
+[ spawnpoint con:>/cut:> add vs_meta_pipe:< ]
+[ win        con:>/cut:> add vs_meta_pipe:< ]
 
 (animate tiles in collision by replacing them with offset variants)
 [ anim_col:> was ball            add ball:> ] 
@@ -299,6 +284,7 @@ dirs [ anim_col:> was vs_con_active:dirs    add vs_con_active:dirs:> ]
 dirs [ anim_col:> was vs_player:dirs        add vs_player:dirs:> ]
 dirs [ anim_col:> was vs_snake_edge:dirs    add vs_snake_edge:dirs:> ]
 dirs [ anim_col:> was vs_snake_opening:dirs add vs_snake_opening:dirs:> ]
+dirs [ anim_col:> was vs_meta_pipe:dirs     add vs_meta_pipe:dirs:> ]
 
 (----START AGAIN TURNS----)
 

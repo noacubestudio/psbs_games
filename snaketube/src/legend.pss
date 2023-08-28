@@ -2,9 +2,10 @@
 0 = wall (WIP)
 
 s = snake
-t = track and wall
-p = player and track and wall and init
-* = player and snake and cut:right and init
+
+p = player and snake and init and spawnpoint
+* = player and snake and init and cut:right
+w = snake and win
 
 u = snake and cut:up
 d = snake and cut:down
@@ -22,8 +23,6 @@ j = snake and init_noMoreCon and cut:left and cut:up
 a = snake and init_conAnotB
 b = snake and init_conBnotA
 
-w = win and track and wall (WIP)
-
 2 = snake and ball
 3 = snake and ball and cut:up
 4 = snake and ball and cut:down
@@ -34,11 +33,6 @@ w = win and track and wall (WIP)
 8 = snake and init_noMoreCon and cut:down
 9 = snake and init_noMoreCon and cut:left
 - = snake and init_noMoreCon and cut:right
-
-; = track and wall and init_noMoreCon and trc:up
-, = track and wall and init_noMoreCon and trc:down
-{ = track and wall and init_noMoreCon and trc:left
-} = track and wall and init_noMoreCon and trc:right
 
 $ = snake and ball and init_noMoreCon and cut:up
 
@@ -52,6 +46,6 @@ it_canFall = any:dirs or brokenplayer:dirs or brokenball:dirs or con:dirs or cut
 
 it_movesOnSnake = snake or con:dirs or cut:dirs or ball or brokenplayer:dirs or brokenball:dirs or player or again_fly:dirs
 
-tempVisualObjects = vs_any_under:dirs or vs_snake_under or vs_player:dirs or vs_any_under:dirs:offs or vs_snake_under:offs or vs_player:dirs:offs or vs_snake_opening:dirs or vs_snake_opening:dirs:offs or vs_snake_edge:dirs or vs_snake_edge:dirs:offs or vs_con:dirs or vs_con:dirs:offs or vs_active_under or vs_active_under:offs or vs_con_active:dirs or vs_con_active:dirs:offs
+tempVisualObjects = vs_any_under:dirs or vs_snake_under or vs_player:dirs or vs_any_under:dirs:offs or vs_snake_under:offs or vs_player:dirs:offs or vs_snake_opening:dirs or vs_snake_opening:dirs:offs or vs_snake_edge:dirs or vs_snake_edge:dirs:offs or vs_con:dirs or vs_con:dirs:offs or vs_active_under or vs_active_under:offs or vs_con_active:dirs or vs_con_active:dirs:offs or vs_meta_pipe:dirs or vs_meta_pipe:dirs:offs
 
 any_move = move:dirs or turnMove:dirs
