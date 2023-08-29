@@ -1,4 +1,37 @@
 (% filter relaxRules %)
+
+(----AGAIN TURN----)
+(these are in a previously started again turn)
+
+(stuff on snake falls into hole)
+(ball and player fall into hole if not flying)
+[ hole again_gravity was it_canFall ]
+[ hole again_gravity no again_fly:dirs was ball/player ]
+(replace snake and hole itself with floor)
+[ was hole again_gravity snake add floor ]
+
+
+(items appear from spawn)
+[ con:>/cut:> was again_spawn add again_fly:> playerFacing:> ]
+(no place to go? ... WIP, should later send it back)
+[ was again_spawn add playerFacing:right ]
+
+(items fall into meta exit, winning the level)
+[ was it_canFly was again_exit ] win
+
+
+(revert collision)
+(swap the shifted collision anim objects out with the regular ones)
+(other objects get regenerated every turn anyway & don't need to be swapped back here)
+[ again_col ] [ was ball:offs add ball ]
+dirs [ again_col ] [ was con:dirs:offs          add con:dirs ]
+dirs [ again_col ] [ was cut:dirs:offs          add cut:dirs ]
+dirs [ again_col ] [ was brokenplayer:dirs:offs add brokenplayer:dirs ]
+dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
+[ was again_col ]
+
+
+
 (----INIT----)
 (do these at the start of the turn, then remove the init marker.)
 
@@ -6,8 +39,8 @@
 [ init ] [ snake no init_conBnotA/init_conAnotB init_noMoreCon cut:> add con:> | snake no init_conBnotA/init_conAnotB init_noMoreCon cut:< add con:< ]
 [ init ] [ player was con:> | was con:< init_connectRules ]
 
-(spawnpoints/win)
-[ init ] [ spawnpoint/win no con:dirs cut:dirs add cut:> | no wall ]
+(spawnpoints/meta_exit)
+[ init ] [ spawnpoint/meta_exit no con:dirs cut:dirs add cut:> | no wall ]
 
 (connect walls)
 [ init ] [ wall add vs_any_under:> vs_wall_con:> ]
@@ -23,39 +56,14 @@
 [ init ] [ no hole add floor ]
 [ init ] [ hole add vs_hole_edge:> | floor ]
 
-(from a spawnpoint, the player should immediately move)
-[ init ] [ spawnpoint con:>/cut:> player add again_fly:> ]
+(from a spawnpoint, the player appears)
+[ init ] [ spawnpoint player add again_spawn ]
 
 (remove markers only used for init)
 [ init ] [ was init_conAnotB/init_conBnotA/init_noMoreCon ]
 
 (remove init) 
-[ con:>/cut:> was init add playerFacing:> ]
-
-
-
-(----AGAIN TURN----)
-(these are in a previously started again turn)
-
-(stuff on snake falls into hole)
-(ball and player fall into hole if not flying)
-[ hole again_gravity was it_canFall ]
-[ hole again_gravity no again_fly:dirs was ball/player ]
-(replace snake and hole itself with floor)
-[ was hole again_gravity snake add floor ]
-
-(update edge of hole)
-[ floor add vs_hole_edge:> | hole ]
-
-(revert collision)
-(swap the shifted collision anim objects out with the regular ones)
-(other objects get regenerated every turn anyway & don't need to be swapped back here)
-[ again_col ] [ was ball:offs add ball ]
-dirs [ again_col ] [ was con:dirs:offs          add con:dirs ]
-dirs [ again_col ] [ was cut:dirs:offs          add cut:dirs ]
-dirs [ again_col ] [ was brokenplayer:dirs:offs add brokenplayer:dirs ]
-dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
-[ was again_col ]
+[ was init ]
 
 
 
@@ -67,7 +75,11 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 [ con:>/cut:> add any:> ]
 
 
+
 (----PLAYER INPUT---)
+
+(always face the right way when starting a move)
+[ >.player ] [ was playerFacing:dirs add playerFacing:> ]
 
 (move out of connector starts flight)
 [ any:> was >.player add stationary.player again_fly:> ]
@@ -77,6 +89,7 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 
 (works for snake)
 [ was >.player add stationary.player turnMove:> ]
+
 
 
 (----FLY----)
@@ -98,7 +111,7 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 [ it_canFly snake no any:> was stationary.again_fly:> add col_effect:> ]
 
 (if flying into wall, remove and leave broken effect)
-[ was stationary.again_fly:> player/ball | wall no win any:< add brokenplayer:</brokenball:< ] sfx6 (breaking sound)
+[ was stationary.again_fly:> player/ball | wall add brokenplayer:</brokenball:< ] sfx6 (breaking sound)
 
 (if flying into snake, try to push the snake)
 [ was stationary.again_fly:> player/ball | snake no any:< add brokenplayer:</brokenball:< move:> ] sfx6 (breaking sound)
@@ -126,6 +139,7 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 [ was it_canFly stationary.again_fly:> | add it_canFly action.again_fly:> ]
 
 
+
 (----FLYING DONE----)
 
 (reset temporary markers)
@@ -136,6 +150,7 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 
 (spread collisions)
 [ col_effect:dirs con:> | add col_effect:dirs ]
+
 
 
 (----MOVE OBJECTS----)
@@ -219,6 +234,8 @@ dirs [ wasTurnMoved:<                           was cut:dirs add cut:> correctCo
 (remove effect of broken player/ball if snake was turnmoved)
 [ wasTurnMoved:> was brokenplayer:dirs/brokenball:dirs ]
 
+
+
 (----AFTER MOVE IS DONE----)
 
 ("any" markers indicate every kind of connection, reset those for the next turn)
@@ -236,20 +253,23 @@ dirs [ wasTurnMoved:<                           was cut:dirs add cut:> correctCo
 (the rest fall into hole)
 [ snake no supported add again_gravity ]
 
+(items fall into meta exit)
+[ it_canFly meta_exit add again_exit ]
+
+
 
 (----VISUAL ONLY----)
 
 [ was tempVisualObjects ]
 
-(layer more detail on snakes)
+(update edge of hole)
+[ floor add vs_hole_edge:> | hole ] (not actually a temp object, but sometimes needs to get added)
 
-(default/ active)
+(default/ active snake detail)
 [ snake ./player add vs_snake_under/vs_active_under ]
-
-(spread)
 [ vs_active_under con:> | add vs_active_under ]
 
-(connect/cut)
+(connections/ cuts)
 [ any:> snake/vs_active_under add vs_any_under:> vs_con:>/vs_con_active:> ]
 [ cut:> add vs_snake_opening:> ]
 [ snake no con:> cut:> add vs_snake_edge:> ]
@@ -258,31 +278,40 @@ dirs [ wasTurnMoved:<                           was cut:dirs add cut:> correctCo
 [ playerFacing:> ] [ player add vs_player:> ] 
 [ player no vs_player:dirs add vs_player:right ]
 
-(start/win)
+( spawn point - show as filled when entering the level and hide the player )
 [ spawnpoint con:>/cut:> add vs_meta_pipe:< ]
-[ win        con:>/cut:> add vs_meta_pipe:< ]
+[ again_spawn was vs_meta_pipe:> add vs_meta_pipe_closed:> del vs_player:dirs ]
+
+( meta exit - show as filled when exiting and hide the player)
+[ meta_exit  con:>/cut:> add vs_meta_pipe:< ]
+[ again_exit was vs_meta_pipe:> add vs_meta_pipe_closed:> del vs_player:dirs ]
 
 (animate tiles in collision by replacing them with offset variants)
 [ col_effect:> was ball            add ball:> ] 
 [ col_effect:> was vs_snake_under  add vs_snake_under:> ] 
 [ col_effect:> was vs_active_under add vs_active_under:> ] 
-dirs [ col_effect:> was con:dirs              add con:dirs:> ]
-dirs [ col_effect:> was cut:dirs              add cut:dirs:> ]
-dirs [ col_effect:> was brokenplayer:dirs     add brokenplayer:dirs:> ]
-dirs [ col_effect:> was brokenball:dirs       add brokenball:dirs:> ]
-dirs [ col_effect:> was vs_any_under:dirs     add vs_any_under:dirs:> ]
-dirs [ col_effect:> was vs_con:dirs           add vs_con:dirs:> ]
-dirs [ col_effect:> was vs_con_active:dirs    add vs_con_active:dirs:> ]
-dirs [ col_effect:> was vs_player:dirs        add vs_player:dirs:> ]
-dirs [ col_effect:> was vs_snake_edge:dirs    add vs_snake_edge:dirs:> ]
-dirs [ col_effect:> was vs_snake_opening:dirs add vs_snake_opening:dirs:> ]
-dirs [ col_effect:> was vs_meta_pipe:dirs     add vs_meta_pipe:dirs:> ]
+dirs [ col_effect:> was con:dirs                 add con:dirs:> ]
+dirs [ col_effect:> was cut:dirs                 add cut:dirs:> ]
+dirs [ col_effect:> was brokenplayer:dirs        add brokenplayer:dirs:> ]
+dirs [ col_effect:> was brokenball:dirs          add brokenball:dirs:> ]
+dirs [ col_effect:> was vs_any_under:dirs        add vs_any_under:dirs:> ]
+dirs [ col_effect:> was vs_con:dirs              add vs_con:dirs:> ]
+dirs [ col_effect:> was vs_con_active:dirs       add vs_con_active:dirs:> ]
+dirs [ col_effect:> was vs_player:dirs           add vs_player:dirs:> ]
+dirs [ col_effect:> was vs_snake_edge:dirs       add vs_snake_edge:dirs:> ]
+dirs [ col_effect:> was vs_snake_opening:dirs    add vs_snake_opening:dirs:> ]
+dirs [ col_effect:> was vs_meta_pipe:dirs        add vs_meta_pipe:dirs:> ]
+dirs [ col_effect:> was vs_meta_pipe_closed:dirs add vs_meta_pipe_closed:dirs:> ]
+
 
 
 (----START AGAIN TURNS----)
 
-(fall into hole after shown over it)
-[ again_gravity ] -> sfx4 again
+(fall into hole/exit after shown over it)
+[ again_gravity/again_exit ] -> sfx4 again (falling sound)
+
+(come out of spawn)
+[ again_spawn ] -> sfx8 again (appear sound)
 
 (fly again)
 [ again_fly:> it_canFly ] -> again

@@ -6,7 +6,6 @@
 (% set color_outer_fg = "#f5ad73" %)
 (% set color_outer_bg = "#c75c2a" %)
 
-
 (% include "prelude.pss" %)
 
 =====
@@ -49,7 +48,7 @@ RULES
 WINCONDITIONS
 ==============
 
-(% include "winconditions.pss" %)
+( I don't use win conditions at this point, instead starting the next level via rules )
 
 =======
 LEVELS

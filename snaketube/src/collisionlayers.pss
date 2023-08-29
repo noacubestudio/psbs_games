@@ -1,12 +1,16 @@
 background
+
 --
+
 hole
 --
-floor (color based on world)
+floor
 --
 dirs -> vs_hole_edge:dirs
+
 --
-wall (color based on world)
+
+wall 
 --
 dirs -> vs_wall_con:dirs
 --
@@ -18,14 +22,15 @@ dirs -> vs_wall_edge_1:dirs
 dirs -> vs_wall_edge_2:dirs
 --
 dirs -> vs_wall_inner_corner:dirs
+
 --
 
 (SNAKE: STATIONARY)
 dirs -> vs_any_under:dirs
 --
-vs_snake_under, vs_active_under (color based on world)
+vs_snake_under, vs_active_under
 --
-dirs -> vs_con:dirs, vs_con_active:dirs, (color based on world)
+dirs -> vs_con:dirs, vs_con_active:dirs
 --
 dirs -> con:dirs
 dirs -> cut:dirs
@@ -34,15 +39,16 @@ dirs -> vs_snake_opening:dirs
 --
 dirs -> vs_snake_edge:dirs
 --
-vs_meta_pipe:dirs
+vs_meta_pipe:dirs, vs_meta_pipe_closed:dirs
+
 --
 
 (SNAKE: ANIMATED)
 dirs -> vs_any_under:dirs:offs
 --
-vs_snake_under:offs, vs_active_under:offs (color based on world)
+vs_snake_under:offs, vs_active_under:offs
 --
-dirs -> vs_con:dirs:offs, vs_con_active:dirs:offs (color based on world)
+dirs -> vs_con:dirs:offs, vs_con_active:dirs:offs
 --
 dirs -> con:dirs:offs
 dirs -> cut:dirs:offs
@@ -51,17 +57,19 @@ dirs -> vs_snake_opening:dirs:offs
 --
 dirs -> vs_snake_edge:dirs:offs
 --
-vs_meta_pipe:dirs:offs
+vs_meta_pipe:dirs:offs, vs_meta_pipe_closed:dirs:offs
+
 --
 
 ball, ball:offs
 vs_player:dirs, vs_player:dirs:offs
 --
 brokenplayer:dirs, brokenball:dirs, brokenplayer:dirs:offs, brokenball:dirs:offs
+
 --
 
 (invsible markers)
-win, spawnpoint
+meta_exit, spawnpoint
 snake
 player
 
@@ -72,12 +80,12 @@ playerFacing:dirs
 
 dirs -> again_fly:dirs
 again_col
+again_exit, again_spawn
 again_gravity
 col_effect:dirs
 
 push:dirs
 supported
-otherPushFailed
 dirs -> any:dirs
 dirs -> wantsToFlyTo:dirs
 

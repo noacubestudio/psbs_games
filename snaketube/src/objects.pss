@@ -9,7 +9,7 @@ background .
 
 (STATIC OBJECTS)
 
-win 
+meta_exit 
 transparent
 
 spawnpoint
@@ -37,6 +37,14 @@ rot:up:dirs
 
 vs_meta_pipe:dirs:offs
 ((color_bg)) ((color_black))
+copy: vs_meta_pipe:dirs translate:offs:2
+
+vs_meta_pipe_closed:dirs
+((color_bg)) ((color_bg))
+copy: vs_meta_pipe:dirs
+
+vs_meta_pipe_closed:dirs:offs
+((color_bg)) ((color_bg))
 copy: vs_meta_pipe:dirs translate:offs:2
 
 floor
@@ -530,11 +538,38 @@ brokenball:dirs:offs
 ((color_black)) ((color_outer_fg))
 copy: brokenball:dirs translate:offs:2
 
+
 (markers)
-playerFacing:dirs
+again_col
 transparent
 
+again_gravity
+transparent
+
+again_exit
+transparent
+
+again_spawn
+transparent
+
+again_fly:dirs
+transparent
+
+
 init
+transparent
+
+init_conAnotB
+transparent
+
+init_conBnotA
+transparent
+
+init_noMoreCon
+transparent
+
+
+playerFacing:dirs
 transparent
 
 push:dirs
@@ -546,33 +581,8 @@ transparent
 supported
 transparent
 
-again_col
-transparent
-
-again_gravity
-transparent
-
-init_conAnotB
-transparent
-
-init_conBnotA
-transparent
-
-otherPushFailed
-transparent
-
-again_fly:dirs
-transparent
-
 any:dirs
 transparent
-
-playerStillInside
-transparent
-
-playerSnake
-transparent
-
 
 move:dirs
 #FF6000
@@ -629,7 +639,4 @@ follow:dirs
 transparent
 
 wantsToFlyTo:dirs
-transparent
-
-init_noMoreCon
 transparent

@@ -5,7 +5,7 @@ s = snake
 
 p = player and snake and init and spawnpoint
 * = player and snake and init and cut:right
-w = snake and win
+w = snake and meta_exit
 
 u = snake and cut:up
 d = snake and cut:down
@@ -42,10 +42,10 @@ init_connectRules = init_conAnotB or init_conBnotA
 
 (these items get removed with the snake over holes)
 (ball and player fall depending on if they are stationary, which is done via rules)
-it_canFall = any:dirs or brokenplayer:dirs or brokenball:dirs or con:dirs or cut:dirs
+it_canFall = any:dirs or brokenplayer:dirs or brokenball:dirs or con:dirs or cut:dirs or meta_exit or spawnpoint
 
-it_movesOnSnake = snake or con:dirs or cut:dirs or ball or brokenplayer:dirs or brokenball:dirs or player or again_fly:dirs
+it_movesOnSnake = snake or con:dirs or cut:dirs or ball or brokenplayer:dirs or brokenball:dirs or player or again_fly:dirs or meta_exit or spawnpoint
 
-tempVisualObjects = vs_any_under:dirs or vs_snake_under or vs_player:dirs or vs_any_under:dirs:offs or vs_snake_under:offs or vs_player:dirs:offs or vs_snake_opening:dirs or vs_snake_opening:dirs:offs or vs_snake_edge:dirs or vs_snake_edge:dirs:offs or vs_con:dirs or vs_con:dirs:offs or vs_active_under or vs_active_under:offs or vs_con_active:dirs or vs_con_active:dirs:offs or vs_meta_pipe:dirs or vs_meta_pipe:dirs:offs
+tempVisualObjects = vs_any_under:dirs or vs_snake_under or vs_player:dirs or vs_any_under:dirs:offs or vs_snake_under:offs or vs_player:dirs:offs or vs_snake_opening:dirs or vs_snake_opening:dirs:offs or vs_snake_edge:dirs or vs_snake_edge:dirs:offs or vs_con:dirs or vs_con:dirs:offs or vs_active_under or vs_active_under:offs or vs_con_active:dirs or vs_con_active:dirs:offs or vs_meta_pipe:dirs or vs_meta_pipe:dirs:offs or vs_meta_pipe_closed:dirs or vs_meta_pipe_closed:dirs:offs
 
 any_move = move:dirs or turnMove:dirs
