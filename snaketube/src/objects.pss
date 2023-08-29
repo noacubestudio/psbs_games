@@ -540,7 +540,7 @@ transparent
 push:dirs
 transparent
 
-anim_col:dirs
+col_effect:dirs
 transparent
 
 supported

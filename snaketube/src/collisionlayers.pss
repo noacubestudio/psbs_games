@@ -73,7 +73,7 @@ playerFacing:dirs
 dirs -> again_fly:dirs
 again_col
 again_gravity
-anim_col:dirs
+col_effect:dirs
 
 push:dirs
 supported
