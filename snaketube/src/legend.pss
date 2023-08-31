@@ -1,11 +1,11 @@
 # = wall
-0 = wall (WIP)
-
 s = snake
 
 p = player and snake and init and spawnpoint
 * = player and snake and init and cut:right
 w = snake and meta_exit
+
+e = snake and meta_exit and cut:left
 
 u = snake and cut:up
 d = snake and cut:down

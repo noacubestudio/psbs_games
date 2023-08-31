@@ -1,10 +1,60 @@
+(# 
+    WIP Overview for order and progression of mechanics to implement:
+
+    LAUNCHER
+        flying between launchers / moving as launcher
+            (reorient flight paths, move objects out of the way, move around corners, exit to recover self)
+        pushing launchers 
+            (move out of the way even if not enterable, position as a recovery target, position in way you could not have launched from)
+    
+    EITHER: MULTIBLOCKS
+        pushing closed blocks
+            ()
+        pushing self in multiblock - !! maybe only possible once len 2 snake !!
+            ()
+
+    OR: HOLES
+        flying over holes
+            (get to places not accessible by moving, focus on recovery of player?)
+        fill holes to make bridges
+            (create space needed to move over/ to position for launch, clear blocks entirely)
+
+    CONNECTING BLOCKS
+        connect launchers
+            ()
+
+    PIPES
+        straight pipes
+            (connect together to fill holes, recover blocks, or just fly through)
+        curved pipes
+            (reorient flight path in tight spaces, connect, fill holes, recover)
+
+    SNAKES
+        move as a snake / flying out of snake
+            ()
+        pushing "C" as a snake
+            (move self while in a position you normally couldnt have over holes, specific flight path)
+    
+    SPLITTING SNAKES
+        splitting and rebuilding snakes
+            (change parity!, change length, make blocks for recovery, bridges, pipes...)
+        using self as "C"
+            (move towards pipes as snake)
+
+    CLOSED SNAKES
+        use C-movement to connect with other snake
+            (recover snakes, switch sides in snakes, finally exit by splitting)
+
+    BOUNCERS
+        ...
+        
+#)
+
 (INTRO) 
 message U/Z: undo a step, R: restart
 
 message > launch
-(NEW OBJECTS:      launchers)
-(NEW INTERACTIONS: flying, swapping launchers, moving to reorient self)
-(NEW OBSTACLES:    launchers or walls in the way, tight corridors, not being able to fly around corners)
+(NEW: use launchers for flying, swapping launchers, moving to reorient self)
 
 (move / move backwards to launch, switch between launchers)
 ##############
@@ -22,41 +72,56 @@ message > launch
 ##############
 ##############
 ##############
-#####....#####
+######...#####
 ####p.l..#####
-#####....#####
-#####..9######
-#######w######
+#####...7w####
+#####...######
+##############
 ##############
 ##############
 
-(move around so you can go backwards in right direction)
+(find way to move away from exit to launch)
 ##############
 ##############
 ##############
 #####...######
-#####.#..w####
-####p.l.l#####
+#####.#.######
+####p.l.w#####
 #####.#.######
 #####...######
 ##############
 ##############
 
+(message > push)
+(NEW: pushing other launchers)
+
 (move out of the way, then switch back)
 ##############
 ##############
-#######p######
+##############
+#####...######
+####p.l.######
+#####...######
+######77.w####
 #######.######
-###..#.u######
-###.....#..w##
-######77..9###
+##############
+##############
+
+(requires position you cant move from, use extra launcher as recovery)
+##############
+##############
+#######...####
+###p....l.####
+####......####
+####.u#8r.w###
+#######.######
 #######.######
 ##############
 ##############
 
 
 message > cross
-(NEW OBJECTS:      holes)
+(NEW: holes)
 (NEW INTERACTIONS: flying over hole, push *only now needed*, multipush)
 (NEW OBSTACLES:    falling into hole)
 
@@ -65,8 +130,8 @@ message > cross
 ##############
 #######...####
 ####......####
-##p..l.~~~####
-###..~~~~~####
+###....~~~####
+##p.l~~~~~####
 ###...~~.9w###
 ####.u~~..####
 ##############
@@ -76,11 +141,11 @@ message > cross
 ##############
 ##############
 ##############
-######~~~.w###
-###.d.~~..####
-###.......####
-###.......####
-##p~~~l#######
+##########..w#
+###.d#....~~##
+##p...l.....##
+###.....#...##
+#########..###
 ##############
 ##############
 
@@ -115,8 +180,8 @@ message > bridge
 
 (use big one to push smaller one that would otherwise not be pushable because of hole)
 ##############
-##p.l.d.######
 ###.....######
+##p.l.d.######
 ###....~~~####
 ###.ss.~~~####
 ####....~~####
@@ -163,30 +228,17 @@ message > bridge
 ##############
 ##############
 
-(find position in slider that works)
+(find position in C that works)
 ##############
-####..########
-####..~..w####
-###p..~l######
-####bb.....###
-####b...a..###
-####b.aaa.####
-####b..bb.####
-####bb....####
+####ss########
+####s.e#######
+####s.....####
+####s......###
+####ss...a.###
+####...aaa####
+###p.l.bb.####
+######....####
 ##############
-
-(
-    #############
-    pt...~~~t####
-    ##...~~~~~tt#
-    ##..#~~~~~#tw
-    ##sb..~~~~###
-    ##s..aa.~~###
-    ##s.r...t####
-    ##s...l.#####
-    ##ss#########
-    #############
-)
 
 message > connect
 
@@ -227,6 +279,20 @@ message > connect
 ####....~~####
 ##############
 ##############
+
+(NO HOLES VER! - WIP, integrate)
+(
+    ##############
+    ##############
+    ####..ls######
+    ###..##d######
+    ###.l#..#8.###
+    ##p...l.....##
+    ###...###c.e##
+    ##############
+    ##############
+    ##############
+)
 
 (connecting shapes right on top of hole)
 ##############
