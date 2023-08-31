@@ -52,9 +52,18 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 
 [ init ] [ vs_wall_inner:^ add vs_wall_edge_2:^ | vs_wall_inner:^ add vs_wall_edge_1:^ ]
 
+(wall edge decoration)
+[ init ] [ vs_wall_inner:v | vs_wall_inner:v | vs_wall_inner:v no vs_wall_inner:^ add vs_wall_inner_deco:v | vs_wall_inner_corner:> ]
+[ init ] [ vs_wall_inner_corner:^ | vs_wall_inner:v no vs_wall_inner:^ add vs_wall_inner_deco:v | vs_wall_inner:v | vs_wall_inner:v ]
+
 (hole border)
 [ init ] [ no hole add floor ]
 [ init ] [ hole add vs_hole_edge:> | floor ]
+
+(add checker to initial floor)
+[ init ] [ player | add checker ]
+[ init ] [ checker | | add checker ]
+[ init ] [ no floor was checker ]
 
 (from a spawnpoint, the player appears)
 [ init ] [ spawnpoint player add again_spawn ]

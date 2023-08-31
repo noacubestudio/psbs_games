@@ -6,6 +6,8 @@ hole
 --
 floor
 --
+checker
+--
 dirs -> vs_hole_edge:dirs
 
 --
@@ -15,6 +17,7 @@ wall
 dirs -> vs_wall_con:dirs
 --
 dirs -> vs_wall_inner:dirs
+vs_wall_inner_deco:dirs
 --
 dirs -> vs_wall_edge:dirs
 --
