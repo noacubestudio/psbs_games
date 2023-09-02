@@ -119,6 +119,32 @@ message > launch
 ##############
 ##############
 
+(NEW: pushing bigger blocks)
+
+(NEW: push self to stop reorienting)
+##############
+#######..#####
+#######..w####
+#####..ss#####
+#####..s...###
+#####..ss#.###
+####p.l....###
+#####.....####
+##############
+##############
+
+(find position in C that works)
+##############
+####ss########
+####s.e#######
+####s......###
+####s......###
+####ss...a.###
+####...aaa####
+###p.l.bb.####
+######....####
+##############
+
 
 message > cross
 (NEW: holes)
@@ -215,30 +241,6 @@ message > bridge
         - need another block to fly to
         - need one space to move even just to reorient (L-Shape)
 )
-
-(NEW: push self to stop reorienting)
-##############
-##############
-####~~~...####
-####~~~.~.w###
-####.~~ss.####
-####...s..####
-###p.l.ss.####
-####......####
-##############
-##############
-
-(find position in C that works)
-##############
-####ss########
-####s.e#######
-####s.....####
-####s......###
-####ss...a.###
-####...aaa####
-###p.l.bb.####
-######....####
-##############
 
 message > connect
 
@@ -581,6 +583,20 @@ message > leave behind
 ######.#######
 ##############
 ##############
+
+(WIP, IMPROVE AND ADD - split to change launcher parity)
+(
+    ##############
+    ##############
+    ####......####
+    ###p.lsss.####
+    ####......####
+    ####..u#.#####
+    ########.9w###
+    ########~~####
+    ##############
+    ##############
+)
 
 (length math....wip, explain this better)
 (split and combine to get different length)
