@@ -12,7 +12,7 @@ dirs -> vs_hole_edge:dirs
 
 --
 
-wall 
+wall
 --
 dirs -> vs_wall_con:dirs
 --
@@ -25,6 +25,8 @@ dirs -> vs_wall_edge_1:dirs
 dirs -> vs_wall_edge_2:dirs
 --
 dirs -> vs_wall_inner_corner:dirs
+--
+vs_outside, vs_outside_pattern:dirs 
 
 --
 
@@ -79,6 +81,7 @@ player
 init
 init_conAnotB, init_conBnotA
 init_noMoreCon
+dirs -> init_notOutside:dirs
 playerFacing:dirs
 
 dirs -> again_fly:dirs

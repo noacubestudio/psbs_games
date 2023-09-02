@@ -6,6 +6,7 @@
 (% set color_bg_add   = "#067872" %)
 (% set color_outer_fg = "#f5ad73" %)
 (% set color_outer_bg = "#c75c2a" %)
+(% set color_outside  = "#a65542" %)
 
 (% include "prelude.pss" %)
 

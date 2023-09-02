@@ -1,4 +1,4 @@
-# = wall
+# = wall and vs_outside
 s = snake
 
 p = player and snake and init and spawnpoint

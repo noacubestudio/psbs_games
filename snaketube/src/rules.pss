@@ -47,8 +47,8 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 [ init ] [ wall was vs_any_under:> vs_wall_con:> | no wall ]
 
 (wall edge)
-[ init ] [ wall add vs_wall_inner:> vs_wall_edge:> | no wall ]
-[ init ] [ vs_wall_inner:v | wall no vs_wall_inner:v add vs_wall_inner_corner:> ]
+[ init ] [ wall add vs_wall_inner:> vs_wall_edge:> del vs_outside | no wall ]
+[ init ] [ vs_wall_inner:v | wall no vs_wall_inner:v add vs_wall_inner_corner:> del vs_outside ]
 
 [ init ] [ vs_wall_inner:^ add vs_wall_edge_2:^ | vs_wall_inner:^ add vs_wall_edge_1:^ ]
 
@@ -56,6 +56,12 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 [ init ] [ vs_wall_inner:v | vs_wall_inner:v | vs_wall_inner:v no vs_wall_inner:^ add vs_wall_inner_deco:v | vs_wall_inner_corner:> ]
 [ init ] [ vs_wall_inner_corner:^ | vs_wall_inner:v no vs_wall_inner:^ add vs_wall_inner_deco:v | vs_wall_inner:v | vs_wall_inner:v ]
 
+(outside decoration)
+[ init ] [ vs_outside add init_notOutside:> | no vs_outside no vs_outside_pattern:dirs ] (which other tiles do these corners face?)
+[ init ] [ init_notOutside:> init_notOutside:^ add vs_outside_pattern:> ]
+[ init ] [ init_notOutside:> was vs_outside add vs_outside_pattern:> ]
+[ init ] [ vs_outside_pattern:^ | was vs_outside_pattern:^ add vs_outside_pattern:> ]
+[ init ] [ was vs_outside_pattern:> add vs_outside_pattern:^ | vs_outside_pattern:> ]
 (hole border)
 [ init ] [ no hole add floor ]
 [ init ] [ hole add vs_hole_edge:> | floor ]
