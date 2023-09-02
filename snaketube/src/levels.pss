@@ -682,13 +682,13 @@ one where possible target lengths per starting length are explored
 (split to use corner)
 ###############
 ###############
-#####....######
-###p.lfqfqw####
-####.siiii#####
-#####s.cj...###
-#####s.#....###
-#####.......###
-######.....####
+####....#######
+####.fqfqw#####
+####.iiii######
+####..cj...####
+####..#....####
+###p..lsss.####
+#####.....#####
 ###############
 ###############
 
@@ -810,6 +810,26 @@ message WIP section: incomplete
 ###############
 ###############
 ###############
+
+(become closed)
+(currently broken, but idea: 
+	close with the left shape using top c, get bottom C out of the way using closed recovery,
+    get top C on the right and use to connect with pipe, but only after setting up extra launcher
+    to allow another recovery as closed snake
+)
+(
+  ###############
+  ###############
+  ###############
+  ###.sss.....###
+  ###.s.s.....###
+  ###......s.d###
+  ###r.....srj###
+  ###a#..s..ie###
+  ##p...ls#######
+  ###############
+  ###############
+)
 
 message > bounce
 message WIP Section, incomplete and somewhat unsorted!

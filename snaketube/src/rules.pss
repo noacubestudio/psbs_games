@@ -58,7 +58,7 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 
 (outside decoration)
 [ init ] [ vs_outside add init_notOutside:> | no vs_outside no vs_outside_pattern:dirs ] (which other tiles do these corners face?)
-[ init ] [ init_notOutside:> init_notOutside:^ add vs_outside_pattern:> ]
+[ init ] [ init_notOutside:> init_notOutside:^ no vs_outside_pattern:dirs add vs_outside_pattern:> ]
 [ init ] [ init_notOutside:> was vs_outside add vs_outside_pattern:> ]
 [ init ] [ vs_outside_pattern:^ | was vs_outside_pattern:^ add vs_outside_pattern:> ]
 [ init ] [ was vs_outside_pattern:> add vs_outside_pattern:^ | vs_outside_pattern:> ]
