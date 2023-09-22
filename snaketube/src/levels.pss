@@ -11,13 +11,13 @@
         pushing closed blocks
             ()
         pushing self in multiblock - !! maybe only possible once len 2 snake !!
-            ()
+            (create the necessary 1 tile gap, use to connect with exit)
 
     OR: HOLES
         flying over holes
             (get to places not accessible by moving, focus on recovery of player?)
         fill holes to make bridges
-            (create space needed to move over/ to position for launch, clear blocks entirely)
+            (create space needed to move over/ to position for launch, clear blocks entirely - for example to recover)
 
     CONNECTING BLOCKS
         connect launchers
@@ -160,24 +160,11 @@ message > cross
 ###############
 ###############
 ########...####
-#####......####
+####.......####
 ####....~~~####
-###p.l~~~~~####
+###p.l.~~~~####
 ####...~~.9w###
-#####.u~~..####
-###############
-###############
-###############
-
-(swap between pushing and snake move to get into place)
-###############
-###############
-###############
-##########..w##
-###.d#....~~###
-##p...l.....###
-###.....#...###
-#########..####
+####.u.~~..####
 ###############
 ###############
 ###############
@@ -210,6 +197,19 @@ message > bridge
 ##p.l.~...b..##
 ###...~.aabb.##
 #######..a...##
+###############
+###############
+
+(swap between pushing and snake move to get into place)
+###############
+###############
+###############
+##########..w##
+###.d#....~~###
+##p...l.....###
+###.....#...###
+#########..####
+###############
 ###############
 ###############
 
@@ -282,6 +282,61 @@ message > connect
 ###############
 ###############
 
+(connecting shapes right on top of hole)
+###############
+###############
+######...######
+######-.l######
+#####....######
+#####..~..#####
+####p.~~l.#####
+#####~~~~~w####
+#####~~~~~#####
+###############
+###############
+
+(connect one that can't leave)
+( ######## )
+( ##....## )
+( ##...l## )
+( pt.l.~## )
+( ##...l## )
+( ##~~~~tw )
+( ######## )
+
+(NEW: PIPE PIECES - use as paths)
+(introduce open pipes, make sure no extra snakes in these levels)
+
+message > pipes
+
+(figure out how to connect straight pieces)
+###############
+###############
+#####~~~~~#####
+#####~~~~~w####
+#####~~~~~#####
+#####.h.h.#####
+#####..h..#####
+#####.....#####
+####p..l..#####
+###############
+###############
+
+(fly through, then drop)
+###############
+###############
+####..~....####
+####r.~.~..####
+####....~~~####
+####~~~.h.~####
+#####.....#####
+#####.....#####
+####p~~l~~w####
+###############
+###############
+
+message > redirect
+
 (quarter turn pipe influences pusher parity)
 ###############
 ###############
@@ -309,33 +364,6 @@ message > connect
     ###############
     ###############
 )
-
-(connecting shapes right on top of hole)
-###############
-###############
-######...######
-######-.l######
-#####....######
-#####..~..#####
-####p.~~l.#####
-#####~~~~~w####
-#####~~~~~#####
-###############
-###############
-
-(connect one that can't leave)
-( ######## )
-( ##....## )
-( ##...l## )
-( pt.l.~## )
-( ##...l## )
-( ##~~~~tw )
-( ######## )
-
-(NEW: PIPE PIECES - use as paths)
-(introduce open pipes, make sure no extra snakes in these levels)
-
-message > redirect
 
 (use curve piece as path)
 ###############
@@ -376,18 +404,16 @@ message > redirect
 ###############
 ###############
 
-(put shape in hole that works as launchpad)
-(L piece)
-(straight pieces)
+(launch area in hole, connect correctly)
 ###############
 ###############
-##.....#~~~~~##
-##.r.l.#~~~~~w#
-#p.l...#~~~~~##
-##...h##.h.h.##
-##....##..h..##
-##~~~~~......##
-##~~~~~...l..##
+#####.....#####
+#####.r.l.#####
+####p.l...#####
+#####...h######
+#####....######
+#####~~~~######
+#####~~~~w#####
 ###############
 ###############
 
@@ -567,6 +593,19 @@ message > lead
 ######~~~w#####
 #######~#######
 ###############
+
+(make snake to move in double C, broken)
+( ############### )
+( ######..####### )
+( #####...####### )
+( #####.r9h.##### )
+( #####ss.####### )
+( #####s.....#### )
+( #####sss...#### )
+( #####....h.w### )
+( ####p.l#...#### )
+( ############### )
+( ############### )
 
 (double snake moving in double size C)
 ( ############# )
