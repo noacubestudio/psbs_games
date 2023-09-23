@@ -700,6 +700,9 @@ transparent
 follow:dirs
 transparent
 
+hasToSplit
+transparent
+
 wantsToFlyTo:dirs
 transparent
 

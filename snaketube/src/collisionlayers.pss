@@ -99,3 +99,4 @@ turnMove:dirs, wasTurnMoved:dirs
 move:dirs, wasMoved:dirs
 dirs -> correctConnectDir:dirs
 follow:dirs
+hasToSplit

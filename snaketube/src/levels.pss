@@ -124,36 +124,9 @@ message > launch
 ###############
 ###############
 
-(NEW: push self to stop reorienting)
-###############
-###############
-#######..######
-#######..w#####
-#####..ss######
-#####..s...####
-#####..ss#.####
-####p.l....####
-#####.....#####
-###############
-###############
-
-(find position in C that works)
-###############
-####ss#########
-####s.e########
-####s......####
-####s......####
-####ss...a.####
-####...aaa#####
-###p.l.bb.#####
-######....#####
-###############
-###############
-
-
 message > cross
 (NEW: holes)
-(NEW INTERACTIONS: flying over hole, push *only now needed*, multipush)
+(NEW INTERACTIONS: flying over hole)
 (NEW OBSTACLES:    falling into hole)
 
 (fly over hole)
@@ -340,13 +313,13 @@ message > redirect
 (quarter turn pipe influences pusher parity)
 ###############
 ###############
-########dss####
-####...~~~s####
-####.d..~~l####
-####......#####
-###p...l..9w###
-####.....~~####
-###############
+#######dsss####
+#######~~~s####
+####.....~d####
+####.d.~.~j####
+####.....9e####
+###p...l.######
+####.....######
 ###############
 ###############
 
@@ -568,54 +541,6 @@ message > lead
 ( ########~~.tw )
 ( ############# )
 
-(slide to grow self to not fall)
-###############
-###############
-######~~~~#####
-#####.~~.~w####
-#####...~~#####
-#####.ss...####
-#####.s~.h.####
-#####.ss...####
-####p....l.####
-###############
-###############
-
-(find correct orientation to go with when using C)
-###############
-###############
-#####.....#####
-####p....ls####
-#####.ss..s####
-######s..######
-######ss.######
-######~~~######
-######~~~w#####
-#######~#######
-###############
-
-(make snake to move in double C, broken)
-( ############### )
-( ######..####### )
-( #####...####### )
-( #####.r9h.##### )
-( #####ss.####### )
-( #####s.....#### )
-( #####sss...#### )
-( #####....h.w### )
-( ####p.l#...#### )
-( ############### )
-( ############### )
-
-(double snake moving in double size C)
-( ############# )
-( ptl####tttttw )
-( ##s####t##### )
-( #s..s..~~...# )
-( #s..s~~.~...# )
-( #ssss.......# )
-( ############# )
-
 
 (THEME: REORIENT BIG SNAKE IN SMALL SPACE, CLAUSTROPHOBIA)
 
@@ -775,13 +700,9 @@ one where possible target lengths per starting length are explored
 ( ##..{{ttw )
 ( ######### )
 
-(SPLIT TO PUSH SELF)
-(splitting possible but not always present, actually...)
+(RECONNECT VIA SELF PUSH)
 
-(6 len - self pushing)
-
-(sideways shape, stays entirely connected)
-(no way to use the C and approach the wall)
+(push self to avoid splitting off)
 ###############
 ###############
 ###############
@@ -794,80 +715,18 @@ one where possible target lengths per starting length are explored
 ###############
 ###############
 
-(disconnect head)
-###############
-###############
-###############
-####.ds.~~~####
-####.7s.~.~####
-###p.ls....####
-####....#i#####
-#####...hjw####
-#####...#######
-###############
-###############
-
-message > close
-message Thank you for testing this far! =)
-message WIP section: incomplete
-
-(exit is blocked, connect to it with sliding and then split self to be able to leave)
-###############
-###############
-######...######
-#####.ss..#####
-#####.s..h9w###
-#####.ss..#####
-#####.....#####
-####p.ls..#####
-#####.....#####
-###############
-###############
-
-(get extra length into position first, use split to make right shape needed to leave)
-###############
-###############
-####...########
-###p.l.ls~~####
-####...##~~w###
-####sss..~~####
-####s....h.####
-####sss....####
-####...########
-###############
-###############
-
-(obstacle course, find where to split)
-###############
-###############
-###############
-####s#....#####
-####s..#~.w####
-####rss##.#####
-###p.9s#...####
-####sss#...####
-###############
-###############
-###############
-
-(become closed)
-(currently broken, but idea: 
-	close with the left shape using top c, get bottom C out of the way using closed recovery,
-    get top C on the right and use to connect with pipe, but only after setting up extra launcher
-    to allow another recovery as closed snake
-)
-(
-  ###############
-  ###############
-  ###############
-  ###.sss.....###
-  ###.s.s.....###
-  ###......s.d###
-  ###r.....srj###
-  ###a#..s..ie###
-  ##p...ls#######
-  ###############
-  ###############
+( testing level
+    ###############
+    ###############
+    ###############
+    ###.........###
+    ##p..l.l.s..###
+    ###......s..###
+    ###.s..s...~###
+    ###.ssss.#u~w##
+    ###############
+    ###############
+    ###############
 )
 
 message > bounce
@@ -1111,31 +970,6 @@ message WIP Section, incomplete and somewhat unsorted!
 ( #.s....#### )
 ( #.s.22..~~# )
 ( ########### )
-
-(connect self with snake that has ball in it)
-###############
-###############
-#####~~~~~#####
-#####....l.w###
-####p.9..s#####
-#####.ss.2#####
-#####.s...#####
-#####.ss..#####
-######....#####
-###############
-###############
-
-(open slider combination lock test)
-( ###p########### )
-( ###t##..sss...# )
-( ###t##..48d...# )
-( ###t###....u..# )
-( ###t#tt....ss.# )
-( ###t#t#.....d.# )
-( #.u777u.......# )
-( #.sssss.......# )
-( ############t## )
-( ############w## )
 
 (opposite flying machines)
 (doesn't always move when it should hmm)

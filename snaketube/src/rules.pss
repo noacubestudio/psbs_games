@@ -171,57 +171,57 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 (----MOVE OBJECTS----)
 
 ( 
-- starts from a turnMove, i.e. a snakelike move that makes a tile orient itself
-- marks all pushing and turning tiles at once, checking if anything collides
-- push markers overwrite snake movement, so you can build a contraption to push yourself without turning
-- the head pushing into the snake body makes the body split off, because push markers have priority
+- a pipe end with a turnMove moves as the head of the snake
+- multiblocks in front get pushed
+- the tail of the snake head follows - if it can not follow, for example because it got pushed or the head got pushed,
+  the head will split.
+- for any tiles that should do a normal move, collision in checked first so that ALL of them have to work out
+- actual movement transfers everything in those tiles over, tile by tile
 )
 
-(remove temp from last time)
-[ was wasMoved:dirs/wasTurnMoved:dirs/follow:dirs ]
+(remove temp markers from last time)
+[ was wasMoved:dirs/wasTurnMoved:dirs/follow:dirs/hasToSplit ]
 
-(propagate forward from a pusher)
+(the initial move can push multiblocks in front)
 [ turnMove:> | snake add move:> ]
 
-(loop to propagate regular move forward and also through connections whenever possible.)
-(in forward direction-so with actual pressure, it can even affect the snake head doing the push, such as in a C shape)
-(otherwise, through a connection only spread if there is no turnMove:dirs there)
+(spread the move markers through any pushed multiblocks)
+(can not spread from the turnMove (head) to own tail since a push of the head only will ALWAYS split it)
 [ move:> | snake add move:> ]
-+ [ move:dirs con:> | con:< no turnMove:dirs add move:dirs ]
++ [ move:dirs con:> no turnMove:dirs | con:< add move:dirs ]
 
-(however, IF the shape itself is pushed and it now has both turnMove and move, currently it then spreads to the whole tail.)
-(so for now, in that case there should be no snake movement at all and the whole thing just translates.)
-[ move:dirs del turnMove:dirs ]
+(move fails entirely if something was pushed into non-moving obstacle:)
 
-(so far there are tiles being moved and possibly a head tile with a turnMove.)
-(check collision now, show animation and cancel any actual movement if so)
-[ was move:>/turnMove:> add col_effect:> | it_collides no move:> ] nosave
-(collision animation, remove all markers)
+(show collision animation and cancel any actual movement if collided)
+[ was move:>/turnMove:> add col_effect:> | it_collides no any_move ] nosave
 dirs [ col_effect:> ] [ was move:dirs/turnMove:dirs add col_effect:dirs ]
-(also spread through tiles that weren't moved if they are connected)
+(to also spread through tail)
 dirs [ col_effect:dirs con:> | con:< no col_effect:dirs add col_effect:dirs ]
 
-(add marker to indicate in what direction and where the snake should be followed)
-[ con:> no move:dirs add follow:> | con:< turnMove:dirs ]
+(move can happen:)
+(add temporary follow markers along the tail)
+[ con:> add follow:> | con:< turnMove:dirs ]
+[ con:> no follow:dirs turnMove:dirs add follow:> | con:< follow:dirs ]
 
-(do the movement)
+(split head off by removing all follow markers on snake that follows the player if tiles are pushed sideways)
+(also split if ONLY the front has a move marker)
+[ move:perpendicular follow:> add hasToSplit ] 
+[ no move:dirs add hasToSplit con:> | con:< move:dirs ]
+[ hasToSplit con:> | con:< del follow:dirs add hasToSplit ]
+
+(add turnMove markers to snake)
+[ was follow:> add turnMove:> del move:dirs ]
+
+(actually do the movement)
 (use markers to move all items in those tiles)
-  [     move:> was it_movesOnSnake | no any_move add it_movesOnSnake ]
-+ [            was move:>          | no any_move add wasMoved:>      ] sfx3
-+ [ turnMove:> was it_movesOnSnake | no any_move add it_movesOnSnake ]
-+ [            was turnMove:>      | no any_move add wasTurnMoved:>  ]
-
-(add turnMove markers behind the first one, starting from the follow:>)
-(exclude anything that already moved)
-[      no snake | con:< no wasMoved:dirs wasTurnMoved:dirs  was follow:< add turnMove:< ]
-[ turnMove:dirs | con:< no wasMoved:dirs wasTurnMoved:dirs turnMove:dirs add turnMove:< ]
-
-(move the tail following the tile )
-(this assumes there is always one tile that can move, and moves them in order )
 startloop
-    [ turnMove:> was it_movesOnSnake | no any_move add it_movesOnSnake ]
-    random [ was turnMove:> | no any_move add wasTurnMoved:> ]
+  [     move:> was it_movesOnSnake | no any_move add it_movesOnSnake ]
+  [ was move:>  no it_movesOnSnake | no any_move add wasMoved:>      ] sfx3
+  [     turnMove:> was it_movesOnSnake | no any_move add it_movesOnSnake ]
+  [ was turnMove:>  no it_movesOnSnake | no any_move add wasTurnMoved:>  ]
 endloop
+
+(move done:)
 
 (fix the connections of the turning pieces )
 (former "forward" connection should now point at the front again )
@@ -238,6 +238,7 @@ dirs [ wasTurnMoved:<                           was cut:dirs add cut:> correctCo
 
 (new cuts are created, this makes a splitting sound )
 [ wasMoved:dirs/wasTurnMoved:dirs was con:> add cut:> | no con:< ] sfx1
+[ was con:> add cut:> | no con:< wasMoved:dirs/wasTurnMoved:dirs ] sfx1
 
 (a moved flying item will start flying if there is an open end that direction)
 [     wasMoved:> con:>/cut:> it_canFly no again_fly:dirs add again_fly:> ]
