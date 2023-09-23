@@ -10,8 +10,6 @@
     EITHER: MULTIBLOCKS
         pushing closed blocks
             ()
-        pushing self in multiblock - !! maybe only possible once len 2 snake !!
-            (create the necessary 1 tile gap, use to connect with exit)
 
     OR: HOLES
         flying over holes
@@ -32,10 +30,12 @@
     SNAKES
         move as a snake / flying out of snake
             ()
+        
+    SPLITTING SNAKES
+        pushing self in multiblock - !! maybe only possible once len 2 snake !!
+            (create the necessary 1 tile gap, use to connect with exit)
         pushing "C" as a snake
             (move self while in a position you normally couldnt have over holes, specific flight path)
-    
-    SPLITTING SNAKES
         splitting and rebuilding snakes
             (change parity!, change length, make blocks for recovery, bridges, pipes...)
         using self as "C"
@@ -542,9 +542,66 @@ message > lead
 ( ############# )
 
 
+message > leave behind, pt. 1
+
+(LEVEL SERIES: SPLIT IN C)
+
+(C to split to get shorter)
+###############
+###############
+#####.....#####
+###p...ls..####
+####.......####
+####..s.s..####
+####..sss..####
+#######.#######
+######..e######
+###############
+###############
+
+(create self-push situation)
+###############
+###############
+#####ssss.#####
+####.s..s..####
+####.....s.####
+###p.ls..s.####
+####.......####
+#######.#######
+######..e######
+###############
+###############
+
+(fill C in correct order to still have space to even move)
+###############
+###############
+#####bbbbb.####
+####.b.a.b.####
+####..ba...####
+####..ba.######
+####.....######
+###p..lss######
+#####...#######
+####..e########
+###############
+
+(split correct part)
+###############
+###############
+#####..#.s#####
+#####....s#####
+####p....l#####
+#####ss...#####
+#####s..#.w####
+#####ss.#######
+#####~~~#######
+#####~~~#######
+###############
+
+
 (THEME: REORIENT BIG SNAKE IN SMALL SPACE, CLAUSTROPHOBIA)
 
-message > leave behind
+message > leave behind, pt. 2
 
 (find direction so oriented right way)
 ###############
@@ -700,7 +757,9 @@ one where possible target lengths per starting length are explored
 ( ##..{{ttw )
 ( ######### )
 
+
 (RECONNECT VIA SELF PUSH)
+(COMBINATION OF BOTH SPLITTING METHODS)
 
 (push self to avoid splitting off)
 ###############
@@ -715,21 +774,67 @@ one where possible target lengths per starting length are explored
 ###############
 ###############
 
-( testing level
-    ###############
-    ###############
-    ###############
-    ###.........###
-    ##p..l.l.s..###
-    ###......s..###
-    ###.s..s...~###
-    ###.ssss.#u~w##
-    ###############
-    ###############
-    ###############
+(push self or create C, too difficult right now)
+(
+###############
+###############
+###############
+#####sss....###
+#####s.s.l..###
+#p...l.s.d..###
+#####.......###
+###.....#u#####
+###.....lse####
+###############
+###############
 )
 
+message > close
+
+(CAN MESS WITH LEVEL STRUCTURE AT THIS POINT, CONNECTING TO EXITS DIRECTLY)
+(WIP, SINCE STILL LINEAR FOR NOW)
+
+(exit is blocked, connect to it with sliding and then split self to be able to leave)
+###############
+###############
+###############
+#####.....#####
+#####.....#####
+#####..ss.le###
+#####...s.#####
+####p.lss.#####
+###############
+###############
+###############
+
+(get extra length into position first, use split to make right shape needed to leave)
+###############
+###############
+###p.l#########
+####.s.########
+####.s.l~~~####
+####...#~~~w###
+####ss.#~~~####
+####s......####
+####s......####
+####ss#########
+###############
+
+(actually move for a while as closed snake and use to navigate small spaces)
+###############
+###############
+###############
+###.....#~~~###
+###.d.ss#~~~w##
+###....s#~~~###
+##p.lr9s#...###
+###...ss....###
+###############
+###############
+###############
+
 message > bounce
+message Thank you for testing this far! =)
 message WIP Section, incomplete and somewhat unsorted!
 
 (new: ball)
@@ -997,6 +1102,33 @@ message WIP Section, incomplete and somewhat unsorted!
 ( ##...## )
 ( ####### )
 
+(connect self with snake that has ball in it)
+###############
+###############
+#####..s.######
+####p.ls.######
+#####....5e####
+#####.ss..#####
+#####.s...#####
+#####.s...#####
+######ss..#####
+###############
+###############
+
+(variation, needs more time)
+(
+    ###############
+    #####~~~~~e####
+    #####~~~.~~####
+    #####~~~~~~####
+    #####.6....####
+    #####...ss.####
+    #####..s.s.####
+    ####p.ls.s#####
+    #####...ss#####
+    ###############
+    ###############
+)
 
 (WIP Playground)
 message That's all for now!
@@ -1049,4 +1181,23 @@ pt..l..tt##
 ##......u##
 #######.u##
 ###########
+)
+
+(all 4 len split patterns, twice)
+(
+###############
+###############
+####df###qd####
+###cjcl#rjcj###
+###rqfq#fqfl###
+####ju###uc####
+###############
+####ds###rq####
+###scfl#fbad###
+###rjqs#uabj###
+####su###cl####
+###############
+######p.l######
+###############
+###############
 )
