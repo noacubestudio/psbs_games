@@ -2,7 +2,7 @@
 s = snake
 
 p = player and snake and init and spawnpoint
-* = player and snake and init and cut:right
+* = player and snake and init and cut:right and playerFacing:right
 w = snake and meta_exit
 
 e = snake and meta_exit and cut:left

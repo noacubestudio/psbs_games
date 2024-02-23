@@ -52,10 +52,6 @@ dirs [ again_col ] [ was brokenball:dirs:offs   add brokenball:dirs ]
 
 [ init ] [ vs_wall_inner:^ add vs_wall_edge_2:^ | vs_wall_inner:^ add vs_wall_edge_1:^ ]
 
-(wall edge decoration)
-[ init ] [ vs_wall_inner:v | vs_wall_inner:v | vs_wall_inner:v no vs_wall_inner:^ add vs_wall_inner_deco:v | vs_wall_inner_corner:> ]
-[ init ] [ vs_wall_inner_corner:^ | vs_wall_inner:v no vs_wall_inner:^ add vs_wall_inner_deco:v | vs_wall_inner:v | vs_wall_inner:v ]
-
 (outside decoration)
 [ init ] [ vs_outside add init_notOutside:> | no vs_outside no vs_outside_pattern:dirs ] (which other tiles do these corners face?)
 [ init ] [ init_notOutside:> init_notOutside:^ no vs_outside_pattern:dirs add vs_outside_pattern:> ]
@@ -272,6 +268,8 @@ dirs [ wasTurnMoved:<                           was cut:dirs add cut:> correctCo
 (items fall into meta exit)
 [ it_canFly meta_exit add again_exit ]
 
+(reset player direction if not valid)
+[ player snake no any:< ] [ was playerFacing:> add playerFacing:v ] 
 
 
 (----VISUAL ONLY----)
