@@ -6,8 +6,6 @@ hole
 --
 floor
 --
-checker
---
 dirs -> vs_hole_edge:dirs
 
 --
@@ -25,7 +23,7 @@ dirs -> vs_wall_edge_2:dirs
 --
 dirs -> vs_wall_inner_corner:dirs
 --
-vs_outside, vs_outside_pattern:dirs 
+vs_outside (vs_outside_pattern:dirs)
 
 --
 
