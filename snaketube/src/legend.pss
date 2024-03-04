@@ -57,6 +57,6 @@ gpSnake = snake or con:dirs or cut:dirs or again_fly:dirs or meta_exit or spawnp
 (these items get removed with the snake over holes)
 gpGravity = any:dirs or con:dirs or cut:dirs or meta_exit or spawnpoint
 
-tempVisualObjects = vs_snake_base or vs_player:dirs or vs_snake_base:offs or vs_player:dirs:offs or vs_snake_edge:dirs or vs_snake_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_meta_pipe:dirs or vs_meta_pipe:dirs:offs or vs_meta_pipe_closed:dirs or vs_meta_pipe_closed:dirs:offs or vs_npc:dirs or vs_npc:dirs:offs or vs_npc_off or vs_wall_inner_corner_sharp:dirs
+tempVisualObjects = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_snake_base or vs_player:dirs or vs_snake_base:offs or vs_player:dirs:offs or vs_snake_edge:dirs or vs_snake_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_meta_pipe:dirs or vs_meta_pipe:dirs:offs or vs_meta_pipe_closed:dirs or vs_meta_pipe_closed:dirs:offs or vs_npc:dirs or vs_npc:dirs:offs or vs_npc_off or vs_wall_inner_corner_sharp:dirs
 
 lowermovedirs = move:dirs or snakeMove:dirs

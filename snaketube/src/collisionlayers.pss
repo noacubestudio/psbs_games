@@ -29,6 +29,8 @@ vs_outside
 --
 
 (SNAKE: STATIONARY)
+dirs -> vs_con_lowest:dirs
+--
 vs_snake_base
 --
 dirs -> vs_snake_edge:dirs
@@ -44,6 +46,8 @@ vs_meta_pipe:dirs, vs_meta_pipe_closed:dirs
 --
 
 (SNAKE: ANIMATED)
+dirs -> vs_con_lowest:dirs:offs
+--
 vs_snake_base:offs
 --
 dirs -> vs_snake_edge:dirs:offs

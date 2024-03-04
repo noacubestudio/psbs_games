@@ -20,8 +20,8 @@
 (no place to go? ... WIP, should later send it back)
 [ was again_spawn add playerFacing:right ]
 
-(items fall into meta exit, winning the level)
-[ was gpItem was again_exit ] win
+(player falls into meta exit, winning the level)
+[ was player was again_exit ] win
 
 
 (revert collision)
@@ -114,20 +114,18 @@ dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
 (if flying into snake end, stop and collide)
 [ gpItem snake no any:> was stationary.again_fly:> add col_snake:> col_item:> ] sfx7 (soft collision)
 
-(if flying into wall, stop)
-[ was stationary.again_fly:> is player/ball/npc add col_item:> | wall ] sfx2 sfx6 (bump, breaking sound)
-
-(if flying into snake, try to push the snake)
-[ was stationary.again_fly:> is player/ball/npc add col_item:> move:> | snake no any:< add move:> ] sfx6 (breaking sound)
+(if flying into wall or snake side, stop)
+[ was stationary.again_fly:> is player/ball/npc add col_item:> | wall ] sfx0 (movement click)
+[ was stationary.again_fly:> is player/ball/npc add col_item:> | snake no any:< add col_snake:> ] sfx0 (movement click)
 
 (if flying into another flying object, both repel)
 [ gpItem was stationary.again_fly:> add action.again_fly:< | gpItem was stationary.again_fly:< add action.again_fly:> ] sfx7 (soft coll)
 
 (if flying into stationary object at snake end, that one steers)
-[ gpItem was stationary.again_fly:> add col_item:> | snake gpItem no any:> any:perpendicular add snakeMove:> ] sfx0
+[ gpItem was stationary.again_fly:> add col_item:> | snake gpItem no any:> any:perpendicular add snakeMove:> ] sfx0 (movement click)
 
 (if flying into stationary object that could move, that one flies)
-[ gpItem was stationary.again_fly:> add col_item:> | gpItem add action.again_fly:> ] sfx0
+[ gpItem was stationary.again_fly:> add col_item:> | gpItem add action.again_fly:> ] sfx0 (movement click)
 
 (if flying into empty space that another object wants to fly into)
 (first place directional markers in the empty space)
@@ -156,7 +154,7 @@ dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
 [ col_snake:dirs con:> | add col_snake:dirs ]
 
 (turn collided items outside of snake into npc)
-[ was player/ball no snake col_item:dirs again_fly:dirs add npc ]
+[ was player/ball no snake col_item:dirs again_fly:dirs add npc ] sfx6 (breaking sound)
 
 
 
@@ -232,10 +230,13 @@ endloop
 (snake parts)
 startloop
   [     move:> was gpSnake | no lowermovedirs add gpSnake ]
-  [ was move:>  no gpSnake | no lowermovedirs add wasMoved:>   ] sfx3
+  [ was move:>  no gpSnake | no lowermovedirs add wasMoved:>   ] sfx3 (pushed)
   [     snakeMove:> was gpSnake | no lowermovedirs add gpSnake ]
   [ was snakeMove:>  no gpSnake | no lowermovedirs add wasSnakeMoved:> ]
 endloop
+
+(item pushed sound)
+[ wasItemMoved:dirs no wasSnakeMoved:dirs ] sfx3 (pushed)
 
 (move done:)
 
@@ -309,6 +310,9 @@ dirs [ wasSnakeMoved:<                           was cut:dirs add cut:> correctC
 (show snake)
 [ snake add vs_snake_base ]
 
+(outline towards other connected snake part)
+[ con:> add vs_con_lowest:> ]
+
 (make wall corners temporarily sharper to match presence of a block with a sharp corner)
 [ cut:> | was wall add <.wall ]
 [ vs_wall_inner_corner:^ add vs_wall_inner_corner_sharp:^ | v.wall ]
@@ -347,6 +351,7 @@ dirs [ wasSnakeMoved:<                           was cut:dirs add cut:> correctC
 dirs [ col_item:> was vs_player:dirs add vs_player:dirs:> ]
 dirs [ col_item:> was vs_npc:dirs    add vs_npc:dirs:> ]
 
+dirs [ col_snake:> was vs_con_lowest:dirs       add vs_con_lowest:dirs:> ]
 dirs [ col_snake:> was con:dirs                 add con:dirs:> ]
 dirs [ col_snake:> was cut:dirs                 add cut:dirs:> ]
 dirs [ col_snake:> was vs_snake_edge:dirs       add vs_snake_edge:dirs:> ]
