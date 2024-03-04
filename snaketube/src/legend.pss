@@ -58,7 +58,6 @@ gpSnake = snake or con:dirs or cut:dirs or again_fly:dirs or meta_exit or spawnp
 gpGravity = any:dirs or con:dirs or cut:dirs or meta_exit or spawnpoint
 
 
-
-tempVisualObjects = vs_any_under:dirs or vs_snake_under or vs_player:dirs or vs_any_under:dirs:offs or vs_snake_under:offs or vs_player:dirs:offs or vs_snake_opening:dirs or vs_snake_opening:dirs:offs or vs_snake_edge:dirs or vs_snake_edge:dirs:offs or vs_con:dirs or vs_con:dirs:offs or vs_active_under or vs_active_under:offs or vs_con_active:dirs or vs_con_active:dirs:offs or vs_meta_pipe:dirs or vs_meta_pipe:dirs:offs or vs_meta_pipe_closed:dirs or vs_meta_pipe_closed:dirs:offs or vs_npc:dirs or vs_npc:dirs:offs or vs_npc_off
+tempVisualObjects = vs_any_under:dirs or vs_snake_under or vs_player:dirs or vs_any_under:dirs:offs or vs_snake_under:offs or vs_player:dirs:offs or vs_snake_opening:dirs or vs_snake_opening:dirs:offs or vs_snake_edge:dirs or vs_snake_edge:dirs:offs or vs_con:dirs or vs_con:dirs:offs or vs_active_under or vs_active_under:offs or vs_con_active:dirs or vs_con_active:dirs:offs or vs_meta_pipe:dirs or vs_meta_pipe:dirs:offs or vs_meta_pipe_closed:dirs or vs_meta_pipe_closed:dirs:offs or vs_npc:dirs or vs_npc:dirs:offs or vs_npc_off or vs_con_end or vs_con_end:offs or vs_opening_roundness_clockwise:dirs or vs_opening_roundness_clockwise:dirs:offs or vs_wall_inner_corner_sharp:dirs
 
 low_move = move:dirs or snakeMove:dirs

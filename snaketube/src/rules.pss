@@ -192,8 +192,8 @@ dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
 (move fails entirely if something was pushed into non-moving obstacle:)
 
 (show collision animation and cancel any actual movement if collided)
-[ was move:>/snakeMove:> add col_snake:> | gplowcollide       no low_move ] nosave sfx2 (collision sound)
-[ no snake was itemMove:> add col_item:> | gplowcollide no cut:< low_move ] nosave
+[ was move:>/snakeMove:>  add col_snake:>            | gplowcollide       no low_move ] nosave sfx2 (collision sound)
+[ no snake was itemMove:> add col_snake:> col_item:> | gplowcollide no cut:< low_move ] nosave sfx2 (collision sound)
 
 dirs [ col_snake:> ] [ was move:dirs/snakeMove:dirs add col_snake:dirs ]
 dirs [ col_snake:> ] [ was itemMove:dirs            add col_item:dirs ]
@@ -313,7 +313,19 @@ dirs [ wasSnakeMoved:<                           was cut:dirs add cut:> correctC
 (connections/ cuts)
 [ any:> snake/vs_active_under add vs_any_under:> vs_con:>/vs_con_active:> ]
 [ cut:> add vs_snake_opening:> ]
+[ vs_snake_opening:> no any:v add vs_opening_roundness_clockwise:> ]
+[ vs_snake_opening:> no any:^ add vs_opening_roundness_clockwise:^ ]
+
+(make wall corners temporarily sharper to match presence of a block with a sharp corner)
+[ vs_snake_opening:> | was wall add <.wall ]
+[ vs_wall_inner_corner:^ add vs_wall_inner_corner_sharp:^ | v.wall ]
+[ v.wall | vs_wall_inner_corner:> add vs_wall_inner_corner_sharp:> ]
+[ was moving.wall add wall ]
+
 [ snake no con:> cut:> add vs_snake_edge:> ]
+
+(end)
+[ snake no any:v any:^ any:> add vs_con_end ]
 
 (npc at snake end)
 [ npc snake any:< no any:v any:^ any:> add vs_npc:> ]
@@ -336,6 +348,7 @@ dirs [ wasSnakeMoved:<                           was cut:dirs add cut:> correctC
 [ col_item:>  was vs_npc_off      add vs_npc_off:> ]
 [ col_snake:> was vs_snake_under  add vs_snake_under:> ] 
 [ col_snake:> was vs_active_under add vs_active_under:> ] 
+[ col_snake:> was vs_con_end      add vs_con_end:> ] 
 dirs [ col_snake:> was con:dirs                 add con:dirs:> ]
 dirs [ col_snake:> was cut:dirs                 add cut:dirs:> ]
 dirs [ col_snake:> was vs_any_under:dirs        add vs_any_under:dirs:> ]
@@ -345,6 +358,7 @@ dirs [ col_item:>  was vs_player:dirs           add vs_player:dirs:> ]
 dirs [ col_item:>  was vs_npc:dirs              add vs_npc:dirs:> ]
 dirs [ col_snake:> was vs_snake_edge:dirs       add vs_snake_edge:dirs:> ]
 dirs [ col_snake:> was vs_snake_opening:dirs    add vs_snake_opening:dirs:> ]
+dirs [ col_snake:> was vs_opening_roundness_clockwise:dirs add vs_opening_roundness_clockwise:dirs:> ]
 dirs [ col_snake:> was vs_meta_pipe:dirs        add vs_meta_pipe:dirs:> ]
 dirs [ col_snake:> was vs_meta_pipe_closed:dirs add vs_meta_pipe_closed:dirs:> ]
 
