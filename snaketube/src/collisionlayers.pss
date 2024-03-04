@@ -63,10 +63,9 @@ vs_meta_pipe:dirs:offs, vs_meta_pipe_closed:dirs:offs
 
 --
 
-ball, ball:offs
+npc, ball, ball:offs
+vs_npc:dirs, vs_npc:dirs:offs, vs_npc_off, vs_npc_off:offs
 vs_player:dirs, vs_player:dirs:offs
---
-brokenplayer:dirs, brokenball:dirs, brokenplayer:dirs:offs, brokenball:dirs:offs
 
 --
 
@@ -85,15 +84,19 @@ dirs -> again_fly:dirs
 again_col
 again_exit, again_spawn
 again_gravity
-col_effect:dirs
+again_move:dirs
+col_snake:dirs
+col_item:dirs
 
 push:dirs
 supported
 dirs -> any:dirs
 dirs -> wantsToFlyTo:dirs
 
-turnMove:dirs, wasTurnMoved:dirs
+snakeMove:dirs, wasSnakeMoved:dirs
 move:dirs, wasMoved:dirs
+itemMove:dirs, wasItemMoved:dirs
+
 dirs -> correctConnectDir:dirs
 follow:dirs
 hasToSplit
