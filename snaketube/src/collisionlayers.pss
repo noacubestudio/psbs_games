@@ -24,45 +24,35 @@ dirs -> vs_wall_edge_2:dirs
 dirs -> vs_wall_inner_corner:dirs
 dirs -> vs_wall_inner_corner_sharp:dirs
 --
-vs_outside (vs_outside_pattern:dirs)
+vs_outside
 
 --
 
 (SNAKE: STATIONARY)
-dirs -> vs_any_under:dirs
---
-vs_snake_under, vs_active_under
---
-dirs -> vs_con:dirs, vs_con_active:dirs
---
-dirs -> con:dirs
-dirs -> cut:dirs
-vs_con_end
-dirs -> vs_opening_roundness_clockwise:dirs
---
-dirs -> vs_snake_opening:dirs
+vs_snake_base
 --
 dirs -> vs_snake_edge:dirs
+--
+dirs -> cut:dirs
+--
+dirs -> con:dirs
+--
+vs_con_end
 --
 vs_meta_pipe:dirs, vs_meta_pipe_closed:dirs
 
 --
 
 (SNAKE: ANIMATED)
-dirs -> vs_any_under:dirs:offs
---
-vs_snake_under:offs, vs_active_under:offs
---
-dirs -> vs_con:dirs:offs, vs_con_active:dirs:offs
---
-dirs -> con:dirs:offs
-dirs -> cut:dirs:offs
-vs_con_end:offs
-dirs -> vs_opening_roundness_clockwise:dirs:offs
---
-dirs -> vs_snake_opening:dirs:offs
+vs_snake_base:offs
 --
 dirs -> vs_snake_edge:dirs:offs
+--
+dirs -> cut:dirs:offs
+--
+dirs -> con:dirs:offs
+--
+vs_con_end:offs
 --
 vs_meta_pipe:dirs:offs, vs_meta_pipe_closed:dirs:offs
 
