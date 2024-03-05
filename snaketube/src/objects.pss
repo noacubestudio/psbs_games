@@ -511,6 +511,30 @@ vs_snake_edge:dirs:offs
 ((color_black))
 copy: vs_snake_edge:dirs translate:offs:2
 
+vs_snake_col:dirs
+((color_black)) ((color_fg)) ((color_bg))
+...000000000000...
+..00000000000000..
+.0001111111111000.
+000111111111111000
+001111111111111100
+001111111111111100
+001111111111111100
+001111111111111100
+001111112211111100
+001111112211111100
+..................
+..................
+..................
+..................
+..................
+..................
+..................
+..................
+rot:up:dirs
+translate:down:1
+translate:left:1
+translate:dirs:2
 
 vs_player:dirs
 ((color_black)) ((color_white)) ((color_fg))
@@ -735,10 +759,13 @@ transparent
 push:dirs
 transparent
 
-col_snake:dirs
+col_move:dirs
 transparent
 
 col_item:dirs
+transparent
+
+col_snake:dirs
 transparent
 
 supported

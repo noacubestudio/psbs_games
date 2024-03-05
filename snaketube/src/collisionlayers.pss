@@ -56,6 +56,8 @@ dirs -> cut:dirs:offs
 --
 dirs -> con:dirs:offs
 --
+vs_snake_col:dirs (extending snake, on top existing tiles)
+--
 vs_con_end:offs
 --
 vs_meta_pipe:dirs:offs, vs_meta_pipe_closed:dirs:offs
@@ -84,7 +86,7 @@ again_col
 again_exit, again_spawn
 again_gravity
 again_move:dirs
-col_snake:dirs
+col_move:dirs, col_snake:dirs
 col_item:dirs
 
 push:dirs
