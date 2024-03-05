@@ -112,21 +112,6 @@ message U/Z: undo a step, R: restart
 message > launch
 (NEW: use launchers for flying, swapping launchers, moving to reorient self)
 
-(
-    (new simpler intro. WIP, develop this further)
-    ###############
-    ###############
-    #####88888#####
-    ####-.....9####
-    ####-.....9####
-    ####*..l..e####
-    ####-.....9####
-    ####-.....9####
-    #####77777#####
-    ###############
-    ###############
-)
-
 (move / move backwards to launch, switch between launchers)
 ###############
 ###############

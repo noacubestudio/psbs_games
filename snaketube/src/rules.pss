@@ -80,17 +80,18 @@ dirs [ again_col ] [ was cut:dirs:offs add cut:dirs ]
 
 (----PLAYER INPUT---)
 
-(always face the right way when starting a move)
-[ >.player ] [ was playerFacing:dirs add playerFacing:> ]
-
 (all moves start from within a tube)
 (move to empty side starts flight)
-[ any:> was >.player add stationary.player again_fly:> ]
+[ any:> was >.player add stationary.player again_fly:> ] [ was playerFacing:dirs add playerFacing:> ]
+
+(move outside of snake starts flight, but only in backwards direction)
+[ no any:dirs was >.player is vs_player:< add stationary.player again_fly:> ] [ was playerFacing:dirs add playerFacing:> ]
+[ no any:dirs was >.player add stationary.player col_item:> ] sfx2
 
 (move forward starts snake movement)
-[ was >.player add stationary.player snakeMove:> ]
+[ was >.player add stationary.player snakeMove:> ] [ was playerFacing:dirs add playerFacing:> ]
 
-(if there are two neighbor snake parts, this doesn't make sense, block instead)
+(if the player isn't at the end of a snake, block the move)
 dirs [ any:> any:v was snakeMove:dirs add col_item:dirs ] sfx2
 dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
 
@@ -152,9 +153,6 @@ dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
 
 (spread collisions)
 [ col_snake:dirs con:> | add col_snake:dirs ]
-
-(turn collided items outside of snake into npc)
-[ was player/ball no snake col_item:dirs again_fly:dirs add npc ] sfx6 (breaking sound)
 
 
 
