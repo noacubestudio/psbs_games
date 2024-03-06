@@ -6,7 +6,7 @@
 (gravity)
 [ hole again_gravity was gpGravity ]
 [ hole again_gravity no again_fly:dirs was gpItem ]
-[ was hole again_gravity snake add floor ]
+[ was again_gravity ]
 
 (queued moves)
 [ was again_move:> add snakeMove:> ] (sfx7)
@@ -214,7 +214,7 @@ dirs [ wasSnakeMoved:<                           was cut:dirs add cut:> correctC
 
 (----AFTER MOVE IS DONE----)
 
-("any" markers indicate every kind of connection, reset those for the next turn)
+("any" markers indicate every kind of connection, reset those after the moves)
 [ was any:dirs ]
 [ con:>/cut:> add any:> ]
 
@@ -228,7 +228,8 @@ dirs [ wasSnakeMoved:<                           was cut:dirs add cut:> correctC
 [ supported con:> | con:< add supported ]
 
 (the rest fall into hole)
-[ snake no supported add again_gravity ]
+[ hole snake no supported add again_gravity ]
+[ hole gpItem no again_fly:dirs no supported add again_gravity ]
 
 (fall into meta exit)
 [ player meta_exit add again_exit ]
@@ -349,15 +350,21 @@ dirs [ con:> action.again_move:dirs | con:< add action.again_move:dirs ]
 [ player no vs_player:dirs add vs_player:right ]
 
 ( spawn point - show as filled when entering the level and hide the player )
-[ spawnpoint con:>/cut:> add vs_meta_pipe:< ]
+[ spawnpoint any:> add vs_meta_pipe:< ]
 [ again_spawn was vs_meta_pipe:> add vs_meta_pipe_closed:> del vs_player:dirs ]
 
 ( meta exit - show as filled when exiting and hide the player)
-[ meta_exit  con:>/cut:> add vs_meta_pipe:< ]
+[ meta_exit any:> add vs_meta_pipe:< ]
 [ again_exit was vs_meta_pipe:> add vs_meta_pipe_closed:> del vs_player:dirs ]
+
+( meta exit arrow)
+[ meta_exit any:< | wall add vs_meta_arrow:> ]
 
 
 (----ACTIVATE COLLISION VARIANTS----)
+
+(snake movement doesn't work for meta pipes, so don't use it there)
+[ meta_exit/spawnpoint was col_snake:> add col_move:> ]
 
 (always animate items on a colliding block cell)
 [ gpItem col_move:>/col_snake:> add col_item:> ]

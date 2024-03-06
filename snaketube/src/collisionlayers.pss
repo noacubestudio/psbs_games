@@ -25,6 +25,8 @@ dirs -> vs_wall_inner_corner:dirs
 dirs -> vs_wall_inner_corner_sharp:dirs
 --
 vs_outside
+--
+vs_meta_arrow:dirs
 
 --
 
