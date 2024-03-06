@@ -120,7 +120,7 @@ dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
 [ gpItem was stationary.again_fly:> add col_item:> | snake no any:< add col_move:> ] sfx0
 
 (hit other flying item)
-[ gpItem was stationary.again_fly:> add col_item:> | gpItem was stationary.again_fly:< add action.again_fly:> ] sfx0
+[ gpItem was stationary.again_fly:> add action.again_fly:< | gpItem was stationary.again_fly:< add action.again_fly:> ] sfx0
 (hit item at snake end)
 (# [ gpItem was stationary.again_fly:> add col_item:> | snake gpItem no any:> any:perpendicular add snakeMove:> ] sfx0 #)
 (hit stationary item)
@@ -152,7 +152,7 @@ dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
 [ player again_fly:> ] [ was playerFacing:dirs add playerFacing:> ]
 
 (spread collisions ... note, this doesn't also show up on multipushed blocks)
-[ col_move:dirs con:> | add col_move:dirs ]
+[ col_move:dirs con:> | add col_move:dirs ] (WIP?)
 
 
 
@@ -181,7 +181,7 @@ dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
 [ move:> | snake add move:> ]
 + [ move:> no cut:> | gpItem add itemMove:> ]
 + [ itemMove:> | snake no cut:< add move:> ]
-+ [ itemMove:> | npc no snake add itemMove:> ]
++ [ itemMove:> | gpItem no snake add itemMove:> ]
 + [ move:dirs con:> no snakeMove:dirs | con:< add move:dirs ] (through connections)
 + [ move:> gpItem add itemMove:> ]
 
@@ -191,10 +191,10 @@ dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
 [ was move:>/snakeMove:>  add col_move:>            | gplowcollide       no lowermovedirs ] nosave sfx2 (collision sound)
 [ no snake was itemMove:> add col_move:> col_item:> | gplowcollide no cut:< lowermovedirs ] nosave sfx2 (collision sound)
 
-dirs [ col_move:> ] [ was move:dirs/snakeMove:dirs add col_move:dirs ]
-dirs [ col_move:> ] [ was itemMove:dirs            add col_item:dirs ]
+dirs [ col_move:> ] [ supported:> was move:dirs/snakeMove:dirs add col_move:dirs ]
+dirs [ col_move:> ] [ supported:> was itemMove:dirs            add col_item:dirs ]
 
-(to also spread through tail)
+(spread through tail also) (WIP, I think this does nothing since adding snake move)
 dirs [ col_move:dirs con:> | con:< no col_move:dirs add col_move:dirs ]
 
 (move can happen:)
@@ -281,6 +281,7 @@ dirs [ wasSnakeMoved:<                           was cut:dirs add cut:> correctC
 (reconnect cuts)
 [ was cut:> add con:> | was cut:< add con:< ]
 
+
 (find which snake multiblocks are partially not over a hole)
 [ was supported ]
 [ snake no hole add supported ]
@@ -289,14 +290,37 @@ dirs [ wasSnakeMoved:<                           was cut:dirs add cut:> correctC
 (the rest fall into hole)
 [ snake no supported add again_gravity ]
 
-(items fall into meta exit)
-[ gpItem meta_exit add again_exit ]
+(fall into meta exit)
+[ player meta_exit add again_exit ]
+
+
+(find sides towards which blocks are supported and not movable)
+[ was supported:dirs ]
+[ no wall | wall add supported:> ]
+dirs [ con:> supported:dirs | con:< add supported:dirs ]
++ [ snake add supported:> | snake supported:> ]
++ [ snake no cut:> add supported:> | supported:> ]
++ [ gpItem add supported:> | supported:> no cut:< ]
+
 
 (reset player direction if not valid)
 [ player snake no any:< ] [ was playerFacing:> add playerFacing:v ] 
 
 (find multiblocks that could move due to npc)
-[ snake any:< npc no any:v any:^ any:> add again_move:> | no gplowcollide ]
+[ snake any:< npc no again_fly:< any:v any:^ any:> add again_move:> | no wall add action.again_move:> ]
+(spread markers to check for overlapping directions, then remove all)
+(action = temp in front of the actual pushers)
+(directions = failed)
+dirs [ con:> action.again_move:dirs | con:< add action.again_move:dirs ]
++ [ snake action.again_move:> | snake add action.again_move:> ]
++ [ gpItem action.again_move:> | snake no cut:< add action.again_move:> ]
++ [ snake/gpItem action.again_move:> no cut:> | gpItem add action.again_move:> ]
+[ was action.again_move:> action.again_move:v add <.again_move:> ^.again_move:v ]
+[ was action.again_move:> action.again_move:< add <.again_move:> >.again_move:< ]
+[ was moving.again_move:> add <.again_move:> | <.again_move:> ] (spread result of overlap check)
+[ was stationary.again_move:> | <.again_move:> ] (apply result of overlap check)
+[ was again_move:> | supported:> ] (normal collision)
+[ was moving.again_move:dirs ] (remove all temp)
 
 
 (----VISUAL ONLY----)

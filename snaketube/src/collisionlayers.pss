@@ -85,12 +85,13 @@ dirs -> again_fly:dirs
 again_col
 again_exit, again_spawn
 again_gravity
-again_move:dirs
+dirs -> again_move:dirs
 col_move:dirs, col_snake:dirs
 col_item:dirs
 
 push:dirs
 supported
+dirs -> supported:dirs
 dirs -> any:dirs
 dirs -> wantsToFlyTo:dirs
 
