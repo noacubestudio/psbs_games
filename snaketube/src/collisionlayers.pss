@@ -81,13 +81,14 @@ init_noMoreCon
 dirs -> init_notOutside:dirs
 playerFacing:dirs
 
-dirs -> again_fly:dirs
+dirs -> again_fly:dirs, now_fly:dirs
 again_col
 again_exit, again_spawn
 again_gravity
 dirs -> again_move:dirs
 col_move:dirs, col_snake:dirs
 col_item:dirs
+maybeBounce
 
 push:dirs
 supported

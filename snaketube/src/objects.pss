@@ -740,6 +740,9 @@ transparent
 again_move:dirs
 transparent
 
+now_fly:dirs
+transparent
+
 init
 transparent
 
@@ -880,4 +883,7 @@ wantsToFlyTo:dirs
 transparent
 
 init_notOutside:dirs
+transparent
+
+maybeBounce
 transparent
