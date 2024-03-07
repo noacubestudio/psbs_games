@@ -229,7 +229,7 @@ dirs [ wasSnakeMoved:<                           was cut:dirs add cut:> correctC
 
 (the rest fall into hole)
 [ hole snake no supported add again_gravity ]
-[ hole gpItem no again_fly:dirs no supported add again_gravity ]
+[ hole gpItem no again_fly:dirs now_fly:dirs supported add again_gravity ]
 
 (fall into meta exit)
 [ player meta_exit add again_exit ]
@@ -255,7 +255,8 @@ dirs [ con:> supported:dirs | con:< add supported:dirs ]
 (do something with each flying item now)
 
 (hit snake end)
-[ gpItem snake no any:> was now_fly:> add col_snake:> ] sfx7 (soft collision)
+[ gpItem snake meta_exit/spawnpoint no any:> was now_fly:> add col_move:> ]
+[ gpItem snake                      no any:> was now_fly:> add col_snake:> ] sfx7 (soft collision)
 
 (hit wall/ block)
 [ gpItem was now_fly:> add col_item:> maybeBounce | wall ] sfx0 (movement click)
@@ -362,9 +363,6 @@ dirs [ con:> action.again_move:dirs | con:< add action.again_move:dirs ]
 
 
 (----ACTIVATE COLLISION VARIANTS----)
-
-(snake movement doesn't work for meta pipes, so don't use it there)
-[ meta_exit/spawnpoint was col_snake:> add col_move:> ]
 
 (always animate items on a colliding block cell)
 [ gpItem col_move:>/col_snake:> add col_item:> ]

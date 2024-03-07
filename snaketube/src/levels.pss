@@ -50,7 +50,7 @@
         
 #)
 
-message WIP: most levels currently broken!
+message Work in progress: lots of levels are currently broken!
 
 (
     message wip, testing a new feature...
@@ -146,7 +146,7 @@ message WIP: most levels currently broken!
 
 
 (INTRO) 
-message The Kick Off:
+message Launch!
 
 (enter block in the way)
 ###############
@@ -196,7 +196,7 @@ message U/Z: undo a step, R: restart
 #######...#####
 ###p...l...####
 ####.......####
-####.u.#s-.w###
+####.u.#ab.w###
 ########.######
 ########.######
 ###############
@@ -234,56 +234,6 @@ message U/Z: undo a step, R: restart
 ###############
 
 
-(WIP, swapping level that needs bridging...)
-(
-    ###############
-    ###############
-    ###############
-    ###..##########
-    ##p.l#.....~.##
-    ###........~.##
-    ###.....#u.#w##
-    ###############
-    ###############
-    ###############
-    ###############
-
-    (no hole, but requires connection instead :O)
-    ###############
-    ###############
-    ###############
-    ###..##########
-    ##p.l#.....#d.#
-    ###...........#
-    ###.....#u.#w##
-    ###############
-    ###############
-    ###############
-    ###############
-)
-
-(use big one to push smaller one that would otherwise not be pushable because of hole)
-(###############)
-(###############)
-(####.....######)
-(###p.l.d.######)
-(####....~~~####)
-(####.ss.~~~####)
-(#####....~~####)
-(#####..~~~~####)
-(#######~~~~w###)
-(###############)
-(###############)
-
-(remote push)
-( ########### )
-( pt.l.#~~~tw )
-( ##...#.~~## )
-( ##.aa..~.## )
-( ##.bb..~.## )
-( ####...#### )
-( ########### )
-
 (
     potential uses of open blocks for puzzles:
     - can be pushed as usual, but also inhabited.
@@ -301,73 +251,77 @@ message U/Z: undo a step, R: restart
         - need one space to move even just to reorient (L-Shape)
 )
 
-message > connect
-
+message Connect.
 (CONNECTING SHAPES)
 
-(avoid connecting shape so it can sink in hole) 
+(avoid, then intentionally connect shapes)
+##############
+##############
+##############
+##...##..#####
+##.d.u#...de##
+##..........##
+#p.l.u#..#u.##
+##...##..#####
+##############
+##############
+##############
+
+(
+    (simpler version)
+    ###############
+    ###############
+    ###############
+    ####...########
+    ####.d..s#d.###
+    ####........###
+    ###p.l.#u.ue###
+    ####...########
+    ###############
+    ###############
+    ###############
+)
+
+(simple? swapping level)
 ###############
 ###############
-######...######
-#####p.9-~#####
-######...~#####
-########.~w####
-#######...#####
-#######...#####
-########..#####
+###############
+###..##########
+##p.l#.....#d.#
+###...........#
+###.....#u.#w##
+###############
+###############
 ###############
 ###############
 
-(connect shapes before pushing over hole)
+(connect shapes over hole, make hook)
 ###############
 ###############
 ###############
-#####.....#####
 ####.......####
-###p.l.....####
-####...ll~.####
-####...#~~~w###
+####.d.d.d.####
+####.......####
+###p.l.~~~~####
+####...~u..w###
 ###############
 ###############
 ###############
 
-(connecting shapes right on top of hole)
-###############
-###############
-######...######
-######-.l######
-#####....######
-#####..~..#####
-####p.~~l.#####
-#####~~~~~w####
-#####~~~~~#####
-###############
-###############
-
-(connect one that can't leave)
-( ######## )
-( ##....## )
-( ##...l## )
-( pt.l.~## )
-( ##...l## )
-( ##~~~~tw )
-( ######## )
 
 (NEW: PIPE PIECES - use as paths)
 (introduce open pipes, make sure no extra snakes in these levels)
 
-message > pipes
-
 (figure out how to connect straight pieces)
 ###############
 ###############
-#####~~~~~#####
-#####~~~~~w####
-#####~~~~~#####
+###############
+#####h.h.he####
 #####.h.h.#####
-#####..h..#####
-#####.....#####
-####p..l..#####
+#####h.h.h#####
+#####.h.h.#####
+####ph.l.h#####
+###############
 ###############
 ###############
 
@@ -377,14 +331,14 @@ message > pipes
 ####..~....####
 ####r.~.~..####
 ####....~~~####
-####~~~.h.~####
+#####~~.h..####
+#####......####
+####p.~l~.e####
 #####.....#####
-#####.....#####
-####p~~l~~w####
 ###############
 ###############
 
-message > redirect
+message Redirect.
 
 (quarter turn pipe influences pusher parity)
 ###############
@@ -431,12 +385,12 @@ message > redirect
 ###############
 ###############
 ###############
-#####....~#####
-####p.l#~~w####
-#####....~#####
-#####.c.q.#####
+#####~...~#####
+####p~~l~~w####
+#####~...~#####
+####.......####
+####..c.q..####
 #####.....#####
-###############
 ###############
 ###############
 
@@ -454,17 +408,19 @@ message > redirect
 ###############
 
 (launch area in hole, connect correctly)
-###############
-###############
-#####.....#####
-#####.r.l.#####
-####p.l...#####
-#####...h######
-#####....######
-#####~~~~######
-#####~~~~w#####
-###############
-###############
+(
+    ###############
+    ###############
+    #####.....#####
+    #####.r.l.#####
+    ####p.l...#####
+    #####...h######
+    #####....######
+    #####~~~~######
+    #####~~~~w#####
+    ###############
+    ###############
+)
 
 (open slider test)
 ( ######### )
@@ -481,18 +437,18 @@ message > redirect
 
 (NEW: BECOME SNAKE)
 
-message > lead
+message Lead the way.
 
 (big snake but no place to move....mysterious...)
 (close big snake and only use to have something to push)
 ###############
 ###############
 ###############
-####p.l########
-#####...#d#####
-#####.l.hjw####
-#####.....#####
-#######...#####
+#####...#######
+####p.l.#d#####
+#####...hjw####
+#####.l...#####
+######....#####
 ###############
 ###############
 ###############
@@ -511,33 +467,6 @@ message > lead
 #######.#######
 ###############
 
-(use longer snake to launch from tile that's still hole)
-(same thing, but reduce hole first)
-###############
-###############
-###############
-#####~~~~~#####
-#####~~~~~w####
-#####~...~#####
-####p..l..#####
-#####.....#####
-######su#######
-###############
-###############
-
-(shape into hook to leave wall, then shape it again to actually use as bridge)
-###############
-###############
-######ssr..####
-#####......####
-####p...l.#####
-#####.....#####
-######~~~~#####
-######~~~~w####
-######~~~~#####
-###############
-###############
-
 (shape and use as hook to clear way)
 ###############
 ###############
@@ -551,87 +480,47 @@ message > lead
 ###############
 ###############
 
-( ######## )
-( ##.ds.## )
-( ##....## )
-( pt.l..## )
-( ##....## )
-( ##~~.~## )
-( ##~~~~tw )
-( ######## )
+(shape into hook to leave wall, then make as another hook)
+###############
+###############
+###############
+#####ssr..#####
+#####.....#####
+####p..l..#####
+#####....######
+#####...qw#####
+###############
+###############
+###############
 
-( ######## )
-( ##...### )
-( pt..l.## )
-( ###t#.## )
-( ##.u~.## )
-( ##.s~.## )
-( ##.s~.## )
-( ###~~~tw )
-( ######## )
+(make longer twice)
+###############
+###############
+###############
+#######~~~e####
+####......~####
+###p.ls.cc~####
+####......~####
+#######...l####
+###############
+###############
+###############
 
-(triple: drop single one, use the rest to orient right)
-( ######## )
-( pt.l..## )
-( ##..u.## )
-( ##.ss.## )
-( ###~~.## )
-( ###~~~## )
-( ###~.~## )
-( ###~~~tw )
-( ######## )
-
-(triple: make shape that can be pushed around over holes)
-( ######## )
-( pt.l..## )
-( ##..u.## )
-( ##..s.## )
-( ##..s.## )
-( ###.~~## )
-( ###.~~## )
-( ###~~~tw )
-( ######## )
-
-(INSERT level where you push the bridge piece to connect with the corner 1tile snake)
-(to make it possible to become that snake and clear the exit)
-
-( ########## )
-( #####...## )
-( #####r..## )
-( ##..h~l.tw )
-( pt.l.~..## )
-( ########## )
-( ########## )
-
-( ######### )
-( ##~~~~~tw )
-( ##.....## )
-( pt.l.f.## )
-( ##.....## )
-( ##~~u~~## )
-( ######### )
-
-( ######### )
-( ##.....## )
-( ##...c.## )
-( ##.....## )
-( ##...~~## )
-( pt.l.~ltw )
-( ######### )
-
-(INSERT level where you actually have to close two snakes instead of using them)
-(one snake is longer and still not useful over the hole...)
-
-( ############# )
-( ##.......#### )
-( pt.l.l.ls#### )
-( ##.......#### )
-( ##.......~.## )
-( ########~~.tw )
-( ############# )
+(shape and combine)
+###############
+###############
+#######..s.e###
+####.....s~####
+###p.l....~####
+####...ar..####
+####..lb...####
+####.......####
+#######....####
+###############
+###############
 
 
-message > leave behind, pt. 1
+message Move on without.
 
 (LEVEL SERIES: SPLIT IN C)
 
@@ -648,31 +537,50 @@ message > leave behind, pt. 1
 ###############
 ###############
 
-(create self-push situation)
-###############
-###############
-#####ssss.#####
-####.s..s..####
-####.....s.####
-###p.ls..s.####
-####.......####
-#######.#######
-######..e######
-###############
-###############
+(
+    (maybe not needed)
+    (create self-push situation)
+    ###############
+    ###############
+    #####ssss.#####
+    ####.s..s..####
+    ####.....s.####
+    ###p.ls..s.####
+    ####.......####
+    #######.#######
+    ######..e######
+    ###############
+    ###############
+)
 
 (fill C in correct order to still have space to even move)
 ###############
 ###############
-#####bbbbb.####
-####.b.a.b.####
-####..ba...####
-####..ba.######
-####.....######
-###p..lss######
-#####...#######
-####..e########
+#####bbbb.#####
+####.b..b.#####
+####...a..#####
+####...a#.#####
+####...a..#####
+#######b#######
+####p.lb.e#####
 ###############
+###############
+
+(
+    (maybe not needed)
+    ###############
+    ###############
+    #####bbbbb.####
+    ####.b.a.b.####
+    ####..ba...####
+    ####..ba.######
+    ####.....######
+    ###p..lss######
+    #####...#######
+    ####..e########
+    ###############
+)
+
 
 (split correct part)
 ###############
@@ -704,23 +612,6 @@ message > leave behind, pt. 1
 
 
 (THEME: REORIENT BIG SNAKE IN SMALL SPACE, CLAUSTROPHOBIA)
-
-message > leave behind, pt. 2
-
-(find direction so oriented right way)
-(
-    ###############
-    ###############
-    ######...######
-    #####.#.#.#####
-    ####.ssss.w####
-    ####.s#.#.#####
-    #####s.....####
-    ####.s#.#..####
-    ###p.l...######
-    #######.#######
-    ###############
-)
 
 (SPLIT TO CHANGE LENGTH)
 
@@ -762,8 +653,8 @@ message > leave behind, pt. 2
 ####......s####
 ###p.ls..ls####
 ####.......####
-#####.###.#####
-#####~~~~~~w###
+####..##..#####
+#####~~~~.w####
 ###############
 ###############
 
@@ -790,19 +681,24 @@ one where possible target lengths per starting length are explored
 
 (SPLIT TO MAKE SHAPE)
 
-(split to throw into hole, len 2)
-(idea: allows turning over the hole while having a return platform)
-###############
-###############
-#####~~~~~~####
-####~~~~~~~w###
-####~~~~~~~####
-####~~~~~~~####
-###p..l...l####
-####....sss####
-#####.....#####
-###############
-###############
+
+(
+    (WIP, used hole filling, but maybe can do something similar?)
+    (split to throw into hole, len 2)
+    (idea: allows turning over the hole while having a return platform)
+    ###############
+    ###############
+    #####~~~~~~####
+    ####~~~~~~~w###
+    ####~~~~~~~####
+    ####~~~~~~~####
+    ###p..l...l####
+    ####....sss####
+    #####.....#####
+    ###############
+    ###############
+)
+
 
 (SPLIT AND CARE ABOUT OPENINGS)
 
@@ -836,16 +732,17 @@ one where possible target lengths per starting length are explored
 ###############
 ###############
 
-(variation: fill the hole, actually avoid connection)
+(variation: make connection)
+(WIP: too hard?)
 ###############
 ###############
-######..w######
-#####sd~#######
-#####r~~..#####
-######.....####
-####p...hl.####
-#####...ss.####
-######...######
+#######~~e#####
+#####..~~h#####
+#####......####
+####p..hl..####
+#####..ss..####
+#####......####
+######....#####
 ###############
 ###############
 
@@ -895,7 +792,7 @@ one where possible target lengths per starting length are explored
 ###############
 )
 
-message > close
+message Become whole.
 
 (CAN MESS WITH LEVEL STRUCTURE AT THIS POINT, CONNECTING TO EXITS DIRECTLY)
 (WIP, SINCE STILL LINEAR FOR NOW)
@@ -916,32 +813,31 @@ message > close
 (get extra length into position first, use split to make right shape needed to leave)
 ###############
 ###############
-###p.l#########
-####.s.########
-####.s.l~~~####
-####...#~~~w###
-####ss.#~~~####
-####s......####
-####s......####
-####ss#########
+####p.l########
+#####.ss#~#####
+#####...l~w####
+#####...#~#####
+#####ss.#~#####
+#####s....#####
+#####s....#####
+#####ss########
 ###############
 
 (actually move for a while as closed snake and use to navigate small spaces)
 ###############
 ###############
 ###############
-###.....#~~~###
-###.d.ss#~~~w##
-###....s#~~~###
-##p.lr9s#...###
+###..#..#..q###
+###.d.ss#..jw##
+###....s....###
+##p.lr9s....###
 ###...ss....###
 ###############
 ###############
 ###############
 
-message > bounce
 message Thank you for testing this far! =)
-message WIP Section, incomplete and somewhat unsorted!
+message The remaining levels are currently broken.
 
 (new: ball)
 (launch ball to kick boxes)
