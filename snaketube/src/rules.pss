@@ -331,7 +331,7 @@ dirs [ con:> action.again_move:dirs | con:< add action.again_move:dirs ]
 [ con:> add vs_con_lowest:> ]
 
 (make wall corners temporarily sharper to match presence of a block with a sharp corner)
-[ cut:> | was wall add <.wall ]
+[ cut:> | was stationary.wall add <.wall ]
 [ vs_wall_inner_corner:^ add vs_wall_inner_corner_sharp:^ | v.wall ]
 [ v.wall | vs_wall_inner_corner:> add vs_wall_inner_corner_sharp:> ]
 [ was moving.wall add wall ]
