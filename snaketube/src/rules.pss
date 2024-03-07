@@ -255,7 +255,7 @@ dirs [ con:> supported:dirs | con:< add supported:dirs ]
 (do something with each flying item now)
 
 (hit snake end)
-[ gpItem snake meta_exit/spawnpoint no any:> was now_fly:> add col_move:> ]
+[ gpItem snake meta_exit/spawnpoint no any:> was now_fly:> ]
 [ gpItem snake                      no any:> was now_fly:> add col_snake:> ] sfx7 (soft collision)
 
 (hit wall/ block)
