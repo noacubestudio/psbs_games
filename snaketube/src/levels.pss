@@ -103,45 +103,6 @@ message Work in progress: lots of levels are currently broken!
     ###############
     ###############
     ###############
-
-    (req. single end)
-    ###############
-    ###############
-    ###############
-    #####.....#####
-    ####*..l..#####
-    #####.....#####
-    #####.d...#####
-    #####.....#####
-    #######+.e#####
-    ###############
-    ###############
-
-    (req. double end on corner)
-    ###############
-    ###############
-    ###############
-    #####...#.#####
-    #####..c..#####
-    ####p.l..+.w###
-    #####..d.######
-    #####....######
-    ###############
-    ###############
-    ###############
-
-    (tricky)
-    ###############
-    ###############
-    #####.....#####
-    #####..d..#####
-    ####...c...####
-    ###p.l...+.le##
-    ####...h...####
-    #####.....#####
-    #####.....#####
-    ###############
-    ###############
 )
 
 
@@ -661,20 +622,18 @@ message Move on without.
 ###############
 ###############
 
-(WIP, IMPROVE AND ADD - split to change launcher parity)
-(
-    ###############
-    ###############
-    ###############
-    ####......#####
-    ###p.lsss.#####
-    ####......#####
-    ####..u#.######
-    ########.9w####
-    ########~~#####
-    ###############
-    ###############
-)
+(split to change launcher parity)
+###############
+###############
+######..ss#####
+####....s..####
+###p.l..d..####
+####.......####
+######..##.####
+#########r.w###
+#########..####
+###############
+###############
 
 (split and combine to get different length)
 ###############
@@ -690,11 +649,11 @@ message Move on without.
 ###############
 
 (
-wip teach splitting granularily for different lengths, 
-maybe a bunch of forced examples?
-one with two orientations or mirroring, one with rotation...
-one with different ends to get the same shape
-one where possible target lengths per starting length are explored
+    wip: teach splitting granularily for different lengths, 
+    maybe a bunch of forced examples?
+    one with two orientations or mirroring, one with rotation...
+    one with different ends to get the same shape
+    one where possible target lengths per starting length are explored
 )
 
 (teach)
@@ -710,45 +669,10 @@ one where possible target lengths per starting length are explored
 ( ##7r..~~###### )
 ( ############## )
 
-(SPLIT TO MAKE SHAPE)
-
-
-(
-    (WIP, used hole filling, but maybe can do something similar?)
-    (split to throw into hole, len 2)
-    (idea: allows turning over the hole while having a return platform)
-    ###############
-    ###############
-    #####~~~~~~####
-    ####~~~~~~~w###
-    ####~~~~~~~####
-    ####~~~~~~~####
-    ###p..l...l####
-    ####....sss####
-    #####.....#####
-    ###############
-    ###############
-)
-
 
 (SPLIT AND CARE ABOUT OPENINGS)
 
-(split to use corner)
-###############
-###############
-####~~~~#######
-####~fqfqe#####
-####~iiii######
-####.icj.######
-####.......####
-###p..lsss.####
-####.......####
-###############
-###############
-
-
-(connect with existing piece)
-(variation: make hook)
+(make hook)
 (the corners make this more difficult, can't use L shape, only S)
 (maybe do variant that explores both?)
 ###############
@@ -763,7 +687,19 @@ one where possible target lengths per starting length are explored
 ###############
 ###############
 
-(variation: make connection)
+(split to use corner)
+###############
+###############
+####~~~~#######
+####~fqfqe#####
+####~iiii######
+####.icj.######
+####.......####
+###p..lsss.####
+####.......####
+###############
+###############
+
 (WIP: too hard?)
 ###############
 ###############
@@ -795,18 +731,33 @@ one where possible target lengths per starting length are explored
 (RECONNECT VIA SELF PUSH)
 (COMBINATION OF BOTH SPLITTING METHODS)
 
-(push self to avoid splitting off)
+(push self to connect without splitting)
 ###############
 ###############
 ###############
-##p..ls.s.#####
-###...sss.#####
-###.......hqw##
-#####.....#i###
-######......###
-#######.....###
+####..sss.#####
+####..l.l.#####
+####......lse##
+###p..l...#s###
+####......ls###
 ###############
 ###############
+###############
+
+(
+    (maybe do this instead. but could be cheesable?)
+    ###############
+    ###############
+    ###############
+    ####..sss.#####
+    ####..l.l.#####
+    ####.#....lse##
+    ###p..l....s###
+    ####......ls###
+    ###############
+    ###############
+    ###############
+)
 
 (push self or create C, too difficult right now)
 (
@@ -882,421 +833,3 @@ message Become whole.
 ###############
 
 message Thank you for testing this far! =)
-message The remaining levels are currently broken.
-
-(new: ball)
-(launch ball to kick boxes)
-###############
-###############
-###############
-###.....#######
-##p..l.~#.~~w##
-###....~~ss.###
-###..6..~...###
-###.....#######
-###############
-###############
-###############
-
-(new: ball in closed shapes, hole to launch)
-###############
-###############
-#####......####
-####....~~7w###
-###p.l..~~~####
-####....~~~####
-####..2..~~####
-####..s....####
-#####......####
-###############
-###############
-
-( ######### )
-( pt..l..## )
-( ##.....## )
-( ##..2s.## )
-( ##..s..## )
-( ##.....## )
-( ##.....## )
-( ##.....tw )
-( ######### )
-
-(U shape with ball: parity)
-###############
-######~~#~~####
-######ss.r9w###
-####..~~.~~####
-###p.l~~~~~####
-####..~~.~~####
-####...sss.####
-#####..s.2.####
-######.....####
-###############
-###############
-
-(new: can also fly into ball itself to move that snake)
-(launch ball to catch, launch self to kick)
-###############
-###############
-#####.....#####
-####p.l.4.#####
-#####.....#####
-#####~~~~~#####
-#####~~u~~#####
-#####..~..w####
-#####~~~~~#####
-###############
-###############
-
-(launch ball to catch, launch self to kick)
-###############
-###############
-#####~~~~~#####
-#####.d~d.w####
-#####~~~~~#####
-#####~~~~~#####
-#####.....#####
-####p.l.3.#####
-#####.....#####
-###############
-###############
-
-(avoid kicking of one into wall by removing other first?)
-( ############# )
-( ############# )
-( #####~~~ttttw )
-( #####~.~##### )
-( ##...6..5..## )
-( pt..l......## )
-( ##.........## )
-( ############# )
-( ############# )
-
-(find place to get rid of ball so that snake can be turned around)
-###############
-###############
-###############
-###p.l~~~~~####
-####.......####
-####....4..####
-######.....####
-######~~.~~w###
-######$$$$$####
-###############
-###############
-
-(WIP)
-(INSERT level about moving a snake with ball around for far enough with bounces until there is a way to actually PUSH it into a wall facing spot, so the ball can escape)
-
-(new: balls actually also pilot snakes)
-(new: use a ball to hit a ball to avoid dying)
-(launch ball to catch, launch another to kick)
-###############
-###############
-###############
-###.....~~~.###
-###.66.#~~~s###
-###......~~l###
-##p.l...##..w##
-###....########
-###############
-###############
-###############
-
-(place catcher for the automatic return of player after snake change)
-###############
-###############
-###############
-######~~~######
-###.6r~~~.q.###
-###.........###
-##p.l.###c.~###
-###...####..w##
-###############
-###############
-###############
-
-( aug 29         )
-( ############## )
-( ############## )
-( ######...##### )
-( ####...d..#### )
-( ####.6..~~#### )
-( ####.....~#### )
-( ###p.l#~~jw### )
-( ####..######## )
-( ############## )
-( ############## )
-
-(
-    ##############
-    ####......####
-    ####.7##..####
-    ####..#2~~####
-    ###r.l.l.~####
-    ##ps....~~####
-    ####.....~sw##
-    ########~~s###
-    ######.~~~l###
-    ##############
-)
-
-(align snake before adding ball so it works in the desired direction)
-###############
-###############
-####.......####
-####...d.4.####
-####~~~~~~~####
-####~~~.~~~####
-####~~~s~~~####
-###p~~~l~~~w###
-####~~~.~~~####
-###############
-###############
-
-(align snake and catchers for the perfect loop that fills in the ground)
-###############
-###############
-##.....~~#...##
-##6.s2.~~#.#.##
-##..r..~~~~..##
-###....~~f~.###
-##p.l..~~j..w##
-###.......#####
-######.3..#####
-###############
-###############
-
-
-(double balls that hit each other in middle of a shape just bounce back)
-
-(double ball in snake causes double movement)
-###############
-###############
-#####...#dw####
-####.....cq####
-####...2...####
-###p.l.s..~####
-####...2..~####
-####......~####
-#####......####
-###############
-###############
-
-(balls in end of corner piece allow changing it into different straight piece)
-(wait, why does the one next to the wall survive? long enough from the snake move?)
-###############
-###############
-###.......#####
-##p.l.....#####
-###.......#####
-###~~~.....qw##
-###.....2..u###
-###....2s..2###
-###.........###
-###############
-###############
-
-(test)
-###############
-###############
-###......######
-###......######
-###.2ss.~~~~9w#
-###...2.~~~~.##
-##p.l...#######
-###.....#######
-###############
-###############
-###############
-
-(push snake right so it moves left automatically, away from wall)
-(by using a double mover that has a ball bounce back)
-( ########### )
-( #####~~tttw )
-( ####d2~#### )
-( ##....##### )
-( pt..l..#### )
-( ##.....#### )
-( #...u2.#### )
-( #.s....#### )
-( #.s.22..~~# )
-( ########### )
-
-(opposite flying machines)
-(doesn't always move when it should hmm)
-
-( ############ )
-( ########...w )
-( ##...rhq.~~# )
-( ##...s2i.~~# )
-( ##.......~~# )
-( pt..l....~~# )
-( ##.......~~# )
-( ##...s2.i~~# )
-( ##...rhhj~~# )
-( ############ )
-
-( ####### )
-( ##...## )
-( ptlss#w )
-( ##...## )
-( ##sd.## )
-( ##s..## )
-( ##d..## )
-( ##i2.## )
-( ##us.## )
-( ##...## )
-( ####### )
-
-(connect self with snake that has ball in it)
-###############
-###############
-#####..s.######
-####p.ls.######
-#####....5e####
-#####.ss..#####
-#####.s...#####
-#####.s...#####
-######ss..#####
-###############
-###############
-
-(variation, needs more time)
-(
-    ###############
-    #####~~~~~e####
-    #####~~~.~~####
-    #####~~~~~~####
-    #####.6....####
-    #####...ss.####
-    #####..s.s.####
-    ####p.ls.s#####
-    #####...ss#####
-    ###############
-    ###############
-)
-
-(old broken combination lock idea)
-(
-    ###############
-    ######..sss...#
-    ######..48d...#
-    #######....u..#
-    ###p#f.....ss.#
-    ###.#.#.....d.#
-    #.u777u.......#
-    #.sssss.......#
-    ############w##
-    ###############
-    ###############
-
-    (weird testing)
-    ###############
-    ###############
-    ######fq#######
-    #p...q.......##
-    ##......fl...##
-    ##..iiirq....##
-    ##..iic9i....##
-    ##..iclfj....##
-    ##..chhj.....##
-    ###############
-    ###############
-
-    ###############
-    ###############
-    ####dssd#######
-    ##~~......~fe##
-    #p~~.l~~..~cq##
-    ##~~~~~~~~~~~##
-    ##~~iucjui...##
-    ##~~iaabbi...##
-    ##~~chhhhj...##
-    ###############
-    ###############
-
-    ###############
-    ###############
-    ##...........##
-    #p.l.........##
-    ##~~~~~~~~~~~##
-    ##~~~~~~~~~~~##
-    ##..auiiua...##
-    ##..a-jc9a...##
-    ##..aaaaaa...##
-    ###############
-    ###############
-)
-
-(WIP Playground)
-message That's all for now!
-
-(message Levels beyond this point are merely for testing.)
-
-(
-    ###############
-    ###############
-    ###############
-    ###############
-    ######pss######
-    ######.#s######
-    ######..s######
-    ###############
-    ###############
-    ###############
-    ###############
-)
-
-(
-###############
-##...........##
-##...........##
-##..2d.......##
-##.....2s.2s.##
-##..2u..s..s.##
-pt.l....s..2.##
-##.....2s....tw
-##...........##
-##...6..5....##
-##...........##
-##.2s.u..2...##
-##..s.2..srss##
-##.2s.......s##
-##.........ss##
-###############
-
-(WIP exit of 3 rooms)
-###########
-###.~tttttw
-###.~######
-###.~######
-pt..l..tt##
-##.....#t##
-##d#d#d#t##
-##t#t#t#t##
-##t#t#t#t##
-##......u##
-##......u##
-#######.u##
-###########
-)
-
-(all 4 len split patterns, twice)
-(
-###############
-###############
-####df###qd####
-###cjcl#rjcj###
-###rqfq#fqfl###
-####ju###uc####
-###############
-####ds###rq####
-###scfl#fbad###
-###rjqs#uabj###
-####su###cl####
-###############
-######p.l######
-###############
-###############
-)
