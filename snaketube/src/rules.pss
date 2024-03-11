@@ -52,7 +52,12 @@ dirs [ again_col ] [ was cut:dirs:offs add cut:dirs ]
 
 (hole border)
 [ init ] [ no hole add floor ]
-[ init ] [ hole add vs_hole_edge:> | floor ]
+[ init ] [ hole add vs_hole_edge_1:> vs_hole_edge_2:> | floor ]
+[ init ] [ hole no vs_hole_edge_2:^ | was vs_hole_edge_1:^ ]
+[ init ] [ was vs_hole_edge_2:^ | hole no vs_hole_edge_1:^ ]
+[ init ] [ was vs_hole_edge_2:< vs_hole_edge_1:^ add vs_hole_outer_corner:^ ]
+[ init ] [ hole no vs_hole_edge_1:> vs_hole_outer_corner:> | no hole add vs_hole_inner_corner:^ ]
+
 
 (from a spawnpoint, the player appears)
 [ init ] [ spawnpoint player add again_spawn ]
@@ -320,9 +325,6 @@ dirs [ con:> action.again_move:dirs | con:< add action.again_move:dirs ]
 (----VISUAL ONLY----)
 
 [ was tempVisualObjects ]
-
-(update edge of hole)
-[ floor add vs_hole_edge:> | hole ] (not actually a temp object, but sometimes needs to get added)
 
 (show snake)
 [ snake add vs_snake_base ]

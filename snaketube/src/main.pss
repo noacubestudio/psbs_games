@@ -2,7 +2,7 @@
 (% set color_white    = "#ffffff" %)
 (% set color_fg       = "#6cd9b5" %)
 (% set color_bg       = "#036965" %)
-(% set color_black    = "#111018" %)
+(% set color_black    = "#131916" %)
 
 (% include "prelude.pss" %)
 
