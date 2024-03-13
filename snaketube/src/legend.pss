@@ -46,7 +46,7 @@ init_connectRules = init_conAnotB or init_conBnotA
 
 
 (bottom layer)
-gplowcollide = wall or snake
+gpFullBlock = wall or snake
 
 (on top layer in snake or next to snake)
 gpItem = player or ball or npc
@@ -59,4 +59,4 @@ gpGravity = snake or any:dirs or con:dirs or cut:dirs or meta_exit or spawnpoint
 
 tempVisualObjects = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_snake_base or vs_player:dirs or vs_snake_base:offs or vs_player:dirs:offs or vs_snake_edge:dirs or vs_snake_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_meta_pipe:dirs or vs_meta_pipe:dirs:offs or vs_meta_pipe_closed:dirs or vs_meta_pipe_closed:dirs:offs or vs_npc:dirs or vs_npc:dirs:offs or vs_npc_off or vs_wall_inner_corner_sharp:dirs or vs_snake_col:dirs or vs_meta_arrow:dirs
 
-lowermovedirs = move:dirs or snakeMove:dirs
+gpFullBlockMove = push:dirs or snakeMove:dirs

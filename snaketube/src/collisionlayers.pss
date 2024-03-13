@@ -70,9 +70,11 @@ vs_meta_pipe:dirs:offs, vs_meta_pipe_closed:dirs:offs
 
 --
 
+vs_player:dirs, vs_player:dirs:offs
+--
 npc, ball, ball:offs
 vs_npc:dirs, vs_npc:dirs:offs, vs_npc_off, vs_npc_off:offs
-vs_player:dirs, vs_player:dirs:offs
+
 
 --
 
@@ -96,16 +98,20 @@ col_move:dirs, col_snake:dirs
 col_item:dirs
 maybeBounce
 
-push:dirs
 supported
-dirs -> supported:dirs
+
 dirs -> any:dirs
+
 dirs -> wantsToFlyTo:dirs
+dirs -> wantsToMoveTo:dirs
 
 snakeMove:dirs, wasSnakeMoved:dirs
-move:dirs, wasMoved:dirs
-itemMove:dirs, wasItemMoved:dirs
+dirs -> push:dirs, wasMoved:dirs
+dirs -> itemPush:dirs, wasItemMoved:dirs
 
 dirs -> correctConnectDir:dirs
 follow:dirs
 hasToSplit
+discard_move
+cached_conflict
+dirs -> cached_col:dirs, refresh_cache:dirs

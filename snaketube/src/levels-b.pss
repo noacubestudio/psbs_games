@@ -1,5 +1,4 @@
 message The remaining levels are very early experiments.
-message Some might be broken.
 
 (basic npc push behavior)
 
@@ -43,6 +42,21 @@ message Some might be broken.
 #####.....#####
 ###############
 ###############
+
+(close with npc in 2-length)
+###############
+###############
+##p.l#.##fe####
+###......~...##
+###ss.d.~~u.l##
+###s+...~~sss##
+###s....#######
+###ss..########
+#####.#########
+###############
+###############
+(wip, a version of this could make use of blocks for setup first.)
+
 
 message The remaining levels are outdated and currently broken.
 
