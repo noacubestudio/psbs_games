@@ -1,5 +1,20 @@
 message The remaining levels are very early experiments.
 
+
+(get the gem in the correct single snake)
+(combination lock)
+###############
+###############
+#####~~.~~#####
+####.d~d~d.w###
+####~~~~~~~####
+####.......####
+###p.l+.ss.####
+#####.....#####
+#####.....#####
+###############
+###############
+
 (basic npc push behavior)
 
 (req. single end)
@@ -17,7 +32,33 @@ message The remaining levels are very early experiments.
 
 (longer snake npc behavior)
 
-(req. double end on corner)
+(gem into double - would not be able to recover otherwise)
+###############
+###############
+###############
+###.....#...###
+###..d.+#s#d###
+###.....~l~jw##
+##p..l......###
+###......######
+###############
+###############
+###############
+
+(variation, maybe also cool)
+###############
+###############
+###############
+####..~~l..####
+####..~~.+.####
+###...~~..d####
+##p.l..~~~.####
+###.....~~jw###
+###############
+###############
+###############
+
+(double into gem)
 ###############
 ###############
 ###############
@@ -43,6 +84,19 @@ message The remaining levels are very early experiments.
 ###############
 ###############
 
+(needs more work, based on a ball level)
+###############
+###############
+###############
+####+-.q.######
+####.....######
+###p.l.....qw##
+####...####i###
+####su......###
+###############
+###############
+###############
+
 (close with npc in 2-length)
 ###############
 ###############
@@ -56,6 +110,33 @@ message The remaining levels are very early experiments.
 ###############
 ###############
 (wip, a version of this could make use of blocks for setup first.)
+
+(close with npc in 3-length)
+(wip)
+###############
+###############
+####....#sss.##
+###p.ls..s.s.##
+####.....#.~###
+####.......~###
+#######..oe####
+######obb######
+#######..######
+###############
+###############
+
+(self pushing NPC to push and connect yourself backwards)
+###############
+###############
+####.......####
+###p.lss...####
+####......l####
+####......#####
+####..###+#d###
+####.hq....i###
+####..c....je##
+###############
+###############
 
 
 message The remaining levels are outdated and currently broken.
