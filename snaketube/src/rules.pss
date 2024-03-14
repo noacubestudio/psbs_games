@@ -131,17 +131,28 @@ dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
 [ no snake was itemPush:> add push:> ]
 [ was itemPush:> ]
 
-(COLLISION WITH WALL OR DUE TO CONFLICT)
+(COLLISION)
+(with wall)
 [ push:>/snakeMove:> add col_move:> | wall ] sfx2 (collision sound)
-(detect conflicts)
-[ push:>/snakeMove:> | add wantsToMoveTo:> ]
-[ was wantsToMoveTo:> wantsToMoveTo:< ]
-[ was wantsToMoveTo:> wantsToMoveTo:^ ]
-[ push:>/snakeMove:> add col_move:> | no wantsToMoveTo:> add cached_conflict ] sfx2
-[ was wantsToMoveTo:dirs ]
 
 (spread collision)
 (backpropagate collision markers, these will animate with bounce)
+  [      push:> add col_move:> | col_move:> ]
++ [ snakeMove:> add col_move:> | col_move:> ]
++ dirs [ col_move:dirs con:> | con:< add col_move:dirs ]
+
+(if part in front moves in another direction already, then stop moving into it)
+[ push:>/snakeMove:> add col_move:> | push:perpendicular ] sfx2
+[ push:>/snakeMove:> add col_move:> | snakeMove:perpendicular ] sfx2
+
+(detect conflicts between ones that weren't colliding so far)
+[ push:>/snakeMove:> no col_move:> | add wantsToMoveTo:> ]
+[ was wantsToMoveTo:> wantsToMoveTo:< ]
+[ was wantsToMoveTo:> wantsToMoveTo:^ ]
+[ push:>/snakeMove:> no col_move:> add col_move:> | no wantsToMoveTo:> add cached_conflict ] sfx2 (collision sound)
+[ was wantsToMoveTo:dirs ]
+
+(spread collision again)
   [      push:> add col_move:> | col_move:> ]
 + [ snakeMove:> add col_move:> | col_move:> ]
 + dirs [ col_move:dirs con:> | con:< add col_move:dirs ]
@@ -161,6 +172,9 @@ dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
 
 (don't add to the undo queue if the player collided)
 [ player col_move:> ] -> nosave
+
+(hide multi-directional ones)
+[ was col_move:> col_move:v ]
 
 
 
@@ -184,10 +198,13 @@ dirs [ no push:dirs add hasToSplit con:> | con:< push:dirs ]
 
 (clean collision cache / cached conflicts)
 dirs [ push:>/snakeMove:> was cached_col:dirs add refresh_cache:dirs ]
-[ refresh_cache:> | cached_conflict add refresh_cache:> ]
-[ was cached_col:> add refresh_cache:> | refresh_cache:dirs cached_conflict ]
-[ was cached_col:> add refresh_cache:> | refresh_cache:> ]
+
+  [ refresh_cache:> | was cached_col:> add refresh_cache:> ]
++ [ refresh_cache:> | cached_conflict  add refresh_cache:> ]
++ [ was cached_col:> add refresh_cache:> | refresh_cache:> ]
++ [ was cached_col:> add refresh_cache:> | refresh_cache:dirs cached_conflict ]
 + dirs [ con:> was cached_col:dirs add refresh_cache:dirs | con:< refresh_cache:dirs ]
+
 [ was refresh_cache:dirs del cached_conflict ]
 
 (split movement into item and block movement again)

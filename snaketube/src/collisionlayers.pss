@@ -94,8 +94,8 @@ again_col
 again_exit, again_spawn
 again_gravity
 dirs -> again_move:dirs
-col_move:dirs, col_snake:dirs
-col_item:dirs
+dirs -> col_move:dirs, col_snake:dirs
+dirs -> col_item:dirs
 maybeBounce
 
 supported
