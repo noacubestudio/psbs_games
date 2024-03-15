@@ -171,7 +171,7 @@ dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
   >.  >.<
   .^
 )
-[ checkMove:> | no snake add wantsToMoveTo:> ]
+[ checkMove:> | no snake gpItem add wantsToMoveTo:> ]
   [ checkMove:> no checkMove:^ add col_move:> | wantsToMoveTo:^ ] sfx2
   [ checkMove:> no checkMove:v add col_move:> | wantsToMoveTo:v ] sfx2
   [ checkMove:> no checkMove:< add col_move:> | wantsToMoveTo:< ] sfx2
@@ -180,26 +180,23 @@ dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
   [ wantsToMoveTo:> wantsToMoveTo:< add cached_conflict:> cached_conflict:< ]
 [ was wantsToMoveTo:dirs ]
 
+(single tile conflicts will conflict with each other and collide)
+[ checkMove:> checkMove:^ add col_move:> col_move:^ cached_conflict:> cached_conflict:^ ] sfx2
+[ checkMove:> checkMove:< add col_move:> col_move:< cached_conflict:> cached_conflict:< ] sfx2
+
 (forward propagate stopping movement on the blocks in front)
 (these won't show bump anim)
 [ col_move:> | checkMove:> no col_move:> add discard_move:> ]
 [ discard_move:> | checkMove:> no col_move:> add discard_move:> ]
 + dirs [ discard_move:dirs con:> | con:< add discard_move:dirs ]
 
-(single tile conflicts with no discarded movement yet will collide both ways)
-[ checkMove:> checkMove:^ no discard_move:> discard_move:^ add col_move:> col_move:^ ] sfx2
-[ checkMove:> checkMove:v no discard_move:> discard_move:v add col_move:> col_move:v ] sfx2
-[ checkMove:> checkMove:< no discard_move:> discard_move:< add col_move:> col_move:< ] sfx2
-
 (spread collision markers behind all)
   [ checkMove:> add col_move:> | col_move:> ]
 + dirs [ col_move:dirs con:> | con:< add col_move:dirs ]
 
-(for the new collisions due to conflicts, place marker to remember the conflict.)
-(additional collisions behind the source of conflict can get cached as if they went into a wall)
-[ col_move:> col_move:^ add cached_conflict:> cached_conflict:^ ]
-[ col_move:> col_move:< add cached_conflict:> cached_conflict:< ]
-[ col_move:> no col_move:^ col_move:v col_move:< add cached_col:> ]
+(place double markers on pushed blocks that had conflict as well)
+[ checkMove:> col_move:> add cached_col:> cached_conflict:> ]
+
 
 (do I need to forward propagate again here? maybe basically everything above has to happen in a loop)
 
@@ -238,18 +235,24 @@ dirs [ no push:dirs add hasToSplit con:> | con:< push:dirs ]
 [ was follow:> add snakeMove:> del push:dirs ]
 
 
-(clean collision cache / cached conflicts)
-dirs [ push:>/snakeMove:> was cached_col:dirs add refresh_cache:dirs ]
-dirs [ push:>/snakeMove:> was cached_conflict:v add refresh_cache:v ]
-dirs [ push:>/snakeMove:> was cached_conflict:^ add refresh_cache:^ ]
+(REFRESH COLLISION AND CONFLICT CACHE)
 
-  [ refresh_cache:> | cached_conflict:> add refresh_cache:> ]
-+ [ was cached_col:> add refresh_cache:> | refresh_cache:> ]
-+ [ was cached_col:> add refresh_cache:> | refresh_cache:dirs cached_conflict:> ]
-+ dirs [ con:> was cached_col:dirs add refresh_cache:dirs | con:< refresh_cache:dirs ]
+(refresh collision and conflict markers at push)
+dirs [ push:>/snakeMove:> cached_col:dirs add refresh_cache:dirs ]
+dirs [ push:>/snakeMove:> cached_conflict:dirs add refresh_cache:dirs ]
 
-[ refresh_cache:dirs del cached_conflict:dirs ]
+(refresh collision marker behind already refreshed collision marker)
+(refresh collision marker behind already refreshed conflict marker of any direction)
+(refresh conflict marker in front of already refreshed collision marker)
+  [ cached_col:> add refresh_cache:> | refresh_cache:> ]
++ [ cached_col:> add refresh_cache:> | refresh_cache:dirs cached_conflict:dirs ]
++ [ cached_col:> refresh_cache:> | cached_conflict:> add refresh_cache:> ]
++ dirs [ con:> refresh_cache:dirs | con:< add refresh_cache:dirs ] (spread through multiblocks)
+
+[ refresh_cache:dirs del cached_col:dirs cached_conflict:dirs ]
 [ was refresh_cache:dirs ]
+
+
 
 (split movement into item and block movement again)
 [ push:>/snakeMove:> gpItem add itemPush:> ]
@@ -393,7 +396,7 @@ dirs [ wasSnakeMoved:<                           was cut:dirs add cut:> correctC
 (find multiblocks that could move due to npc)
 (if there was already an attempt that collided, the collision is cached.)
 (it is updated if a relevant part of the collided blocks was moved.)
-[ snake any:< npc no again_fly:< any:v any:^ any:> cached_col:> add again_move:>  ]
+[ snake any:< npc no again_fly:< any:v any:^ any:> cached_col:> cached_conflict:> add again_move:>  ]
 
 
 
