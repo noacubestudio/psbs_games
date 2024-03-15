@@ -94,8 +94,10 @@ again_col
 again_exit, again_spawn
 again_gravity
 dirs -> again_move:dirs
+dirs -> checkMove:dirs
 dirs -> col_move:dirs, col_snake:dirs
 dirs -> col_item:dirs
+dirs -> discard_move:dirs
 maybeBounce
 
 supported
@@ -112,6 +114,8 @@ dirs -> itemPush:dirs, wasItemMoved:dirs
 dirs -> correctConnectDir:dirs
 follow:dirs
 hasToSplit
-discard_move
-cached_conflict
-dirs -> cached_col:dirs, refresh_cache:dirs
+
+(maybe could all be on same line)
+dirs -> cached_conflict:dirs
+dirs -> cached_col:dirs 
+dirs -> refresh_cache:dirs

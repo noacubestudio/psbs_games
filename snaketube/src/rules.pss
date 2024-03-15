@@ -131,50 +131,91 @@ dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
 [ no snake was itemPush:> add push:> ]
 [ was itemPush:> ]
 
+
 (COLLISION)
+[ was checkMove:dirs ]
+[ push:>/snakeMove:> add checkMove:> ]
+
 (with wall)
-[ push:>/snakeMove:> add col_move:> | wall ] sfx2 (collision sound)
+[ checkMove:> add col_move:> | wall ] sfx2 (collision sound)
 
 (spread collision)
 (backpropagate collision markers, these will animate with bounce)
-  [      push:> add col_move:> | col_move:> ]
-+ [ snakeMove:> add col_move:> | col_move:> ]
+  [ checkMove:> add col_move:> | col_move:> ]
 + dirs [ col_move:dirs con:> | con:< add col_move:dirs ]
 
-(if part in front moves in another direction already, then stop moving into it)
-[ push:>/snakeMove:> add col_move:> | push:perpendicular ] sfx2
-[ push:>/snakeMove:> add col_move:> | snakeMove:perpendicular ] sfx2
+(forward propagate stopping movement on the blocks that weren't going to be pushed anyway)
+(these won't show bump anim)
+[ col_move:> | checkMove:> no col_move:> add discard_move:> ]
+[ discard_move:> | checkMove:> no col_move:> add discard_move:> ]
++ dirs [ discard_move:dirs con:> | con:< add discard_move:dirs ]
 
-(detect conflicts between ones that weren't colliding so far)
-[ push:>/snakeMove:> no col_move:> | add wantsToMoveTo:> ]
-[ was wantsToMoveTo:> wantsToMoveTo:< ]
-[ was wantsToMoveTo:> wantsToMoveTo:^ ]
-[ push:>/snakeMove:> no col_move:> add col_move:> | no wantsToMoveTo:> add cached_conflict ] sfx2 (collision sound)
+(remember collisions and no longer check these for conflicts, as they already won't move)
+[ col_move:> add cached_col:> del checkMove:> push:> snakeMove:> ]
+[ discard_move:> del checkMove:> push:> snakeMove:> ]
+[ was discard_move:dirs ]
+
+
+(CONFLICTS)
+
+(in a non-cyclic conflict, let the conflicting movement through and stop the source of the conflict instead)
+(example, where the left is the source of the conflict: )
+(
+  >^
+)
+[ checkMove:> no checkMove:^ add col_move:> | checkMove:^ add cached_conflict:> ] sfx2
+[ checkMove:> no checkMove:v add col_move:> | checkMove:v add cached_conflict:> ] sfx2
+
+(also do this if the tile is pointed at by multiple pushers but not a snake itself)
+(
+  >.  >.<
+  .^
+)
+[ checkMove:> | no snake add wantsToMoveTo:> ]
+  [ checkMove:> no checkMove:^ add col_move:> | wantsToMoveTo:^ ] sfx2
+  [ checkMove:> no checkMove:v add col_move:> | wantsToMoveTo:v ] sfx2
+  [ checkMove:> no checkMove:< add col_move:> | wantsToMoveTo:< ] sfx2
+  (at the actual conflict, indicate it)
+  [ wantsToMoveTo:> wantsToMoveTo:^ add cached_conflict:> cached_conflict:^ ]
+  [ wantsToMoveTo:> wantsToMoveTo:< add cached_conflict:> cached_conflict:< ]
 [ was wantsToMoveTo:dirs ]
 
-(spread collision again)
-  [      push:> add col_move:> | col_move:> ]
-+ [ snakeMove:> add col_move:> | col_move:> ]
+(forward propagate stopping movement on the blocks in front)
+(these won't show bump anim)
+[ col_move:> | checkMove:> no col_move:> add discard_move:> ]
+[ discard_move:> | checkMove:> no col_move:> add discard_move:> ]
++ dirs [ discard_move:dirs con:> | con:< add discard_move:dirs ]
+
+(single tile conflicts with no discarded movement yet will collide both ways)
+[ checkMove:> checkMove:^ no discard_move:> discard_move:^ add col_move:> col_move:^ ] sfx2
+[ checkMove:> checkMove:v no discard_move:> discard_move:v add col_move:> col_move:v ] sfx2
+[ checkMove:> checkMove:< no discard_move:> discard_move:< add col_move:> col_move:< ] sfx2
+
+(spread collision markers behind all)
+  [ checkMove:> add col_move:> | col_move:> ]
 + dirs [ col_move:dirs con:> | con:< add col_move:dirs ]
 
-(forward propagate stopping movement on blocks that couldn't have moved anyway)
-[ col_move:> | push:> no col_move:> add discard_move ]
-  [ discard_move push:> | push:> no col_move:> add discard_move ]
-+ dirs [ discard_move con:> | con:< add discard_move ]
+(for the new collisions due to conflicts, place marker to remember the conflict.)
+(additional collisions behind the source of conflict can get cached as if they went into a wall)
+[ col_move:> col_move:^ add cached_conflict:> cached_conflict:^ ]
+[ col_move:> col_move:< add cached_conflict:> cached_conflict:< ]
+[ col_move:> no col_move:^ col_move:v col_move:< add cached_col:> ]
 
-(remove all movement markers on collided tiles) 
-[ col_move:>   was push:>/snakeMove:> ]
-[ discard_move was push:> ]
-[ was discard_move ]
+(do I need to forward propagate again here? maybe basically everything above has to happen in a loop)
 
-(cache the result of collision)
-[ col_move:> add cached_col:> ]
+(clear the movement)
+[ col_move:> del push:>/snakeMove:> ]
+[ discard_move:> del push:>/snakeMove:> ]
+[ was checkMove:> ]
+[ was discard_move:> ]
+
+(don't visualize multi-directional collision)
+[ was col_move:> col_move:v ]
+[ was col_move:> col_move:< ]
 
 (don't add to the undo queue if the player collided)
 [ player col_move:> ] -> nosave
 
-(hide multi-directional ones)
-[ was col_move:> col_move:v ]
 
 
 
@@ -196,20 +237,24 @@ dirs [ no push:dirs add hasToSplit con:> | con:< push:dirs ]
 (add snakeMove markers to snake)
 [ was follow:> add snakeMove:> del push:dirs ]
 
+
 (clean collision cache / cached conflicts)
 dirs [ push:>/snakeMove:> was cached_col:dirs add refresh_cache:dirs ]
+dirs [ push:>/snakeMove:> was cached_conflict:v add refresh_cache:v ]
+dirs [ push:>/snakeMove:> was cached_conflict:^ add refresh_cache:^ ]
 
-  [ refresh_cache:> | was cached_col:> add refresh_cache:> ]
-+ [ refresh_cache:> | cached_conflict  add refresh_cache:> ]
+  [ refresh_cache:> | cached_conflict:> add refresh_cache:> ]
 + [ was cached_col:> add refresh_cache:> | refresh_cache:> ]
-+ [ was cached_col:> add refresh_cache:> | refresh_cache:dirs cached_conflict ]
++ [ was cached_col:> add refresh_cache:> | refresh_cache:dirs cached_conflict:> ]
 + dirs [ con:> was cached_col:dirs add refresh_cache:dirs | con:< refresh_cache:dirs ]
 
-[ was refresh_cache:dirs del cached_conflict ]
+[ refresh_cache:dirs del cached_conflict:dirs ]
+[ was refresh_cache:dirs ]
 
 (split movement into item and block movement again)
 [ push:>/snakeMove:> gpItem add itemPush:> ]
 [ gpItem no snake was push:> ]
+
 
 (actually do the movement)
 (use markers to move all items in those tiles)
