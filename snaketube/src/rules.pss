@@ -109,8 +109,7 @@ dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
 )
 
 (remove temp markers from last time)
-[ was wasMoved:dirs/wasSnakeMoved:dirs/wasItemMoved:dirs/follow:dirs/hasToSplit ]
-
+[ was wasMoved:dirs/wasSnakeMoved:dirs/wasItemMoved:dirs/follow:dirs/hasToSplit/checkMove:dirs/npcBody ]
 
 (INITIAL MOVE)
 (push block/ item in front)
@@ -158,19 +157,17 @@ dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
 
 (CONFLICTS)
 
-(in a non-cyclic conflict, let the conflicting movement through and stop the source of the conflict instead)
-(example, where the left is the source of the conflict: )
-(
-  >^
-)
-[ checkMove:> no checkMove:^ add col_move:> | checkMove:^ add cached_conflict:> ] sfx2
-[ checkMove:> no checkMove:v add col_move:> | checkMove:v add cached_conflict:> ] sfx2
+(only movements that didn't collide into wall are left)
 
-(also do this if the tile is pointed at by multiple pushers but not a snake itself)
-(
-  >.  >.<
-  .^
-)
+(mark bodies of actors that can still move)
+[ npc checkMove:> no col_move:> add npcBody ]
+[ npcBody con:> | con:< add npcBody ]
+
+(conflict: something pushing directly into an actor moving sideways or backwards)
+[ checkMove:> no con:> add col_move:> | npcBody checkMove:perpendicular add cached_conflict:> ] sfx2
+[ checkMove:> no con:> add col_move:> | npcBody checkMove:<             add cached_conflict:> ] sfx2
+
+(conflict at empty tile, which is moved into from multiple directions)
 [ checkMove:> | no snake gpItem add wantsToMoveTo:> ]
   [ checkMove:> no checkMove:^ add col_move:> | wantsToMoveTo:^ ] sfx2
   [ checkMove:> no checkMove:v add col_move:> | wantsToMoveTo:v ] sfx2
@@ -180,25 +177,25 @@ dirs [ any:> any:< was snakeMove:dirs add col_item:dirs ] sfx2
   [ wantsToMoveTo:> wantsToMoveTo:< add cached_conflict:> cached_conflict:< ]
 [ was wantsToMoveTo:dirs ]
 
-(single tile conflicts will conflict with each other and collide)
-[ checkMove:> checkMove:^ add col_move:> col_move:^ cached_conflict:> cached_conflict:^ ] sfx2
-[ checkMove:> checkMove:< add col_move:> col_move:< cached_conflict:> cached_conflict:< ] sfx2
+(conflict at tile moved into multiple directions)
+[ checkMove:> checkMove:^ no npcBody add col_move:> col_move:^ ] sfx2
+[ checkMove:> checkMove:< no npcBody add col_move:> col_move:< ] sfx2
 
-(forward propagate stopping movement on the blocks in front)
-(these won't show bump anim)
+(stop all movement that can't happen due to a conflict)
+
+(in front)
 [ col_move:> | checkMove:> no col_move:> add discard_move:> ]
 [ discard_move:> | checkMove:> no col_move:> add discard_move:> ]
 + dirs [ discard_move:dirs con:> | con:< add discard_move:dirs ]
 
-(spread collision markers behind all)
+(behind the conflict, these will show a collision animation)
   [ checkMove:> add col_move:> | col_move:> ]
 + dirs [ col_move:dirs con:> | con:< add col_move:dirs ]
 
-(place double markers on pushed blocks that had conflict as well)
+(cache these added collisions behind the conflicts)
 [ checkMove:> col_move:> add cached_col:> cached_conflict:> ]
 
 
-(do I need to forward propagate again here? maybe basically everything above has to happen in a loop)
 
 (clear the movement)
 [ col_move:> del push:>/snakeMove:> ]
@@ -423,7 +420,7 @@ dirs [ wasSnakeMoved:<                           was cut:dirs add cut:> correctC
 [ snake no any:v any:^ any:> add vs_con_end ]
 
 (npc at snake end)
-[ npc snake any:< no any:v any:^ any:> add vs_npc:> ]
+[ npc snake any:< no any:v any:^ any:> again_fly:< add vs_npc:> ]
 [ npc no vs_npc:dirs add vs_npc_off ]
 
 (direction for eye)

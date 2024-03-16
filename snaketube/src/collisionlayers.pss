@@ -78,44 +78,51 @@ vs_npc:dirs, vs_npc:dirs:offs, vs_npc_off, vs_npc_off:offs
 
 --
 
-(invsible markers)
+(INVISIBLE MARKERS)
+
 meta_exit, spawnpoint
 snake
 player
+playerFacing:dirs
 
+(init)
 init
 init_conAnotB, init_conBnotA
 init_noMoreCon
 dirs -> init_notOutside:dirs
-playerFacing:dirs
 
-dirs -> again_fly:dirs, now_fly:dirs
-again_col
-again_exit, again_spawn
-again_gravity
+(temporary groups)
+dirs -> any:dirs
+
+(movement conflicts and collision)
 dirs -> again_move:dirs
 dirs -> checkMove:dirs
+dirs -> wantsToMoveTo:dirs
 dirs -> col_move:dirs, col_snake:dirs
 dirs -> col_item:dirs
 dirs -> discard_move:dirs
-maybeBounce
-
-supported
-
-dirs -> any:dirs
-
-dirs -> wantsToFlyTo:dirs
-dirs -> wantsToMoveTo:dirs
-
-snakeMove:dirs, wasSnakeMoved:dirs
-dirs -> push:dirs, wasMoved:dirs
-dirs -> itemPush:dirs, wasItemMoved:dirs
-
-dirs -> correctConnectDir:dirs
-follow:dirs
-hasToSplit
+npcBody
 
 (maybe could all be on same line)
 dirs -> cached_conflict:dirs
 dirs -> cached_col:dirs 
 dirs -> refresh_cache:dirs
+
+(move)
+snakeMove:dirs, wasSnakeMoved:dirs
+dirs -> push:dirs, wasMoved:dirs
+dirs -> itemPush:dirs, wasItemMoved:dirs
+dirs -> correctConnectDir:dirs
+follow:dirs
+hasToSplit
+
+(fly)
+dirs -> wantsToFlyTo:dirs
+dirs -> again_fly:dirs, now_fly:dirs
+maybeBounce
+
+(again)
+again_col
+again_exit, again_spawn
+supported
+again_gravity

@@ -909,7 +909,7 @@ discard_move:dirs
 transparent
 
 cached_col:dirs
- #ffff90
+transparent #ffff90
 ................
 ................
 ................
@@ -929,7 +929,7 @@ cached_col:dirs
 rot:up:dirs
 
 cached_conflict:dirs
- #ff9090
+transparent #ff9090
 ................
 ................
 .......00.......
@@ -970,4 +970,7 @@ wantsToFlyTo:dirs
 transparent
 
 wantsToMoveTo:dirs
+transparent
+
+npcBody
 transparent
