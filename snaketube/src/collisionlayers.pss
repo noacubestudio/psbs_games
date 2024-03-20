@@ -83,44 +83,43 @@ vs_npc:dirs, vs_npc:dirs:offs, vs_npc_off, vs_npc_off:offs
 meta_exit, spawnpoint
 snake
 player
-playerFacing:dirs
+player_facing:dirs
 
 (init)
 init
-init_conAnotB, init_conBnotA
-init_noMoreCon
-dirs -> init_notOutside:dirs
+init_connect_only_a, init_connect_only_b
+init_dont_connect
 
 (temporary groups)
 dirs -> any:dirs
 
 (move)
-snakeMove:dirs, wasSnakeMoved:dirs
-dirs -> push:dirs, wasMoved:dirs
-dirs -> itemPush:dirs, wasItemMoved:dirs
-dirs -> correctConnectDir:dirs
+snake_move:dirs, was_snake_moved:dirs
+dirs -> push:dirs, was_pushed:dirs
+dirs -> item_push:dirs, was_item_pushed:dirs
+dirs -> fixed_tail_con:dirs
 follow:dirs
-discardFollow
+discard_follow
 
 (movement conflicts and collision)
 dirs -> again_move:dirs
-dirs -> checkMove:dirs
-dirs -> checkFollow:dirs
-dirs -> wantsToMoveTo:dirs
-dirs -> collMove:dirs, col_snake:dirs
+dirs -> try_move:dirs
+dirs -> try_follow:dirs
+dirs -> try_move_dest:dirs
+dirs -> col_move:dirs, col_snake:dirs
 dirs -> col_item:dirs
-dirs -> discardMove:dirs
-snakeEnd
+dirs -> discard_move:dirs
+snake_end
 
 (maybe could all be on same line)
-dirs -> cachedConflict:dirs
-dirs -> cachedColl:dirs 
+dirs -> conflict_cache:dirs
+dirs -> col_cache:dirs 
 dirs -> refresh_cache:dirs
 
 (fly)
-dirs -> wantsToFlyTo:dirs
+dirs -> try_fly_dest:dirs
 dirs -> again_fly:dirs, now_fly:dirs
-maybeBounce
+try_bounce
 
 (again)
 again_col

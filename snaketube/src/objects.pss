@@ -785,20 +785,19 @@ transparent
 init
 transparent
 
-init_conAnotB
+init_connect_only_a
 transparent
 
-init_conBnotA
+init_connect_only_b
 transparent
 
-init_noMoreCon
+init_dont_connect
 transparent
 
-
-playerFacing:dirs
+player_facing:dirs
 transparent
 
-collMove:dirs
+col_move:dirs
 transparent
 
 col_item:dirs
@@ -833,11 +832,11 @@ push:dirs
 ................
 rot:up:dirs
 
-wasMoved:dirs
+was_pushed:dirs
 transparent #0080FF
 copy: push:dirs
 
-itemPush:dirs
+item_push:dirs
 green
 ................
 .......00.......
@@ -857,11 +856,11 @@ green
 ................
 rot:up:dirs
 
-wasItemMoved:dirs
+was_item_pushed:dirs
 transparent lightgreen
-copy: itemPush:dirs
+copy: item_push:dirs
 
-snakeMove:dirs
+snake_move:dirs
 #FF9000
 ................
 ................
@@ -881,11 +880,11 @@ snakeMove:dirs
 ................
 rot:up:dirs
 
-wasSnakeMoved:dirs
+was_snake_moved:dirs
 transparent #00B0FF
-copy: snakeMove:dirs
+copy: snake_move:dirs
 
-checkMove:dirs
+try_move:dirs
 transparent #FF9000
 ................
 ................
@@ -905,14 +904,14 @@ transparent #FF9000
 ................
 rot:up:dirs
 
-checkFollow:dirs
+try_follow:dirs
 transparent #FF6000
-copy: checkMove:dirs
+copy: try_move:dirs
 
-discardMove:dirs
+discard_move:dirs
 transparent
 
-cachedColl:dirs
+col_cache:dirs
 transparent #ffff90
 ................
 ................
@@ -932,7 +931,7 @@ transparent #ffff90
 ................
 rot:up:dirs
 
-cachedConflict:dirs
+conflict_cache:dirs
 transparent #ff9090
 ................
 ................
@@ -955,26 +954,23 @@ rot:up:dirs
 refresh_cache:dirs
 transparent
 
-correctConnectDir:dirs
+fixed_tail_con:dirs
 transparent
 
 follow:dirs
 transparent
 
-discardFollow
+discard_follow
 transparent
 
-init_notOutside:dirs
+try_bounce
 transparent
 
-maybeBounce
+try_fly_dest:dirs
 transparent
 
-wantsToFlyTo:dirs
+try_move_dest:dirs
 transparent
 
-wantsToMoveTo:dirs
-transparent
-
-snakeEnd
+snake_end
 transparent

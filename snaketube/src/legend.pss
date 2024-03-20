@@ -2,7 +2,7 @@
 s = snake
 
 p = player and snake and init and spawnpoint
-* = player and snake and init and cut:right and playerFacing:right
+* = player and snake and init and cut:right and player_facing:right
 w = snake and meta_exit
 
 e = snake and meta_exit and cut:left
@@ -12,16 +12,16 @@ d = snake and cut:down
 l = snake and cut:left
 r = snake and cut:right
 
-h = snake and init_noMoreCon and cut:left and cut:right
-i = snake and init_noMoreCon and cut:up and cut:down
+h = snake and init_dont_connect and cut:left and cut:right
+i = snake and init_dont_connect and cut:up and cut:down
 
-c = snake and init_noMoreCon and cut:right and cut:up
-f = snake and init_noMoreCon and cut:right and cut:down
-q = snake and init_noMoreCon and cut:left and cut:down
-j = snake and init_noMoreCon and cut:left and cut:up
+c = snake and init_dont_connect and cut:right and cut:up
+f = snake and init_dont_connect and cut:right and cut:down
+q = snake and init_dont_connect and cut:left and cut:down
+j = snake and init_dont_connect and cut:left and cut:up
 
-a = snake and init_conAnotB
-b = snake and init_conBnotA
+a = snake and init_connect_only_a
+b = snake and init_connect_only_b
 
 2 = snake and ball
 3 = snake and ball and cut:up
@@ -29,35 +29,35 @@ b = snake and init_conBnotA
 5 = snake and ball and cut:left
 6 = snake and ball and cut:right
 
-7 = snake and init_noMoreCon and cut:up
-8 = snake and init_noMoreCon and cut:down
-9 = snake and init_noMoreCon and cut:left
-- = snake and init_noMoreCon and cut:right
+7 = snake and init_dont_connect and cut:up
+8 = snake and init_dont_connect and cut:down
+9 = snake and init_dont_connect and cut:left
+- = snake and init_dont_connect and cut:right
 
 + = npc
-m = snake and init_noMoreCon and cut:up    and npc
-n = snake and init_noMoreCon and cut:down  and npc
-o = snake and init_noMoreCon and cut:left  and npc
-t = snake and init_noMoreCon and cut:right and npc
+m = snake and init_dont_connect and cut:up    and npc
+n = snake and init_dont_connect and cut:down  and npc
+o = snake and init_dont_connect and cut:left  and npc
+t = snake and init_dont_connect and cut:right and npc
 
-$ = snake and ball and init_noMoreCon and cut:up
+$ = snake and ball and init_dont_connect and cut:up
 
-init_connectRules = init_conAnotB or init_conBnotA
+init_connectRules = init_connect_only_a or init_connect_only_b
 
 
 (bottom layer)
-gpFullBlock = wall or snake
+gp_blocks = wall or snake
 
 (on top layer in snake or next to snake)
-gpItem = player or ball or npc
+gp_items = player or ball or npc
 
 (always move with snake)
-gpSnake = snake or con:dirs or cut:dirs or again_fly:dirs or meta_exit or spawnpoint
+gp_snake = snake or con:dirs or cut:dirs or again_fly:dirs or meta_exit or spawnpoint
 
 (these items get removed with the snake over holes)
-gpGravity = snake or any:dirs or con:dirs or cut:dirs or meta_exit or spawnpoint
+gp_can_fall = snake or any:dirs or con:dirs or cut:dirs or meta_exit or spawnpoint
 
 (these markers represent actual full blocks moving, not items)
-gpFullBlockMove = push:dirs or snakeMove:dirs
+gp_moving_blocks = push:dirs or snake_move:dirs
 
-tempVisualObjects = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_snake_base or vs_player:dirs or vs_snake_base:offs or vs_player:dirs:offs or vs_snake_edge:dirs or vs_snake_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_meta_pipe:dirs or vs_meta_pipe:dirs:offs or vs_meta_pipe_closed:dirs or vs_meta_pipe_closed:dirs:offs or vs_npc:dirs or vs_npc:dirs:offs or vs_npc_off or vs_npc_off:offs or vs_wall_inner_corner_sharp:dirs or vs_snake_col:dirs or vs_meta_arrow:dirs
+gp_temporary_visuals = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_snake_base or vs_player:dirs or vs_snake_base:offs or vs_player:dirs:offs or vs_snake_edge:dirs or vs_snake_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_meta_pipe:dirs or vs_meta_pipe:dirs:offs or vs_meta_pipe_closed:dirs or vs_meta_pipe_closed:dirs:offs or vs_npc:dirs or vs_npc:dirs:offs or vs_npc_off or vs_npc_off:offs or vs_wall_inner_corner_sharp:dirs or vs_snake_col:dirs or vs_meta_arrow:dirs
