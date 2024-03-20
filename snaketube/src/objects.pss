@@ -798,7 +798,7 @@ transparent
 playerFacing:dirs
 transparent
 
-col_move:dirs
+collMove:dirs
 transparent
 
 col_item:dirs
@@ -886,7 +886,7 @@ transparent #00B0FF
 copy: snakeMove:dirs
 
 checkMove:dirs
-#FF9000
+transparent #FF9000
 ................
 ................
 ................
@@ -905,10 +905,14 @@ checkMove:dirs
 ................
 rot:up:dirs
 
-discard_move:dirs
+checkFollow:dirs
+transparent #FF6000
+copy: checkMove:dirs
+
+discardMove:dirs
 transparent
 
-cached_col:dirs
+cachedColl:dirs
 transparent #ffff90
 ................
 ................
@@ -928,7 +932,7 @@ transparent #ffff90
 ................
 rot:up:dirs
 
-cached_conflict:dirs
+cachedConflict:dirs
 transparent #ff9090
 ................
 ................
@@ -957,7 +961,7 @@ transparent
 follow:dirs
 transparent
 
-hasToSplit
+discardFollow
 transparent
 
 init_notOutside:dirs
@@ -972,5 +976,5 @@ transparent
 wantsToMoveTo:dirs
 transparent
 
-npcBody
+snakeEnd
 transparent

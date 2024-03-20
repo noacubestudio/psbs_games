@@ -94,27 +94,28 @@ dirs -> init_notOutside:dirs
 (temporary groups)
 dirs -> any:dirs
 
-(movement conflicts and collision)
-dirs -> again_move:dirs
-dirs -> checkMove:dirs
-dirs -> wantsToMoveTo:dirs
-dirs -> col_move:dirs, col_snake:dirs
-dirs -> col_item:dirs
-dirs -> discard_move:dirs
-npcBody
-
-(maybe could all be on same line)
-dirs -> cached_conflict:dirs
-dirs -> cached_col:dirs 
-dirs -> refresh_cache:dirs
-
 (move)
 snakeMove:dirs, wasSnakeMoved:dirs
 dirs -> push:dirs, wasMoved:dirs
 dirs -> itemPush:dirs, wasItemMoved:dirs
 dirs -> correctConnectDir:dirs
 follow:dirs
-hasToSplit
+discardFollow
+
+(movement conflicts and collision)
+dirs -> again_move:dirs
+dirs -> checkMove:dirs
+dirs -> checkFollow:dirs
+dirs -> wantsToMoveTo:dirs
+dirs -> collMove:dirs, col_snake:dirs
+dirs -> col_item:dirs
+dirs -> discardMove:dirs
+snakeEnd
+
+(maybe could all be on same line)
+dirs -> cachedConflict:dirs
+dirs -> cachedColl:dirs 
+dirs -> refresh_cache:dirs
 
 (fly)
 dirs -> wantsToFlyTo:dirs
