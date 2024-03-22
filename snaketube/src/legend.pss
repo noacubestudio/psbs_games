@@ -1,63 +1,60 @@
 # = wall and vs_outside
-s = snake
+s = block
 
-p = player and snake and init and spawnpoint
-* = player and snake and init and cut:right and player_facing:right
-w = snake and meta_exit
+p = player and block and init and spawnpoint
+* = player and block and init and cut:right and player_facing:right
+w = block and meta_exit
 
-e = snake and meta_exit and cut:left
+e = block and meta_exit and cut:left
 
-u = snake and cut:up
-d = snake and cut:down
-l = snake and cut:left
-r = snake and cut:right
+u = block and cut:up
+d = block and cut:down
+l = block and cut:left
+r = block and cut:right
 
-h = snake and init_dont_connect and cut:left and cut:right
-i = snake and init_dont_connect and cut:up and cut:down
+h = block and init_dont_connect and cut:left and cut:right
+i = block and init_dont_connect and cut:up and cut:down
 
-c = snake and init_dont_connect and cut:right and cut:up
-f = snake and init_dont_connect and cut:right and cut:down
-q = snake and init_dont_connect and cut:left and cut:down
-j = snake and init_dont_connect and cut:left and cut:up
+c = block and init_dont_connect and cut:right and cut:up
+f = block and init_dont_connect and cut:right and cut:down
+q = block and init_dont_connect and cut:left and cut:down
+j = block and init_dont_connect and cut:left and cut:up
 
-a = snake and init_connect_only_a
-b = snake and init_connect_only_b
+a = block and init_connect_only_a
+b = block and init_connect_only_b
 
-2 = snake and ball
-3 = snake and ball and cut:up
-4 = snake and ball and cut:down
-5 = snake and ball and cut:left
-6 = snake and ball and cut:right
+2 = block and ball
+3 = block and ball and cut:up
+4 = block and ball and cut:down
+5 = block and ball and cut:left
+6 = block and ball and cut:right
 
-7 = snake and init_dont_connect and cut:up
-8 = snake and init_dont_connect and cut:down
-9 = snake and init_dont_connect and cut:left
-- = snake and init_dont_connect and cut:right
+7 = block and init_dont_connect and cut:up
+8 = block and init_dont_connect and cut:down
+9 = block and init_dont_connect and cut:left
+- = block and init_dont_connect and cut:right
 
 + = npc
-m = snake and init_dont_connect and cut:up    and npc
-n = snake and init_dont_connect and cut:down  and npc
-o = snake and init_dont_connect and cut:left  and npc
-t = snake and init_dont_connect and cut:right and npc
+m = block and init_dont_connect and cut:up    and npc
+n = block and init_dont_connect and cut:down  and npc
+o = block and init_dont_connect and cut:left  and npc
+t = block and init_dont_connect and cut:right and npc
 
-$ = snake and ball and init_dont_connect and cut:up
+$ = block and ball and init_dont_connect and cut:up
 
 init_connectRules = init_connect_only_a or init_connect_only_b
 
 
-(bottom layer)
-gp_blocks = wall or snake
-
-(on top layer in snake or next to snake)
+(on top layer in block or next to block)
 gp_items = player or ball or npc
 
-(always move with snake)
-gp_snake = snake or con:dirs or cut:dirs or again_fly:dirs or meta_exit or spawnpoint
+(always move with block)
+gp_block = block or con:dirs or cut:dirs or again_fly:dirs or meta_exit or spawnpoint
 
-(these items get removed with the snake over holes)
-gp_can_fall = snake or any:dirs or con:dirs or cut:dirs or meta_exit or spawnpoint
+(these items get removed with the block over holes)
+gp_can_fall = block or any:dirs or con:dirs or cut:dirs or meta_exit or spawnpoint
 
 (these markers represent actual full blocks moving, not items)
 gp_moving_blocks = push:dirs or snake_move:dirs
 
-gp_temporary_visuals = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_snake_base or vs_player:dirs or vs_snake_base:offs or vs_player:dirs:offs or vs_snake_edge:dirs or vs_snake_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_meta_pipe:dirs or vs_meta_pipe:dirs:offs or vs_meta_pipe_closed:dirs or vs_meta_pipe_closed:dirs:offs or vs_npc:dirs or vs_npc:dirs:offs or vs_npc_off or vs_npc_off:offs or vs_wall_inner_corner_sharp:dirs or vs_snake_col:dirs or vs_meta_arrow:dirs
+gp_temporary_visuals = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_block_base or vs_player:dirs or vs_block_base:offs or vs_player:dirs:offs or vs_block_edge:dirs or vs_block_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_meta_pipe:dirs or vs_meta_pipe:dirs:offs or vs_meta_pipe_closed:dirs or vs_meta_pipe_closed:dirs:offs or vs_npc:dirs or vs_npc:dirs:offs or vs_npc_off or vs_npc_off:offs or vs_wall_inner_corner_sharp:dirs or vs_block_col:dirs or vs_meta_arrow:dirs

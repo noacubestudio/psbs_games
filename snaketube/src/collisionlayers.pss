@@ -34,12 +34,12 @@ vs_meta_arrow:dirs
 
 --
 
-(SNAKE: STATIONARY)
+(block: STATIONARY)
 dirs -> vs_con_lowest:dirs
 --
-vs_snake_base
+vs_block_base
 --
-dirs -> vs_snake_edge:dirs
+dirs -> vs_block_edge:dirs
 --
 dirs -> cut:dirs
 --
@@ -51,18 +51,18 @@ vs_meta_pipe:dirs, vs_meta_pipe_closed:dirs
 
 --
 
-(SNAKE: ANIMATED)
+(block: ANIMATED)
 dirs -> vs_con_lowest:dirs:offs
 --
-vs_snake_base:offs
+vs_block_base:offs
 --
-dirs -> vs_snake_edge:dirs:offs
+dirs -> vs_block_edge:dirs:offs
 --
 dirs -> cut:dirs:offs
 --
 dirs -> con:dirs:offs
 --
-vs_snake_col:dirs (extending snake, on top existing tiles)
+vs_block_col:dirs (extending block, on top existing tiles)
 --
 vs_con_end:offs
 --
@@ -81,7 +81,7 @@ vs_npc:dirs, vs_npc:dirs:offs, vs_npc_off, vs_npc_off:offs
 (INVISIBLE MARKERS)
 
 meta_exit, spawnpoint
-snake
+block
 player
 player_facing:dirs
 
@@ -106,10 +106,10 @@ dirs -> again_move:dirs
 dirs -> try_move:dirs
 dirs -> try_follow:dirs
 dirs -> try_move_dest:dirs
-dirs -> col_move:dirs, col_snake:dirs
+dirs -> col_move:dirs, col_head:dirs
 dirs -> col_item:dirs
 dirs -> discard_move:dirs
-snake_end
+block_end
 
 (maybe could all be on same line)
 dirs -> conflict_cache:dirs

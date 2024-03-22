@@ -385,10 +385,10 @@ translate:left:3
 
 (MOVING OBJECTS)
 
-snake
+block
 transparent
 
-vs_snake_base
+vs_block_base
 ((color_black)) ((color_fg))
 ...00000..00000...
 ..00000011000000..
@@ -411,9 +411,9 @@ vs_snake_base
 translate:down:1
 translate:left:1
 
-vs_snake_base:offs
+vs_block_base:offs
 ((color_black)) ((color_fg))
-copy: vs_snake_base translate:offs:2
+copy: vs_block_base translate:offs:2
 
 con:dirs
 ((color_fg)) ((color_bg))
@@ -522,7 +522,7 @@ vs_con_end:offs
 ((color_bg))
 copy: vs_con_end translate:offs:2
 
-vs_snake_edge:dirs
+vs_block_edge:dirs
 ((color_black))
 ......000000......
 ......000000......
@@ -546,11 +546,11 @@ rot:up:dirs
 translate:down:1
 translate:left:1
 
-vs_snake_edge:dirs:offs
+vs_block_edge:dirs:offs
 ((color_black))
-copy: vs_snake_edge:dirs translate:offs:2
+copy: vs_block_edge:dirs translate:offs:2
 
-vs_snake_col:dirs
+vs_block_col:dirs
 ((color_black)) ((color_fg)) ((color_bg))
 ...000000000000...
 ..00000000000000..
@@ -803,7 +803,7 @@ transparent
 col_item:dirs
 transparent
 
-col_snake:dirs
+col_head:dirs
 transparent
 
 supported
@@ -972,5 +972,5 @@ transparent
 try_move_dest:dirs
 transparent
 
-snake_end
+block_end
 transparent
