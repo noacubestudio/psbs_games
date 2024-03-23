@@ -109,7 +109,8 @@ dirs -> try_move_dest:dirs
 dirs -> col_move:dirs, col_head:dirs
 dirs -> col_item:dirs
 dirs -> discard_move:dirs
-block_end
+snake_head
+snake_end
 
 (maybe could all be on same line)
 dirs -> conflict_cache:dirs

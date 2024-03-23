@@ -100,31 +100,37 @@ dirs [ any:> any:< was snake_move:dirs add col_item:dirs ] sfx2
 (----MOVE OBJECTS----)
 
 ( 
-- a pipe end with a snake_move moves as the head of the block
-- multiblocks and npcs in front get pushed
-- the tail of the block head follows - if it can not follow, for example because it got pushed or the head got pushed,
-  the head will split.
-- for any tiles that should do a normal move, collision in checked first so that ALL of them have to work out
+- a block with a snake_move moves as the head of a snake
+- multiblocks and items in front get pushed
+- tails and inhabitated heads of snakes can split and are not actually connected for pushing. the tail only follows via snake_move
+- collisions or conflicts (multiple attempts to move into same tile) will prevent movement from happening, collision animation will show the problem.
+- collisions are cashed so that auto-moving snakes don't try the same movement over and over and refreshed when needed.
 - actual movement transfers everything in those tiles over, tile by tile
 )
 
 (remove temp markers from last time)
-[ was was_pushed:dirs/was_snake_moved:dirs/was_item_pushed:dirs/follow:dirs/discard_move:dirs/discard_follow/try_move:dirs/try_follow:dirs/block_end ]
+[ was was_pushed:dirs/was_snake_moved:dirs/was_item_pushed:dirs/follow:dirs/discard_move:dirs/discard_follow/try_move:dirs/try_follow:dirs/snake_end/snake_head ]
 
 (INITIAL MOVE)
 (push block/ item in front)
-[ snake_move:> | block  add push:>     ]
+[ snake_move:> | block    add push:> ]
 [ snake_move:> | gp_items add item_push:> ]
 
+
 (SPREAD PUSH MARKERS)
-(items can also push/be pushed by blocks but only if there is no opening there)
-  [ block  push:>               | block          add push:>      ] (block to block)
-+ [ block  push:>      no any:> | gp_items         add item_push:> ] (closed block to item outside)
-+ [ gp_items item_push:>          | gp_items         add item_push:> ] (item to item)
-+ [ gp_items item_push:>          | block no any:< add push:>      ] (item outside to closed block)
-+ dirs [ push:dirs con:> no snake_move:dirs | con:< add push:dirs ] (whole multiblock, except don't move block body through head alone)
-+ [ block push:>      gp_items no any:< add item_push:> ] (item inside pushed block)
-+ [ block item_push:> gp_items no any:> add push:>      ] (block around pushed item)
+
+(push markers do not spread through connections if one side is head of an active snake)
+(detect these tiles first)
+[ gp_items any:> no any:< any:v any:^ add snake_head ]
+
+(items and blocks can push each other, unless there is an open side and they won't collide)
+dirs [ push:dirs con:> no snake_head | con:< no snake_head add push:dirs ] (through multiblocks)
++ [ push:>          | block          add push:>      ] (block to block)
++ [ push:> no any:> | gp_items       add item_push:> ] (closed block to item outside)
++ [ item_push:>     | gp_items       add item_push:> ] (item to item)
++ [ item_push:>     | block no any:< add push:>      ] (item outside to closed block)
++ [ push:> gp_items   no any:< add item_push:> ] (item inside pushed block)
++ [ item_push:> block no any:> add push:>      ] (block around pushed item)
 
 (count item pushes as any other push from now on)
 [ no block was item_push:> add push:> ]
@@ -150,8 +156,8 @@ dirs [ any:> any:< was snake_move:dirs add col_item:dirs ] sfx2
 + dirs [ discard_move:dirs con:> | con:< add discard_move:dirs ]
 
 (remember collisions and no longer check these for conflicts, as they already won't move)
-[ col_move:>     add col_cache:> del try_move:> push:> snake_move:> ]
-[ discard_move:>                 del try_move:> push:> snake_move:> ]
+[ col_move:> add col_cache:> del try_move:> push:> snake_move:> ]
+[ discard_move:>             del try_move:> push:> snake_move:> ]
 [ was discard_move:dirs ]
 
 
@@ -161,17 +167,13 @@ dirs [ any:> any:< was snake_move:dirs add col_item:dirs ] sfx2
 (here we handle:
   - simultanious movement into the same spot
   - objects pushed into multiple directions at once
-  - pushes into a moving block, which will split off the tail and push it, or be blocked otherwise
-
-  note: if only the head of a moving block is moved, the body doesn't have push markers at this point
-  as it will be split anyway and shouldn't have lead to a collision with walls or further pushes that way.
+  - removing follow markers on pushed blocks since they separate from the snake head
 )
 
-(add follow markers inside moving blocks that point to the tile nearer to the front)
-[ snake_move:dirs add block_end ]
-[ con:> add follow:> block_end | con:< snake_move:dirs was block_end ]
-[ con:> no follow:dirs snake_move:dirs add follow:> block_end | con:< follow:dirs was block_end ]
-(WIP: what about a block trying to move from both ends at once?)
+(add follow markers inside moving snakes that point to the tile nearer to the front)
+[ snake_move:dirs add snake_end ]
+[ con:> add follow:> snake_end | con:< snake_move:dirs was snake_end ]
+[ con:> no follow:dirs snake_move:dirs add follow:> snake_end | con:< follow:dirs was snake_end ]
 
 (potential conflict: object pushing into a single-tile moving block)
 (if the moving block can actually move and doesn't have its own conflict, then the object will have room to move into it.)
@@ -224,7 +226,7 @@ dirs [ any:> any:< was snake_move:dirs add col_item:dirs ] sfx2
 
 (block can move)
 [ follow:> add snake_move:> ]
-[ snake_move:dirs del push:dirs ]
+[ snake_move:dirs del push:dirs ] (this should never be needed)
 
 (don't visualize multi-directional collision)
 [ was col_move:> col_move:v ]
@@ -269,9 +271,9 @@ dirs [ push:>/snake_move:> conflict_cache:dirs add refresh_cache:dirs ]
 
 (items and their flying movement)
 startloop
-       [ item_push:> was gp_items       | no item_push:dirs add gp_items ]
+       [ item_push:> was gp_items     | no item_push:dirs add gp_items ]
   dirs [ item_push:> was now_fly:dirs | no item_push:dirs add now_fly:dirs ]
-  [ was item_push:>  no gp_items        | no item_push:dirs add was_item_pushed:> ]
+  [ was item_push:>  no gp_items      | no item_push:dirs add was_item_pushed:> ]
 endloop
 
 (block parts)

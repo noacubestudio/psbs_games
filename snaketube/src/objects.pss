@@ -972,5 +972,8 @@ transparent
 try_move_dest:dirs
 transparent
 
-block_end
+snake_head
+transparent
+
+snake_end
 transparent
