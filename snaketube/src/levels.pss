@@ -554,13 +554,13 @@ message Lead the way.
 (shape and combine)
 ###############
 ###############
-#######..s.e###
-####.....s~####
-###p.l....~####
-####...ar..####
-####..lb...####
+######..sse####
+#####...8s~####
+####....j9~####
 ####.......####
-#######....####
+###p.lb...#####
+####.....######
+###############
 ###############
 ###############
 
@@ -697,7 +697,7 @@ message Move on without.
 #####...s.#####
 #######.#######
 ######..w######
-#######.#######
+######..#######
 ###############
 ###############
 
@@ -860,6 +860,7 @@ message Become whole.
 
 (exit is blocked, connect to it with sliding and then split self to be able to leave)
 (WIP, maybe could actually remove this?)
+(
 ###############
 ###############
 ###############
@@ -871,6 +872,7 @@ message Become whole.
 ###############
 ###############
 ###############
+)
 
 (get extra length into position first, use split to make right shape needed to leave)
 ###############
