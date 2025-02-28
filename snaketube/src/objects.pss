@@ -682,6 +682,61 @@ vs_player:dirs:offs
 ((color_black)) ((color_white)) ((color_fg))
 copy: vs_player:dirs translate:offs:2
 
+vs_player_end:dirs
+((color_black)) ((color_white)) ((color_fg))
+...000000000000...
+..00000000000000..
+.0002221111222000.
+000222111111222000
+002221110011122200
+002211110011112200
+002111110011111200
+001111110011111100
+001111111111111100
+001111111111111100
+001111112211111100
+002111122221111200
+..................
+..................
+..................
+..................
+..................
+..................
+rot:up:dirs
+translate:down:1
+translate:left:1
+
+vs_player_end:right
+((color_black)) ((color_white)) ((color_fg))
+......000000000...
+......0000000000..
+......21111222000.
+......111111222000
+......111111122200
+......111111112200
+......111110011200
+......211110011100
+......221110011100
+......221110011100
+......211111111100
+......111111111200
+......111111112200
+......111111122200
+......111111222000
+......21111222000.
+......0000000000..
+......000000000...
+translate:down:1
+translate:left:1
+
+vs_player_end:left
+((color_black)) ((color_white)) ((color_fg))
+copy: vs_player_end:right |
+
+vs_player_end:dirs:offs
+((color_black)) ((color_white)) ((color_fg))
+copy: vs_player_end:dirs translate:offs:2
+
 npc
 transparent
 

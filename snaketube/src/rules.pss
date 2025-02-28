@@ -445,6 +445,9 @@ dirs [ col_move:dirs con:> | add col_move:dirs ]
 ( meta exit arrow)
 [ meta_exit any:< | wall add vs_meta_arrow:> ]
 
+(bigger player sprite if at end)
+[ block no any:v any:^ any:> was vs_player:> add vs_player_end:> ]
+
 
 (----ACTIVATE COLLISION VARIANTS----)
 
@@ -455,8 +458,9 @@ dirs [ col_move:dirs con:> | add col_move:dirs ]
 [ col_item:> was ball       add ball:> ] 
 [ col_item:> was vs_npc_off add vs_npc_off:> ]
 
-dirs [ col_item:> was vs_player:dirs add vs_player:dirs:> ]
-dirs [ col_item:> was vs_npc:dirs    add vs_npc:dirs:> ]
+dirs [ col_item:> was vs_player:dirs     add vs_player:dirs:> ]
+dirs [ col_item:> was vs_player_end:dirs add vs_player_end:dirs:> ]
+dirs [ col_item:> was vs_npc:dirs        add vs_npc:dirs:> ]
 
 [ col_move:> was vs_block_base add vs_block_base:> ] 
 [ col_move:> was vs_con_end    add vs_con_end:> ] 
