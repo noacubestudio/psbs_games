@@ -423,8 +423,8 @@ dirs [ col_move:dirs con:> | add col_move:dirs ]
 (clean edge on sides without cut/con)
 [ block no any:> add vs_block_edge:> ]
 
-(add dot on rail ending in the center because it only goes to one neighbor)
-[ block no any:v any:^ any:> add vs_con_end ]
+(add decoration to center of block with exactly one rail)
+[ block any:> no any:v any:^ any:< add vs_con_end ]
 
 (npc at block end)
 [ npc block any:< no any:v any:^ any:> again_fly:< add vs_npc:> ]
@@ -446,7 +446,7 @@ dirs [ col_move:dirs con:> | add col_move:dirs ]
 [ meta_exit any:< | wall add vs_meta_arrow:> ]
 
 (bigger player sprite if at end)
-[ block no any:v any:^ any:> was vs_player:> add vs_player_end:> ]
+[ block no any:v any:^ any:> meta_exit was vs_player:> add vs_player_end:> ]
 
 
 (----ACTIVATE COLLISION VARIANTS----)
