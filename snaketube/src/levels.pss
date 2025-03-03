@@ -209,8 +209,8 @@ message U/Z: undo a step, R: restart
 ###############
 ###############
 ###############
-######..#######
-#####p..l######
+######...######
+#####p.l.######
 ######...######
 #######77.w####
 ########.######
@@ -236,6 +236,7 @@ message U/Z: undo a step, R: restart
 (NEW OBSTACLES:    falling into hole)
 
 (fly over hole, place recovery block)
+(
 ###############
 ###############
 ###############
@@ -247,16 +248,29 @@ message U/Z: undo a step, R: restart
 ###############
 ###############
 ###############
+)
+
+###############
+###############
+#####.....#####
+####p.l.r..####
+#####.......###
+####..~~~~..###
+####..~.l~..###
+####..~..~..###
+#######.ue#####
+###############
+###############
 
 (harder)
 ###############
 ###############
-###~~~~~~.~~###
-##p~~l.~~l~~w##
-###~~..~~.~~###
-###...u~~~~~###
+###############
+###....~~.~~###
+##p.l..~.l.~e##
+###...u~~.~~###
 ###...9~~~~~###
-####........###
+####.......####
 ###############
 ###############
 ###############
@@ -283,17 +297,17 @@ message Connect.
 (CONNECTING SHAPES)
 
 (avoid, then intentionally connect shapes)
-##############
-##############
-##############
-##...##..#####
-##.d.u#...de##
-##..........##
-#p.l.u#..#u.##
-##...##..#####
-##############
-##############
-##############
+###############
+###############
+###############
+###...##..#####
+###.d.u#...de##
+###..........##
+##p.l.u#..#u.##
+###...##..#####
+###############
+###############
+###############
 
 (
     (simpler version)
@@ -314,10 +328,10 @@ message Connect.
 ###############
 ###############
 ###############
-###..##########
-##p.l#.....#d.#
-###...........#
-###.....#u.#w##
+##..###########
+#p.l#.....#d.##
+##...........##
+##.....#u.#w###
 ###############
 ###############
 ###############
@@ -353,6 +367,21 @@ message Connect.
 ###############
 ###############
 
+(kinda annoying)
+(
+###############
+###############
+###........####
+##p.l.h.....###
+###...~~~~..###
+###.#h~hi~..###
+###...~~~~..###
+###...i.~..####
+###.......ie###
+###############
+###############
+)
+
 (fly through)
 ###############
 ###############
@@ -382,7 +411,20 @@ message Redirect.
 ###############
 ###############
 
-(NO HOLES VER! - WIP, integrate)
+(alt, harder?)
+###############
+###############
+###############
+#####..ls~~####
+####..#.d~~####
+####.....~~####
+###p.l.l.l~e###
+####....#######
+###############
+###############
+###############
+
+(old)
 (
     ###############
     ###############
@@ -413,6 +455,7 @@ message Redirect.
 )
 
 (connect, but only used to have something to push)
+(
 ###############
 ###############
 ###############
@@ -424,6 +467,7 @@ message Redirect.
 ###############
 ###############
 ###############
+)
 
 (combine corners to make path and also have something to push)
 ###############
@@ -484,32 +528,18 @@ message Redirect.
 
 message Lead the way.
 
-(big snake but no place to move....mysterious...)
-(close big snake and only use to have something to push)
-###############
-###############
-###############
-#####...#######
-####p.l.#d#####
-#####...hjw####
-#####.l...#####
-######....#####
-###############
-###############
-###############
-
 (reveal)
 (flip and connect to make snake, then leave wall)
 ###############
-#######.#######
-######...######
-#####.....#####
-####.......####
-###p..l.l.qw###
-####......j####
-#####.....#####
-######...######
-#######.#######
+###############
+###############
+#####....######
+#####..d.q#####
+####p.l....####
+#####......####
+########.je####
+###############
+###############
 ###############
 
 (shape and use as hook to clear way)
@@ -543,10 +573,10 @@ message Lead the way.
 ###############
 ###############
 #######~~~e####
-####......~####
-###p.ls.cc~####
-####......~####
-#######...l####
+####.......####
+###p.l.c.c.####
+####.......####
+#######~~~l####
 ###############
 ###############
 ###############
@@ -555,11 +585,11 @@ message Lead the way.
 ###############
 ###############
 ######..sse####
-####....8s~####
+#####...8s~####
 ####....j9~####
 ####.......####
 ###p.lb....####
-####.....######
+####......#####
 ###############
 ###############
 ###############
@@ -687,17 +717,39 @@ message Move on without.
 
 
 (SELF-SPLIT)
+(
+    wip: teach splitting granularily for different lengths, 
+    maybe a bunch of forced examples?
+    one with two orientations or mirroring, one with rotation...
+    one with different ends to get the same shape
+    one where possible target lengths per starting length are explored
+)
 
 (split to get shorter)
 ###############
 ###############
-###############
+######...######
 #####.....#####
 ####p.lss.#####
 #####...s.#####
 #######.#######
 ######..w######
 ######..#######
+###############
+###############
+
+(make hook)
+(the corners make this more difficult, can't use L shape, only S)
+(maybe do variant that explores both?)
+###############
+###############
+###############
+#####....######
+####p.lss.#####
+#####...s.#####
+#####.....#####
+######...jw####
+###############
 ###############
 ###############
 
@@ -714,6 +766,20 @@ message Move on without.
 ###############
 ###############
 
+(
+###############
+###############
+#####...ss.####
+####.....sd####
+###p..l....####
+####.......####
+#####...##.####
+#########r.w###
+#########..####
+###############
+###############
+)
+
 (split and combine to get different length)
 ###############
 ###############
@@ -724,45 +790,6 @@ message Move on without.
 ####.......####
 #####.###.#####
 #####~~~~.w####
-###############
-###############
-
-(
-    wip: teach splitting granularily for different lengths, 
-    maybe a bunch of forced examples?
-    one with two orientations or mirroring, one with rotation...
-    one with different ends to get the same shape
-    one where possible target lengths per starting length are explored
-)
-
-(teach)
-( ############## )
-( ##ds~~###..### )
-( ##7d.~##...ltw )
-( ###t####.s.~## )
-( ##....###s#### )
-( pt.l..ttls#### )
-( ##....######## )
-( ####.######### )
-( ##ds.~~####### )
-( ##7r..~~###### )
-( ############## )
-
-
-(SPLIT AND CARE ABOUT OPENINGS)
-
-(make hook)
-(the corners make this more difficult, can't use L shape, only S)
-(maybe do variant that explores both?)
-###############
-###############
-###############
-#####....######
-####p.lss.#####
-#####...s.#####
-#####.....#####
-######...jw####
-###############
 ###############
 ###############
 
@@ -807,6 +834,12 @@ message Move on without.
 ( ######### )
 
 
+message Become whole.
+
+(CAN MESS WITH LEVEL STRUCTURE AT THIS POINT, CONNECTING TO EXITS DIRECTLY)
+(WIP, SINCE STILL LINEAR FOR NOW)
+
+
 (RECONNECT VIA SELF PUSH)
 (COMBINATION OF BOTH SPLITTING METHODS)
 
@@ -838,7 +871,7 @@ message Move on without.
     ###############
 )
 
-(push self or create C, too difficult right now)
+(push self or create C, broken now. but interesting possibilitly: impossible self push that requires some other spacer block in between)
 (
 ###############
 ###############
@@ -852,11 +885,6 @@ message Move on without.
 ###############
 ###############
 )
-
-message Become whole.
-
-(CAN MESS WITH LEVEL STRUCTURE AT THIS POINT, CONNECTING TO EXITS DIRECTLY)
-(WIP, SINCE STILL LINEAR FOR NOW)
 
 (exit is blocked, connect to it with sliding and then split self to be able to leave)
 (WIP, maybe could actually remove this?)
@@ -954,8 +982,10 @@ message Become whole.
 ##...........##
 ###############
 ###############
+)
 
-    (this one uses hilbert curve path that needs to be followed)
+(this one uses hilbert curve path that needs to be followed)
+(can work as a temporary ending level)
 ###############
 ###.........###
 ###.ssssss..w##
@@ -968,6 +998,7 @@ message Become whole.
 ###.........###
 ###############
 
+(
 ###############
 #####........##
 ####p.l......##
