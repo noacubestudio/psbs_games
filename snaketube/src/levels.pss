@@ -1,25 +1,19 @@
 (# 
-    WIP Overview for order and progression of mechanics to implement:
+    WIP (outdated) Overview for order and progression of mechanics to implement:
 
     LAUNCHER
         flying between launchers / moving as launcher
             (reorient flight paths, move objects out of the way, move around corners, exit to recover self)
         pushing launchers 
             (move out of the way even if not enterable, position as a recovery target, position in way you could not have launched from)
-    
-    EITHER: MULTIBLOCKS
-        pushing closed blocks
-            ()
 
-    OR: HOLES
+    HOLES
         flying over holes
             (get to places not accessible by moving, focus on recovery of player?)
-        fill holes to make bridges
-            (create space needed to move over/ to position for launch, clear blocks entirely - for example to recover)
 
     CONNECTING BLOCKS
         connect launchers
-            ()
+            (avoid connection to get launchers past each other, connect together to make multiblock that can go over gaps)
 
     PIPES
         straight pipes
@@ -43,11 +37,7 @@
 
     CLOSED SNAKES
         use C-movement to connect with other snake
-            (recover snakes, switch sides in snakes, finally exit by splitting)
-
-    BOUNCERS
-        ...
-        
+            (recover snakes, switch sides in snakes, finally exit by splitting)    
 #)
 
 (
@@ -174,18 +164,29 @@
 )
 
 
-(INTRO) 
+
+(# https://www.asciiart.eu/text-to-ascii-art, using Bright font #)
+
+(
+.##.......####...##..##..##..##...####...##..##.
+.##......##..##..##..##..###.##..##..##..##..##.
+.##......######..##..##..##.###..##......######.
+.##......##..##..##..##..##..##..##..##..##..##.
+.######..##..##...####...##..##...####...##..##.
+................................................
+)
+
 message Launch!
 
-(enter block in the way)
+(enter blocks in the way)
 ###############
 ###############
 ###############
-#####...#######
-####..*..######
-####.....8w####
+#####......####
+####.......####
+####...*..l####
+####......7w###
 #####.....#####
-#######...#####
 ###############
 ###############
 ###############
@@ -194,16 +195,26 @@ message Launch!
 ###############
 ###############
 ###############
-#####.....#####
-#####.###.#####
+#####....######
+#####.##.######
 ####p..l..w####
-#####.###.#####
-#####.....#####
+######.##.#####
+######....#####
 ###############
 ###############
 ###############
 
 message U/Z: undo a step, R: restart
+
+(
+    open blocks properties:
+    - entry side effects/ requirements:
+        - leaves other open block (usually with opposite orientation, parity)
+        - at least two open tiles in the direction of the opening
+    - exit side effects/ requirements:
+        - need another block to fly to
+        - need one space to move even just to reorient (L-Shape)
+)
 
 (move and fly back)
 ###############
@@ -232,24 +243,8 @@ message U/Z: undo a step, R: restart
 ###############
 
 (NEW: holes)
-(NEW INTERACTIONS: flying over hole)
-(NEW OBSTACLES:    falling into hole)
 
 (fly over hole, place recovery block)
-(
-###############
-###############
-###############
-####.......####
-###p...l...####
-####.u..~~~####
-####~~..~.9w###
-####~~..~..####
-###############
-###############
-###############
-)
-
 ###############
 ###############
 #####.....#####
@@ -276,25 +271,18 @@ message U/Z: undo a step, R: restart
 ###############
 
 
+
+
 (
-    potential uses of open blocks for puzzles:
-    - can be pushed as usual, but also inhabited.
-    - push to:
-        - push into hole to fill and create more floor
-        - get into position for entry
-    - move within to:
-        - recover from wall
-        - use to launch somewhere else
-    - entry side effects/ requirements:
-        - leaves other open block (usually with opposite orientation, parity)
-        - at least two open tiles in the direction of the opening
-    - exit side effects/ requirements:
-        - need another block to fly to
-        - need one space to move even just to reorient (L-Shape)
+..####....####...##..##..##..##..######...####...######.
+.##..##..##..##..###.##..###.##..##......##..##....##...
+.##......##..##..##.###..##.###..####....##........##...
+.##..##..##..##..##..##..##..##..##......##..##....##...
+..####....####...##..##..##..##..######...####.....##...
+........................................................
 )
 
 message Connect.
-(CONNECTING SHAPES)
 
 (avoid, then intentionally connect shapes)
 ###############
@@ -324,7 +312,7 @@ message Connect.
 ###############
 )
 
-(simple? swapping level)
+(alternate sides)
 ###############
 ###############
 ###############
@@ -352,9 +340,9 @@ message Connect.
 
 
 (NEW: PIPE PIECES - use as paths)
-(introduce open pipes, make sure no extra snakes in these levels)
+(introduce open pipes, make sure no extra end blocks in these levels to prevent snake movement showing up)
 
-(figure out how to connect straight pieces)
+(create long block to push from a distance) (WIP)
 ###############
 ###############
 ###############
@@ -367,7 +355,7 @@ message Connect.
 ###############
 ###############
 
-(kinda annoying)
+(kinda annoying)  (WIP)
 (
 ###############
 ###############
@@ -382,7 +370,7 @@ message Connect.
 ###############
 )
 
-(fly through)
+(replace block with one you can fly through)
 ###############
 ###############
 ####..~....####
@@ -395,6 +383,17 @@ message Connect.
 ###############
 ###############
 
+
+
+
+(
+.#####...######..#####...######..#####...######...####...######.
+.##..##..##......##..##....##....##..##..##......##..##....##...
+.#####...####....##..##....##....#####...####....##........##...
+.##..##..##......##..##....##....##..##..##......##..##....##...
+.##..##..######..#####...######..##..##..######...####.....##...
+................................................................
+)
 
 message Redirect.
 
@@ -411,7 +410,7 @@ message Redirect.
 ###############
 ###############
 
-(alt, harder?)
+(use corner pipe to get block you can enter after using corner again)
 ###############
 ###############
 ###############
@@ -424,50 +423,7 @@ message Redirect.
 ###############
 ###############
 
-(old)
-(
-    ###############
-    ###############
-    ###############
-    #####..ls######
-    ###...##d######
-    ###.l.#..#8.###
-    ##p...l.....###
-    ###....###c.e##
-    ###############
-    ###############
-    ###############
-)
-
-(use curve piece as path)
-(
-###############
-###############
-###############
-#####...~~#####
-#####.#.~~w####
-#####...~~#####
-####p.l.f.#####
-#####.....#####
-###############
-###############
-###############
-)
-
-(connect, but only used to have something to push)
-(
-###############
-###############
-###############
-#####....######
-####p....q#####
-#####.r..jw####
-#####.r.l.#####
-#####.....#####
-###############
-###############
-###############
-)
+(WIP, could do a hook thing here. I also like the square from 4 corners...)
 
 (combine corners to make path and also have something to push)
 ###############
@@ -495,8 +451,7 @@ message Redirect.
 ###############
 ###############
 
-(launch area in hole, connect correctly)
-(this kind of puzzle is no longer supported, but could do something similar?)
+(WIP: not working anymore but could do something similar?)
 (
     ###############
     ###############
@@ -511,18 +466,31 @@ message Redirect.
     ###############
 )
 
-(open slider test)
-( ######### )
-( ##~~~~~## )
-( ##~...~## )
-( ##~~.~~## )
-( ##...ls## )
-( pt.ll.stw )
-( ##...ls## )
-( ##sr...## )
-( ##s..h.## )
-( ##sr...## )
-( ######### )
+(open C test)
+(
+###############
+###############
+###############
+####sss....####
+####d.d....####
+###p.l.....w###
+####..u.u..####
+####..sss..####
+###############
+###############
+###############
+)
+
+
+
+(
+.##......######...####...#####.......######..##..##..######.......##...##...####...##..##.
+.##......##......##..##..##..##........##....##..##..##...........##...##..##..##...####..
+.##......####....######..##..##........##....######..####.........##.#.##..######....##...
+.##......##......##..##..##..##........##....##..##..##...........#######..##..##....##...
+.######..######..##..##..#####.........##....##..##..######........##.##...##..##....##...
+..........................................................................................
+)
 
 (NEW: BECOME SNAKE)
 
@@ -562,7 +530,7 @@ message Lead the way.
 #####ssr..#####
 #####.....#####
 ####p..l..#####
-#####....######
+#####.....#####
 #####...qw#####
 ###############
 ###############
@@ -625,9 +593,24 @@ message Lead the way.
 
 
 
+(
+.##...##...####...##..##..######...........####...##..##.
+.###.###..##..##..##..##..##..............##..##..###.##.
+.##.#.##..##..##..##..##..####............##..##..##.###.
+.##...##..##..##...####...##..............##..##..##..##.
+.##...##...####.....##....######...........####...##..##.
+.........................................................
+.##...##..######..######..##..##...####...##..##..######.
+.##...##....##......##....##..##..##..##..##..##....##...
+.##.#.##....##......##....######..##..##..##..##....##...
+.#######....##......##....##..##..##..##..##..##....##...
+..##.##...######....##....##..##...####....####.....##...
+.........................................................
+)
+
 message Move on without.
 
-(LEVEL SERIES: SPLIT IN C)
+(PART 1: SPLIT IN C)
 
 (C to split to get shorter)
 ###############
@@ -643,7 +626,7 @@ message Move on without.
 ###############
 
 (
-    (maybe not needed)
+    (not needed)
     (create self-push situation)
     ###############
     ###############
@@ -672,7 +655,7 @@ message Move on without.
 ###############
 
 (
-    (maybe not needed)
+    (not needed)
     ###############
     ###############
     #####bbbbb.####
@@ -686,8 +669,7 @@ message Move on without.
     ###############
 )
 
-
-(split correct part)
+(split correct part to use as path)
 ###############
 ###############
 #####..#.s#####
@@ -716,16 +698,15 @@ message Move on without.
 )
 
 
-(SELF-SPLIT)
+(PART 2: SELF-SPLIT)
 (
-    wip: teach splitting granularily for different lengths, 
-    maybe a bunch of forced examples?
-    one with two orientations or mirroring, one with rotation...
-    one with different ends to get the same shape
-    one where possible target lengths per starting length are explored
+    maybe it would be helpful to visualize and teach splitting more.
+    all four rotations and mirrors, plus the 2 different places the tail points to.
+    show how two very different paths produce the same shape...
+    also explore how different lengths can be combined and separated.
 )
 
-(split to get shorter)
+(split to get shorter) (WIP: what if I skipped this)
 ###############
 ###############
 ######...######
@@ -740,7 +721,6 @@ message Move on without.
 
 (make hook)
 (the corners make this more difficult, can't use L shape, only S)
-(maybe do variant that explores both?)
 ###############
 ###############
 ###############
@@ -767,6 +747,7 @@ message Move on without.
 ###############
 
 (
+(alt., trying to make finding the right shape to split easier?)
 ###############
 ###############
 #####...ss.####
@@ -780,7 +761,8 @@ message Move on without.
 ###############
 )
 
-(split and combine to get different length)
+(split and combine to get required length)
+( 2 + 4) -> ( 2 + 3P + 1) -> ( 5 + 1)
 ###############
 ###############
 ###############
@@ -793,7 +775,7 @@ message Move on without.
 ###############
 ###############
 
-(split to use corner)
+(split to make pipe to get around corner)
 ###############
 ###############
 ####~~~~#######
@@ -806,7 +788,7 @@ message Move on without.
 ###############
 ###############
 
-(WIP: too hard?)
+(pretty difficult?)
 ###############
 ###############
 #######~~e#####
@@ -819,26 +801,34 @@ message Move on without.
 ###############
 ###############
 
-(variation: make long to exit without falling)
-( ######### )
-( ##.....## )
-( pt...l.## )
-( ##.....## )
-( ##ssssu## )
-( ##~~.~~## )
-( ##~~~~~## )
-( ###~~~### )
-( ###~~~### )
-( ###~~~### )
-( ##..{{ttw )
-( ######### )
+(
+(make long shape that is just used to push - broken, because level works as a snake)
+###############
+###############
+###........d###
+##p.lsssss..###
+###~~~...~~~###
+###~~~~~~~~~###
+###~~~~~~~~~###
+###~~~~#~~~~###
+#####..u.~~~e##
+###############
+###############
+)
 
+
+
+
+(
+.#####...######...####....####...##...##..######.......##...##..##..##...####...##......######.
+.##..##..##......##..##..##..##..###.###..##...........##...##..##..##..##..##..##......##.....
+.#####...####....##......##..##..##.#.##..####.........##.#.##..######..##..##..##......####...
+.##..##..##......##..##..##..##..##...##..##...........#######..##..##..##..##..##......##.....
+.#####...######...####....####...##...##..######........##.##...##..##...####...######..######.
+...............................................................................................
+)
 
 message Become whole.
-
-(CAN MESS WITH LEVEL STRUCTURE AT THIS POINT, CONNECTING TO EXITS DIRECTLY)
-(WIP, SINCE STILL LINEAR FOR NOW)
-
 
 (RECONNECT VIA SELF PUSH)
 (COMBINATION OF BOTH SPLITTING METHODS)
@@ -887,7 +877,7 @@ message Become whole.
 )
 
 (exit is blocked, connect to it with sliding and then split self to be able to leave)
-(WIP, maybe could actually remove this?)
+(currently removed because the puzzle itself is familiar)
 (
 ###############
 ###############
@@ -929,7 +919,7 @@ message Become whole.
 ###############
 
 (
-    (maybe a setup to use elsewhere as well)
+    (old alt)
     ###############
     ###############
     ###############

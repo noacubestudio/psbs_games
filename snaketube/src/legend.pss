@@ -2,7 +2,7 @@
 s = block
 
 p = player and block and init and spawnpoint
-* = player and block and init and cut:right and player_facing:right
+* = player and block and init and cut:left and player_facing:left
 w = block and meta_exit
 
 e = block and meta_exit and cut:left

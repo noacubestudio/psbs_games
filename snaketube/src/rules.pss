@@ -359,8 +359,9 @@ dirs [ was_snake_moved:<                        was cut:dirs add cut:> fixed_tai
 (do something with each flying item now)
 
 (hit block end)
-[ gp_items block meta_exit/spawnpoint no any:> was now_fly:> ]
-[ gp_items block                      no any:> was now_fly:> add col_head:> ] sfx7 (soft collision)
+[ gp_items block meta_exit  no any:> was now_fly:> ]
+[ gp_items block spawnpoint no any:> was now_fly:> add col_item:> try_bounce ] (turn around when trying to go to previous level)
+[ gp_items block            no any:> was now_fly:> add col_head:> ] sfx7 (soft collision)
 
 (hit wall/ block)
 [ gp_items was now_fly:> add col_item:> try_bounce | wall ] sfx0 (movement click)
@@ -446,7 +447,7 @@ dirs [ col_move:dirs con:> | add col_move:dirs ]
 [ meta_exit any:< | wall add vs_meta_arrow:> ]
 
 (bigger player sprite if at end)
-[ block no any:v any:^ any:> meta_exit was vs_player:> add vs_player_end:> ]
+[ block no any:v any:^ any:> meta_exit spawnpoint was vs_player:> add vs_player_end:> ]
 
 
 (----ACTIVATE COLLISION VARIANTS----)
