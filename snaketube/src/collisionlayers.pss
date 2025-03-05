@@ -1,9 +1,9 @@
 background
-
 --
 
 hole
 --
+
 floor
 --
 dirs -> vs_hole_edge_1:dirs
@@ -12,6 +12,9 @@ dirs -> vs_hole_edge_2:dirs
 dirs -> vs_hole_inner_corner:dirs
 --
 dirs -> vs_hole_outer_corner:dirs
+--
+
+meta_exit, spawnpoint
 --
 
 wall
@@ -31,7 +34,6 @@ dirs -> vs_wall_inner_corner_sharp:dirs
 vs_outside
 --
 vs_meta_arrow:dirs
-
 --
 
 (block: STATIONARY)
@@ -48,7 +50,6 @@ dirs -> con:dirs
 vs_con_end
 --
 vs_meta_pipe:dirs, vs_meta_pipe_closed:dirs
-
 --
 
 (block: ANIMATED)
@@ -67,20 +68,18 @@ vs_block_col:dirs (extending block, on top existing tiles)
 vs_con_end:offs
 --
 vs_meta_pipe:dirs:offs, vs_meta_pipe_closed:dirs:offs
-
 --
 
 vs_player:dirs, vs_player:dirs:offs, vs_player_end:dirs, vs_player_end:dirs:offs
 --
 npc, ball, ball:offs
 vs_npc:dirs, vs_npc:dirs:offs, vs_npc_off, vs_npc_off:offs
-
-
 --
+
+
 
 (INVISIBLE MARKERS)
 
-meta_exit, spawnpoint
 block
 player
 player_facing:dirs

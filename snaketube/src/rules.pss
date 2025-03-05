@@ -19,8 +19,10 @@ dirs [           was again_fly:dirs add now_fly:dirs ]
 [ con:>/cut:> was again_spawn add again_fly:> player_facing:> ]
 [ was again_spawn add player_facing:right ] (wip, what is this?)
 
-(win level)
-[ was player again_exit ] win
+(win level when exiting through meta exit)
+[ meta_exit was player again_exit ] win
+[ spawnpoint was player again_exit ] (wip: use on screen message under game, or the undo feature and message, in another fork.)
+[ was gp_items again_exit ]
 
 (end collision animation, swap tiles back)
 (only for objects that don't get regenerated every turn anyway)
@@ -38,7 +40,10 @@ dirs [ again_col ] [ was cut:dirs:offs add cut:dirs ]
 [ init ] [ player was con:> | was con:< init_connectRules ]
 
 (spawnpoints/meta_exit)
-[ init ] [ spawnpoint/meta_exit no con:dirs cut:dirs add cut:> | no wall ]
+[ init ] [ spawnpoint/meta_exit block no con:dirs cut:dirs add cut:> | no wall ]
+(arrows)
+[ init ] [ spawnpoint cut:< | wall add vs_meta_arrow:< ]
+[ init ] [ meta_exit  cut:< | wall add vs_meta_arrow:> ]
 
 (connect walls)
 [ init ] [ wall add vs_wall_con:> ]
@@ -343,10 +348,9 @@ dirs [ was_snake_moved:<                        was cut:dirs add cut:> fixed_tai
 [ hole block no supported add again_gravity ]
 [ hole gp_items no again_fly:dirs now_fly:dirs supported add again_gravity ]
 
-(fall into meta exit or fly back out)
-[ player meta_exit any:< add again_exit | wall ]
-[ player meta_exit any:< add now_fly:< | no wall ]
-[ npc    meta_exit any:< add now_fly:< ] (just always leave again)
+(fall into meta pipes)
+(don't fall in when currently spawning, about to fly out or flying out.)
+[ gp_items meta_exit/spawnpoint block no any:v any:^ any:< again_spawn now_fly:> again_fly:> add again_exit ]
 
 (reset player direction if not valid)
 [ player block no any:< ] [ was player_facing:> add player_facing:v ] 
@@ -359,9 +363,8 @@ dirs [ was_snake_moved:<                        was cut:dirs add cut:> fixed_tai
 (do something with each flying item now)
 
 (hit block end)
-[ gp_items block meta_exit  no any:> was now_fly:> ]
-[ gp_items block spawnpoint no any:> was now_fly:> add col_item:> try_bounce ] (turn around when trying to go to previous level)
-[ gp_items block            no any:> was now_fly:> add col_head:> ] sfx7 (soft collision)
+[ gp_items block meta_exit/spawnpoint no any:> was now_fly:> ] (stop before disappear/win)
+[ gp_items block                      no any:> was now_fly:> add col_head:> ] sfx7 (soft collision)
 
 (hit wall/ block)
 [ gp_items was now_fly:> add col_item:> try_bounce | wall ] sfx0 (movement click)
@@ -435,16 +438,9 @@ dirs [ col_move:dirs con:> | add col_move:dirs ]
 [ player_facing:> ] [ player add vs_player:> ] 
 [ player no vs_player:dirs add vs_player:right ]
 
-( spawn point - show as filled when entering the level and hide the player )
-[ spawnpoint any:> add vs_meta_pipe:< ]
-[ again_spawn was vs_meta_pipe:> add vs_meta_pipe_closed:> del vs_player:dirs ]
-
-( meta exit - show as filled when exiting and hide the player)
-[ meta_exit any:> add vs_meta_pipe:< ]
-[ again_exit was vs_meta_pipe:> add vs_meta_pipe_closed:> del vs_player:dirs ]
-
-( meta exit arrow)
-[ meta_exit any:< | wall add vs_meta_arrow:> ]
+( meta connections - show as filled when entering the level and hide the player )
+[ spawnpoint/meta_exit any:> no any:v any:^ any:< add vs_meta_pipe:< ]
+[ again_spawn/again_exit was vs_meta_pipe:> add vs_meta_pipe_closed:> del vs_player:dirs ]
 
 (bigger player sprite if at end)
 [ block no any:v any:^ any:> meta_exit spawnpoint was vs_player:> add vs_player_end:> ]
