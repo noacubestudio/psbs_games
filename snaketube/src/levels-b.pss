@@ -1,6 +1,7 @@
-message The remaining levels are very early experiments.
+message The remaining mechanics may change and levels are potentially broken.
+section WIP SECTION
 
-
+level
 (get the gem in the correct single snake)
 (combination lock)
 ###############
@@ -17,6 +18,7 @@ message The remaining levels are very early experiments.
 
 (basic npc push behavior)
 
+level
 (req. single end)
 ###############
 ###############
@@ -32,6 +34,7 @@ message The remaining levels are very early experiments.
 
 (longer snake npc behavior)
 
+level
 (gem into double - would not be able to recover otherwise)
 ###############
 ###############
@@ -45,6 +48,7 @@ message The remaining levels are very early experiments.
 ###############
 ###############
 
+level
 (variation, maybe also cool)
 ###############
 ###############
@@ -58,6 +62,7 @@ message The remaining levels are very early experiments.
 ###############
 ###############
 
+level
 (double into gem)
 ###############
 ###############
@@ -71,6 +76,7 @@ message The remaining levels are very early experiments.
 ###############
 ###############
 
+level
 (tricky)
 ###############
 ###############
@@ -84,6 +90,8 @@ message The remaining levels are very early experiments.
 ###############
 ###############
 
+level
+message currently broken
 (needs more work, based on a ball level)
 ###############
 ###############
@@ -97,6 +105,7 @@ message The remaining levels are very early experiments.
 ###############
 ###############
 
+level
 (close with npc in 2-length)
 ###############
 ###############
@@ -111,6 +120,7 @@ message The remaining levels are very early experiments.
 ###############
 (wip, a version of this could make use of blocks for setup first.)
 
+level
 (close with npc in 3-length)
 (wip)
 ###############
@@ -125,6 +135,7 @@ message The remaining levels are very early experiments.
 ###############
 ###############
 
+level
 (self pushing NPC to push and connect yourself backwards)
 ###############
 ###############

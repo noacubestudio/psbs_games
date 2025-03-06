@@ -52,6 +52,8 @@ WINCONDITIONS
 LEVELS
 =======
 
+(% filter organizeLevels %)
 (% include "levels.pss" %)
 
 (% include "levels-b.pss" %)
+(% endfilter %)

@@ -1,7 +1,7 @@
-gist_id: 14d08f4f438dc0d648637c76655b3144
-engine: https://clementsparrow.github.io/Pattern-Script/src/
+gist_id: 8a9c0d9a937cf1b60c4fabd53dbb7c83
+engine: https://david-pfx.github.io/PuzzleScriptNext/src/
 template: main.pss
-user_extensions: [scripts/compactFilter.py]
+user_extensions: [scripts/filters.py]
 Build:
   name: debug
 Images:

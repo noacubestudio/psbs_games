@@ -10,3 +10,6 @@ author_color ((color_fg))
 title_color ((color_white))
 
 ( flickscreen 16x12 )
+
+(PS Next specific:)
+level_select

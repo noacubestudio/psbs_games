@@ -1,10 +1,13 @@
-from psbs.extension import Extension
 import re
 
-class Decompact(Extension):
+from psbs.extension import Extension
+
+
+class Filters(Extension):
     def __init__(self, config):
         super().__init__(config)
         self.register_filter("relaxRules", self.compactToPatternScript)
+        self.register_filter("organizeLevels", self.organizeLevels)
 
     def _cloneMutateLine(self, line):
         if "[" not in line or "]" not in line or "/" not in line:
@@ -131,3 +134,26 @@ class Decompact(Extension):
         linesArray = [self._decompactLine(line) for line in linesArray]
 
         return '\n'.join(linesArray)
+    
+    def organizeLevels(self, levels_string):
+        output = ""
+        current_section = ""
+        index_in_section = 0
+        for line in levels_string.splitlines():
+            # get words following 'section ' 
+            if line.strip().startswith("section"):
+                current_section = line.split("section")[1].strip()
+                index_in_section = 0
+                continue
+            # get words following 'level '
+            if line.strip().startswith("level"):
+                level_name = line.split("level")[1].strip()
+                # if empty, increment index and use that
+                if level_name == "":
+                    index_in_section += 1
+                    level_name = str(index_in_section)
+                output += f"section {current_section} {level_name}\n"
+                output += f"level   {current_section} {level_name}\n"
+                continue
+            output += line + "\n"
+        return output.strip()
