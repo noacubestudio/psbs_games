@@ -657,14 +657,14 @@ level
 (make wider 'C' to push self to be oriented correctly over hole)
 ###############
 ###############
-##....~~~..####
-#p.ls..~....###
-##....~~~...###
-###.ssr~lss.###
-###...~~~...###
-###~~~~~~~~~###
-###~~~~.~~~~###
-#######w#######
+##......#######
+##.sr.l.#######
+##.s..s.~~~.###
+##......~~~.###
+##....#..~..###
+#####.#s~~~.###
+####p.ls~~~.###
+#########w#####
 ###############
 
 (WIP: try impossible self push that requires some other spacer block in between)

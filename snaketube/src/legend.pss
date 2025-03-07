@@ -23,11 +23,11 @@ j = block and init_dont_connect and cut:left and cut:up
 a = block and init_connect_only_a
 b = block and init_connect_only_b
 
-2 = block and ball
-3 = block and ball and cut:up
-4 = block and ball and cut:down
-5 = block and ball and cut:left
-6 = block and ball and cut:right
+2 = block and pusher
+3 = block and pusher and cut:up
+4 = block and pusher and cut:down
+5 = block and pusher and cut:left
+6 = block and pusher and cut:right
 
 7 = block and init_dont_connect and cut:up
 8 = block and init_dont_connect and cut:down
@@ -49,12 +49,12 @@ init_connectRules = init_connect_only_a or init_connect_only_b
 gp_items = player or ball or npc
 
 (always move with block)
-gp_block = block or con:dirs or cut:dirs or again_fly:dirs
+gp_block = block or con:dirs or cut:dirs or again_fly:dirs or pusher
 
 (these items get removed with the block over holes)
-gp_can_fall = block or any:dirs or con:dirs or cut:dirs
+gp_can_fall = block or any:dirs or con:dirs or cut:dirs or pusher
 
 (these markers represent actual full blocks moving, not items)
 gp_moving_blocks = push:dirs or snake_move:dirs
 
-gp_temporary_visuals = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_block_base or vs_player:dirs or vs_block_base:offs or vs_player:dirs:offs or vs_block_edge:dirs or vs_block_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_meta_pipe:dirs or vs_meta_pipe:dirs:offs or vs_meta_pipe_closed:dirs or vs_meta_pipe_closed:dirs:offs or vs_npc:dirs or vs_npc:dirs:offs or vs_npc_off or vs_npc_off:offs or vs_wall_inner_corner_sharp:dirs or vs_block_col:dirs or vs_player_end:dirs or vs_player_end:dirs:offs
+gp_temporary_visuals = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_block_base or vs_player:dirs or vs_block_base:offs or vs_player:dirs:offs or vs_block_edge:dirs or vs_block_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_meta_pipe:dirs or vs_meta_pipe:dirs:offs or vs_meta_pipe_closed:dirs or vs_meta_pipe_closed:dirs:offs or vs_npc:dirs or vs_npc:dirs:offs or vs_npc_off or vs_npc_off:offs or vs_wall_inner_corner_sharp:dirs or vs_block_col:dirs or vs_player_end:dirs or vs_player_end:dirs:offs or vs_pusher:dirs or vs_pusher:dirs:offs

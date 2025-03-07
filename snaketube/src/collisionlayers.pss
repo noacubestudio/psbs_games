@@ -72,8 +72,8 @@ vs_meta_pipe:dirs:offs, vs_meta_pipe_closed:dirs:offs
 
 vs_player:dirs, vs_player:dirs:offs, vs_player_end:dirs, vs_player_end:dirs:offs
 --
-npc, ball, ball:offs
-vs_npc:dirs, vs_npc:dirs:offs, vs_npc_off, vs_npc_off:offs
+npc, ball, ball:offs, pusher
+vs_npc:dirs, vs_npc:dirs:offs, vs_npc_off, vs_npc_off:offs, vs_pusher:dirs, vs_pusher:dirs:offs
 --
 
 
@@ -108,8 +108,8 @@ dirs -> try_move_dest:dirs
 dirs -> col_move:dirs, col_head:dirs
 dirs -> col_item:dirs
 dirs -> discard_move:dirs
-snake_head
-snake_end
+snake_source
+pusher_destination
 
 (maybe could all be on same line)
 dirs -> conflict_cache:dirs

@@ -1,5 +1,44 @@
-message The remaining mechanics may change and levels are potentially broken.
 section WIP SECTION
+message The remaining mechanics are outdated and levels are potentially broken.
+
+(
+(testing new pushers)
+###############
+###############
+#########...###
+###.....#...###
+###...6.#s#d###
+###......l.jw##
+##p..l.u..#####
+###......######
+###############
+###############
+###############
+
+###############
+###############
+###############
+####.....######
+###p.l...######
+####..4....qw##
+####....###i###
+######c....j###
+###############
+###############
+###############
+
+###############
+###############
+##p.l.....#####
+###.......#####
+###ss.....##w##
+###d......#..##
+###i3.....~6.l#
+###c9.....#uss#
+####......#####
+###############
+###############
+)
 
 level
 (get the gem in the correct single snake)
