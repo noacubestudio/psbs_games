@@ -31,6 +31,9 @@ dirs -> vs_wall_edge_2:dirs
 dirs -> vs_wall_inner_corner:dirs
 dirs -> vs_wall_inner_corner_sharp:dirs
 --
+wall_deco_s, wall_deco_m
+dirs -> vs_wall_deco_s:dirs, vs_wall_deco_m:dirs
+--
 vs_outside
 --
 vs_meta_arrow:dirs

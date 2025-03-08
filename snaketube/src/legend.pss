@@ -1,6 +1,9 @@
 # = wall and vs_outside
 s = block
 
+$ = wall and vs_outside and wall_deco_s
+@ = wall and vs_outside and wall_deco_m
+
 p = player and block and init and spawnpoint
 * = player and block and init and cut:left and player_facing:left
 w = block and meta_exit
@@ -39,8 +42,6 @@ m = block and init_dont_connect and cut:up    and npc
 n = block and init_dont_connect and cut:down  and npc
 o = block and init_dont_connect and cut:left  and npc
 t = block and init_dont_connect and cut:right and npc
-
-$ = block and ball and init_dont_connect and cut:up
 
 init_connectRules = init_connect_only_a or init_connect_only_b
 
