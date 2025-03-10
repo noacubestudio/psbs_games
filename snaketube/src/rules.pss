@@ -74,6 +74,10 @@ dirs [ again_col ] [ was cut:dirs:offs add cut:dirs ]
 (remove markers only used for init)
 [ init ] [ was init_connect_only_a/init_connect_only_b/init_dont_connect ]
 
+(put screen_border in bottom left edge)
+[ was stationary.init add action.init ] [ add screen_border ] (do once)
+down [ init ] [ was screen_border | add screen_border ]
+
 (remove init) 
 [ was init ]
 
