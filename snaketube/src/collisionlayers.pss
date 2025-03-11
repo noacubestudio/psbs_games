@@ -81,6 +81,8 @@ vs_npc:dirs, vs_npc:dirs:offs, vs_npc_off, vs_npc_off:offs, vs_pusher:dirs, vs_p
 --
 screen_border
 --
+restart_hint, undo_hint
+--
 
 
 (INVISIBLE MARKERS)

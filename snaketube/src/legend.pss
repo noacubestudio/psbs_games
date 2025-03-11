@@ -6,9 +6,13 @@ $ = wall and vs_outside and wall_deco_s
 
 p = player and block and init and spawnpoint
 * = player and block and init and cut:left and player_facing:left
-w = block and meta_exit
+" = player and block and init and init_dont_connect and cut:right and player_facing:left
 
-e = block and meta_exit and cut:left
+Ʉ = undo_hint    and wall and vs_outside
+Ɍ = restart_hint and wall and vs_outside
+
+w = block and meta_exit
+e = block and meta_exit and cut:left and init_dont_connect
 
 u = block and cut:up
 d = block and cut:down
