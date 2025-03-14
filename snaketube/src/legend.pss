@@ -1,13 +1,14 @@
-# = wall and vs_outside
-$ = wall and vs_outside and wall_deco_s
-@ = wall and vs_outside and wall_deco_m
-Ʉ = wall and vs_outside and undo_hint
-Ɍ = wall and vs_outside and restart_hint
+. = background
+# = wall
+$ = wall and wall_deco_s
+@ = wall and wall_deco_m
+Ʉ = wall and undo_hint
+Ɍ = wall and restart_hint
 
-p = block and vs_block_base and player and init and cut:right and spawnpoint 
-* = block and vs_block_base and player and init and cut:right and player_facing:right
-ǝ = block and vs_block_base and meta_exit and cut:left
-e = block and vs_block_base and meta_exit and cut:up
+p = block and vs_block_base and player and init and cut:right and spawnpoint and vs_player:right
+* = block and vs_block_base and player and init and cut:right and player_facing:right and vs_player_end:right
+ǝ = block and vs_block_base and meta_exit and cut:left and vs_meta_pipe:left
+e = block and vs_block_base and meta_exit and cut:up and vs_meta_pipe:up
 
 o = block and vs_block_base
 u = block and vs_block_base and cut:up
@@ -23,11 +24,10 @@ c = block and vs_block_base and cut:right
 ╗ = block and vs_block_base and cut:left and cut:down
 ╝ = block and vs_block_base and cut:left and cut:up
 
-◊ = block and vs_block_base and pusher
-▲ = block and vs_block_base and pusher and cut:up
-▼ = block and vs_block_base and pusher and cut:down
-◄ = block and vs_block_base and pusher and cut:left
-► = block and vs_block_base and pusher and cut:right
+▲ = block and vs_block_base and pusher and cut:up and vs_pusher:up
+▼ = block and vs_block_base and pusher and cut:down and vs_pusher:down
+◄ = block and vs_block_base and pusher and cut:left and vs_pusher:left
+► = block and vs_block_base and pusher and cut:right and vs_pusher:right
 
 
 (on top layer in block or next to block)

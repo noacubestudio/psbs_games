@@ -4,8 +4,6 @@ background
 hole
 --
 
-floor
---
 dirs -> vs_hole_edge_1:dirs
 dirs -> vs_hole_edge_2:dirs
 --

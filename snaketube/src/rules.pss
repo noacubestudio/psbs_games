@@ -54,8 +54,7 @@ dirs [ again_col ] [ was cut:dirs:offs add cut:dirs ]
 [ init ] [ wall_deco_m was vs_wall_inner:> add vs_wall_deco_m:> ]
 
 (hole border)
-[ init ] [ no hole add floor ]
-[ init ] [ hole add vs_hole_edge_1:> vs_hole_edge_2:> | floor ]
+[ init ] [ hole add vs_hole_edge_1:> vs_hole_edge_2:> | no hole ]
 [ init ] [ hole no vs_hole_edge_2:^ | was vs_hole_edge_1:^ ]
 [ init ] [ was vs_hole_edge_2:^ | hole no vs_hole_edge_1:^ ]
 [ init ] [ was vs_hole_edge_2:< vs_hole_edge_1:^ add vs_hole_outer_corner:^ ]
