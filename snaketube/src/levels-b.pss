@@ -1,7 +1,7 @@
 message Thank you for testing =)
 
-section [ WIP SECTION ]
-message The remaining mechanics are outdated and levels are potentially broken.
+section [ WIP, broken ]
+(message The remaining mechanics are outdated and levels are potentially broken.)
 
 (
 (testing new pushers)
@@ -69,6 +69,7 @@ message The remaining mechanics are outdated and levels are potentially broken.
 ###############
 )
 
+(
 level
 (get the gem in the correct single snake)
 (combination lock)
@@ -563,6 +564,8 @@ message The remaining levels are outdated and currently broken.
     ##..aaaaaa...##
     ###############
     ###############
+)
+
 )
 
 (WIP Playground)

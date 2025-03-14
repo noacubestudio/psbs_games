@@ -1,5 +1,5 @@
 # = wall and vs_outside
-s = block
+s = block and init_dont_connect
 
 $ = wall and vs_outside and wall_deco_s
 @ = wall and vs_outside and wall_deco_m
@@ -13,10 +13,10 @@ p = player and block and init and spawnpoint
 e = block and meta_exit and cut:left and init_dont_connect
 w = block and meta_exit and cut:up and init_dont_connect
 
-u = block and cut:up
-d = block and cut:down
-l = block and cut:left
-r = block and cut:right
+u = block and init_dont_connect and cut:up
+d = block and init_dont_connect and cut:down
+l = block and init_dont_connect and cut:left
+r = block and init_dont_connect and cut:right
 
 h = block and init_dont_connect and cut:left and cut:right
 i = block and init_dont_connect and cut:up and cut:down
@@ -26,14 +26,14 @@ f = block and init_dont_connect and cut:right and cut:down
 q = block and init_dont_connect and cut:left and cut:down
 j = block and init_dont_connect and cut:left and cut:up
 
-a = block and init_connect_only_a
-b = block and init_connect_only_b
+a = block and init_dont_connect
+b = block and init_dont_connect
 
-2 = block and pusher
-3 = block and pusher and cut:up
-4 = block and pusher and cut:down
-5 = block and pusher and cut:left
-6 = block and pusher and cut:right
+2 = block and init_dont_connect and pusher
+3 = block and init_dont_connect and pusher and cut:up
+4 = block and init_dont_connect and pusher and cut:down
+5 = block and init_dont_connect and pusher and cut:left
+6 = block and init_dont_connect and pusher and cut:right
 
 7 = block and init_dont_connect and cut:up
 8 = block and init_dont_connect and cut:down
