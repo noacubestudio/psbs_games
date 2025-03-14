@@ -1162,15 +1162,6 @@ transparent
 init
 transparent
 
-init_connect_only_a
-transparent
-
-init_connect_only_b
-transparent
-
-init_dont_connect
-transparent
-
 player_facing:dirs
 transparent
 

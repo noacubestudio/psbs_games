@@ -35,12 +35,6 @@ dirs [ again_col ] [ was cut:dirs:offs add cut:dirs ]
 (----INIT----)
 (do these at the start of the first turn, then never again)
 
-(connect any blocks in level)
-[ init ] [ block no init_connect_only_b/init_connect_only_a init_dont_connect cut:> add con:> | block no init_connect_only_b/init_connect_only_a init_dont_connect cut:< add con:< ]
-[ init ] [ player was con:> | was con:< init_connectRules ]
-
-(spawnpoints/meta_exit)
-[ init ] [ spawnpoint/meta_exit block no con:dirs cut:dirs add cut:> | no wall ]
 (arrows)
 [ init ] [ spawnpoint cut:< | wall add vs_meta_arrow:< ]
 [ init ] [ meta_exit  cut:< | wall add vs_meta_arrow:> ]
@@ -70,9 +64,6 @@ dirs [ again_col ] [ was cut:dirs:offs add cut:dirs ]
 
 (from a spawnpoint, the player appears)
 [ init ] [ spawnpoint player add again_spawn ]
-
-(remove markers only used for init)
-[ init ] [ was init_connect_only_a/init_connect_only_b/init_dont_connect ]
 
 (put screen_border in bottom left edge)
 [ was stationary.init add action.init ] [ add screen_border ] (do once)

@@ -90,11 +90,7 @@ restart_hint, undo_hint
 block
 player
 player_facing:dirs
-
-(init)
 init
-init_connect_only_a, init_connect_only_b
-init_dont_connect
 
 (temporary groups)
 dirs -> any:dirs
