@@ -3,6 +3,13 @@
 (----AGAIN TURN----)
 (do these in an again turn if the markers were placed in the previous turn)
 
+(after collision animation, swap some tiles back)
+(all other animated tiles are reset every turn anyway)
+[ again_col ] [ was ball:offs add ball ]
+dirs [ again_col ] [ was con:dirs:offs add con:dirs ]
+dirs [ again_col ] [ was cut:dirs:offs add cut:dirs ]
+[ was again_col ]
+
 (gravity)
 [ hole again_gravity was gp_can_fall ]
 [ hole again_gravity no again_fly:dirs was gp_items ]
@@ -16,20 +23,12 @@
 dirs [           was again_fly:dirs add now_fly:dirs ]
 
 (appearing from spawn)
-(add player in case they were removed before)
+(respawn after trying to go back)
 [ con:>/cut:> was again_spawn add again_fly:> player_facing:> player ]
-
 (win level when exiting through meta exit)
-[ meta_exit was player again_exit ] win
+[ meta_exit  was player again_exit ] win
 (if going back to spawn, player disappears and comes back later)
 [ spawnpoint was player again_exit add again_spawn ]
-
-(end collision animation, swap tiles back)
-(only for objects that don't get regenerated every turn anyway)
-[ again_col ] [ was ball:offs add ball ]
-dirs [ again_col ] [ was con:dirs:offs add con:dirs ]
-dirs [ again_col ] [ was cut:dirs:offs add cut:dirs ]
-[ was again_col ]
 
 
 (----INIT----)
@@ -53,6 +52,10 @@ dirs [ again_col ] [ was cut:dirs:offs add cut:dirs ]
 [ init ] [ wall_deco_s was vs_wall_inner:> add vs_wall_deco_s:> ]
 [ init ] [ wall_deco_m was vs_wall_inner:> add vs_wall_deco_m:> ]
 
+(put screen_border in bottom left edge)
+[ was stationary.init add action.init ] [ add screen_border ] (do once)
+down [ init ] [ was screen_border | add screen_border ]
+
 (hole border)
 [ init ] [ hole add vs_hole_edge_1:> vs_hole_edge_2:> | no hole ]
 [ init ] [ hole no vs_hole_edge_2:^ | was vs_hole_edge_1:^ ]
@@ -60,13 +63,8 @@ dirs [ again_col ] [ was cut:dirs:offs add cut:dirs ]
 [ init ] [ was vs_hole_edge_2:< vs_hole_edge_1:^ add vs_hole_outer_corner:^ ]
 [ init ] [ hole no vs_hole_edge_1:> vs_hole_outer_corner:> | no hole add vs_hole_inner_corner:^ ]
 
-
 (from a spawnpoint, the player appears)
 [ init ] [ spawnpoint player add again_spawn ]
-
-(put screen_border in bottom left edge)
-[ was stationary.init add action.init ] [ add screen_border ] (do once)
-down [ init ] [ was screen_border | add screen_border ]
 
 (remove init) 
 [ was init ]
@@ -128,6 +126,11 @@ down [ init ] [ was screen_border | add screen_border ]
 
 (items and blocks can push each other, unless there is an open side and they won't collide)
 dirs [ push:dirs con:> no snake_source | con:< no snake_source add push:dirs ] (through multiblocks)
++ [ push:<       con:> no snake_source | con:< pusher          add push:<    ] (can drag pusher along even if not snake movement)
+    (above is a WIP. a sideways pusher will still fall off when the rest is involved in a self push.)
+    (at the same time, I *want* it to fall off when it's a self snake move but an outside push, I think.)
+    (because in that case there is a conflict, which is what the splitting is there to resolve.)
+    (it might also be cool to make a failed pusher actually push from the back when it can't snake at the front?)
 + [ push:>          | block          add push:>      ] (block to block)
 + [ push:> no any:> | gp_items       add item_push:> ] (closed block to item outside)
 + [ item_push:>     | gp_items       add item_push:> ] (item to item)
@@ -138,6 +141,9 @@ dirs [ push:dirs con:> no snake_source | con:< no snake_source add push:dirs ] (
 (count item pushes as any other push from now on)
 [ no block was item_push:> add push:> ]
 [ was item_push:> ]
+
+(a pusher tail pushing itself will not have snake movement, as it can't split and the rest also gets pushed)
+[ push:dirs no snake_source was snake_move:dirs ]
 
 
 (COLLISION)
@@ -186,7 +192,9 @@ dirs [ push:dirs con:> no snake_source | con:< no snake_source add push:dirs ] (
 [ try_move:> no con:> col_move:> add try_follow:> | snake_move:perpendicular add discard_move:> discard_follow ] (tail won't follow, if present)
 
 (object pushing into tail of moving block)
-(the tail will be pushed and not follow the block head)
+(fine if it's into eg. a pusher, it will just split and not follow)
+[ try_move:> no con:> | was follow:dirs snake_source ]
+(otherwise, the entire tail will be pushed and not follow the try_move)
 [ try_move:> no con:> | follow:dirs add discard_follow ]
 
 (conflict at empty tile, which is moved into from multiple directions)
@@ -228,7 +236,6 @@ dirs [ push:dirs con:> no snake_source | con:< no snake_source add push:dirs ] (
 
 (block can move)
 [ follow:> add snake_move:> ]
-[ snake_move:dirs del push:dirs ] (this should never be needed)
 
 (don't visualize multi-directional collision)
 [ was col_move:> col_move:v ]
