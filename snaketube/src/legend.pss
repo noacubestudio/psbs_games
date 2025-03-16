@@ -5,41 +5,39 @@ $ = wall and wall_deco_s
 Ʉ = wall and undo_hint
 Ɍ = wall and restart_hint
 
-p = block and vs_block_base and player and init and cut:right and spawnpoint and vs_player:right
-* = block and vs_block_base and player and init and cut:right and player_facing:right and vs_player_end:right
-ǝ = block and vs_block_base and meta_exit and cut:left and vs_meta_pipe:left
-e = block and vs_block_base and meta_exit and cut:up and vs_meta_pipe:up
+p = block and vs_block_base and player and init and con:0:right and spawnpoint and vs_player:right
+* = block and vs_block_base and player and init and con:0:right and player_facing:right and vs_player_end:right
+ǝ = block and vs_block_base and meta_exit and con:0:left and vs_meta_pipe:left
+e = block and vs_block_base and meta_exit and con:0:up   and vs_meta_pipe:up
 
 o = block and vs_block_base
-u = block and vs_block_base and cut:up
-n = block and vs_block_base and cut:down
-ɔ = block and vs_block_base and cut:left
-c = block and vs_block_base and cut:right
+u = block and vs_block_base and con:0:up
+n = block and vs_block_base and con:0:down
+ɔ = block and vs_block_base and con:0:left
+c = block and vs_block_base and con:0:right
 
-═ = block and vs_block_base and cut:left and cut:right
-‖ = block and vs_block_base and cut:up and cut:down
+═ = block and vs_block_base and con:0:left and con:0:right
+‖ = block and vs_block_base and con:0:up   and con:0:down
 
-╚ = block and vs_block_base and cut:right and cut:up
-╔ = block and vs_block_base and cut:right and cut:down
-╗ = block and vs_block_base and cut:left and cut:down
-╝ = block and vs_block_base and cut:left and cut:up
+╚ = block and vs_block_base and con:0:right and con:0:up
+╔ = block and vs_block_base and con:0:right and con:0:down
+╗ = block and vs_block_base and con:0:left  and con:0:down
+╝ = block and vs_block_base and con:0:left  and con:0:up
 
-▲ = block and vs_block_base and pusher and cut:up and vs_pusher:up
-▼ = block and vs_block_base and pusher and cut:down and vs_pusher:down
-◄ = block and vs_block_base and pusher and cut:left and vs_pusher:left
-► = block and vs_block_base and pusher and cut:right and vs_pusher:right
+▲ = block and vs_block_base and pusher and con:0:up    and vs_pusher:up
+▼ = block and vs_block_base and pusher and con:0:down  and vs_pusher:down
+◄ = block and vs_block_base and pusher and con:0:left  and vs_pusher:left
+► = block and vs_block_base and pusher and con:0:right and vs_pusher:right
 
 
 (on top layer in block or next to block)
 gp_items = player or ball or npc
 
 (always move with block)
-gp_block = block or con:dirs or cut:dirs or again_fly:dirs or pusher
+gp_block = block or con:x:dirs or again_fly:dirs or pusher
 
 (these items get removed with the block over holes)
-gp_can_fall = block or any:dirs or con:dirs or cut:dirs or pusher
+gp_can_fall = block or con:x:dirs or pusher
 
-(these markers represent actual full blocks moving, not items)
-gp_moving_blocks = push:dirs or snake_move:dirs
-
+(all of these are regenerated every turn and not supposed to be used on the left side of game logic rules)
 gp_temporary_visuals = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_block_base or vs_player:dirs or vs_block_base:offs or vs_player:dirs:offs or vs_block_edge:dirs or vs_block_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_meta_pipe:dirs or vs_meta_pipe:dirs:offs or vs_meta_pipe_closed:dirs or vs_meta_pipe_closed:dirs:offs or vs_npc:dirs or vs_npc:dirs:offs or vs_npc_off or vs_npc_off:offs or vs_wall_inner_corner_sharp:dirs or vs_block_col:dirs or vs_player_end:dirs or vs_player_end:dirs:offs or vs_pusher:dirs or vs_pusher:dirs:offs

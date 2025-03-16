@@ -1,7 +1,9 @@
-dirs = up down left right
-offs = up down left right
+dirs = up down left right (logical/ visual directions of objects, usually for rotated sprite)
+offs = up down left right (used as temporary visual offsets for animation, can coexist with dirs)
 hor = left right
 ver = up down
+
+x = 0 1 (bool)
 
 ( notUp = left down right )
 ( notLeft = up down right )

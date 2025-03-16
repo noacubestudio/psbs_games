@@ -687,7 +687,7 @@ vs_block_base:offs
 ((color_black)) ((color_fg))
 copy: vs_block_base translate:offs:2
 
-con:dirs
+con:1:dirs
 ((color_fg)) ((color_bg))
 ..................
 ..00000011000000..
@@ -711,9 +711,9 @@ rot:up:dirs
 translate:down:1
 translate:left:1
 
-con:dirs:offs
+con:1:dirs:offs
 ((color_fg)) ((color_bg))
-copy: con:dirs translate:offs:2
+copy: con:1:dirs translate:offs:2
 
 vs_con_lowest:dirs
 ((color_black))
@@ -743,7 +743,7 @@ vs_con_lowest:dirs:offs
 ((color_black))
 copy: vs_con_lowest:dirs translate:offs:2
 
-cut:dirs
+con:0:dirs
 ((color_fg)) ((color_black)) ((color_bg))
 ..111111..111111..
 .1111111111111111.
@@ -767,9 +767,9 @@ rot:up:dirs
 translate:down:1
 translate:left:1
 
-cut:dirs:offs
+con:0:dirs:offs
 ((color_fg)) ((color_black)) ((color_bg))
-copy: cut:dirs translate:offs:2
+copy: con:0:dirs translate:offs:2
 
 vs_con_end
 ((color_bg))
@@ -1172,9 +1172,6 @@ col_head:dirs
 transparent
 
 supported
-transparent
-
-any:dirs
 transparent
 
 push:dirs

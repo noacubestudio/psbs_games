@@ -44,9 +44,9 @@ vs_block_base
 --
 dirs -> vs_block_edge:dirs
 --
-dirs -> cut:dirs
+dirs -> con:0:dirs
 --
-dirs -> con:dirs
+dirs -> con:1:dirs
 --
 vs_con_end
 --
@@ -60,9 +60,9 @@ vs_block_base:offs
 --
 dirs -> vs_block_edge:dirs:offs
 --
-dirs -> cut:dirs:offs
+dirs -> con:0:dirs:offs
 --
-dirs -> con:dirs:offs
+dirs -> con:1:dirs:offs
 --
 vs_block_col:dirs (extending block, on top existing tiles)
 --
@@ -89,9 +89,6 @@ block
 player
 player_facing:dirs
 init
-
-(temporary groups)
-dirs -> any:dirs
 
 (move)
 snake_move:dirs, was_snake_moved:dirs
