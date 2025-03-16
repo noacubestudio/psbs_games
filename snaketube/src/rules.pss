@@ -5,7 +5,6 @@
 
 (after collision animation, swap some tiles back)
 (all other animated tiles are reset every turn anyway)
-[ again_col ] [ was ball:offs add ball ]
 dirs x [ again_col ] [ was con:x:dirs:offs add con:x:dirs ]
 [ was again_col ]
 
@@ -457,7 +456,6 @@ dirs [ col_move:dirs con:1:> | add col_move:dirs ]
 [ gp_items col_move:>/col_head:> add col_item:> ]
 
 (animate tiles in collision by replacing them with offset variants)
-[ col_item:> was ball       add ball:> ] 
 [ col_item:> was vs_npc_off add vs_npc_off:> ]
 
 dirs [ col_item:> was vs_player:dirs     add vs_player:dirs:> ]

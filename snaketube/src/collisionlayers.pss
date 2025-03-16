@@ -74,7 +74,7 @@ vs_meta_pipe:dirs:offs, vs_meta_pipe_closed:dirs:offs
 (top layer)
 vs_player:dirs, vs_player:dirs:offs, vs_player_end:dirs, vs_player_end:dirs:offs
 --
-npc, ball, ball:offs, pusher
+npc, pusher
 vs_npc:dirs, vs_npc:dirs:offs, vs_npc_off, vs_npc_off:offs, vs_pusher:dirs, vs_pusher:dirs:offs
 --
 screen_border

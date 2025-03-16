@@ -30,8 +30,8 @@ c = block and vs_block_base and con:0:right
 ► = block and vs_block_base and pusher and con:0:right and vs_pusher:right
 
 
-(on top layer in block or next to block)
-gp_items = player or ball or npc
+(on top layer in block or next to block, can fly through pipes)
+gp_items = player or npc
 
 (always move with block)
 gp_block = block or con:x:dirs or again_fly:dirs or pusher
