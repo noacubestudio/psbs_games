@@ -1172,7 +1172,7 @@ push:dirs
 rot:up:dirs
 
 was_pushed:dirs
-transparent #0080FF
+#0080FF
 copy: push:dirs
 
 item_push:dirs
@@ -1196,7 +1196,7 @@ green
 rot:up:dirs
 
 was_item_pushed:dirs
-transparent lightgreen
+lightgreen
 copy: item_push:dirs
 
 snake_move:dirs
@@ -1220,11 +1220,11 @@ snake_move:dirs
 rot:up:dirs
 
 was_snake_moved:dirs
-transparent #00B0FF
+#00B0FF
 copy: snake_move:dirs
 
 try_move:dirs
-transparent #FF9000
+#FF9000
 ................
 ................
 ................
@@ -1244,7 +1244,7 @@ transparent #FF9000
 rot:up:dirs
 
 try_follow:dirs
-transparent #FF6000
+#FF6000
 copy: try_move:dirs
 
 discard_move:dirs
@@ -1297,7 +1297,24 @@ fixed_tail_con:dirs
 transparent
 
 follow:dirs
-transparent
+white
+................
+................
+.......00.......
+......0000......
+.....00..00.....
+.....0....0.....
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................
+rot:up:dirs
 
 discard_follow
 transparent

@@ -71,7 +71,7 @@ down [ init ] [ was screen_border | add screen_border ]
 
 (----PLAYER INPUT---)
 
-(all moves start from within a tube)
+(all moves start from within a block)
 (move to empty side starts flight, this same turn)
 [ con:x:> was >.player add stationary.player now_fly:> ] [ was player_facing:dirs add player_facing:> ]
 
@@ -82,9 +82,8 @@ down [ init ] [ was screen_border | add screen_border ]
 (move forward starts block movement)
 [ was >.player add stationary.player snake_move:> ] [ was player_facing:dirs add player_facing:> ]
 
-(if the player isn't at the end of a block, block the move)
-(dirs [ player con:x:> con:x:v was snake_move:dirs add col_item:dirs ] sfx2)
-(dirs [ player con:x:> con:x:< was snake_move:dirs add col_item:dirs ] sfx2)
+(in addition to player movement, some moves by other objects can be queued from the last turn)
+(see again section at the top)
 
 
 
@@ -98,9 +97,6 @@ down [ init ] [ was screen_border | add screen_border ]
 - collisions are cashed so that auto-moving snakes don't try the same movement over and over and refreshed when needed.
 - actual movement transfers everything in those tiles over, tile by tile
 )
-
-(remove temp markers from last time)
-[ was was_pushed:dirs/was_snake_moved:dirs/was_item_pushed:dirs/follow:dirs/discard_move:dirs/discard_follow/try_move:dirs/try_follow:dirs/snake_source ]
 
 (INITIAL MOVE)
 (push block/ item in front)
@@ -222,10 +218,9 @@ dirs [ push:dirs con:1:> no snake_source | con:1:< no snake_source add push:dirs
 (clear the movement)
 [ col_move:> del push:>/snake_move:> ]
 [ discard_move:> del push:>/snake_move:> ]
-[ discard_follow del follow:dirs ]
 
 (block can move)
-[ follow:> add snake_move:> ]
+[ follow:> no discard_follow add snake_move:> ]
 
 (don't visualize multi-directional collision)
 [ was col_move:> col_move:v ]
@@ -233,6 +228,9 @@ dirs [ push:dirs con:1:> no snake_source | con:1:< no snake_source add push:dirs
 
 (don't add to the undo queue if the player collided)
 [ player col_move:> ] -> nosave
+
+(remove temp markers used in the movement planning, which is now over)
+[ was follow:dirs/discard_move:dirs/discard_follow/try_move:dirs/try_follow:dirs/snake_source ]
 
 
 
@@ -257,7 +255,6 @@ dirs [ push:>/snake_move:> conflict_cache:dirs add refresh_cache:dirs ]
 
 [ refresh_cache:dirs del col_cache:dirs conflict_cache:dirs ]
 [ was refresh_cache:dirs ]
-
 
 
 (split movement into item and block movement again)
@@ -322,6 +319,9 @@ dirs [ was_snake_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixed
 
 (if cut was moved into item, the item moves the other way)
 [ was_pushed:> con:0:> gp_items no was_item_pushed:dirs again_fly:dirs add again_fly:< ]
+
+(remove markers for actually doing the movement)
+[ was was_pushed:dirs/was_snake_moved:dirs/was_item_pushed:dirs ]
 
 
 
