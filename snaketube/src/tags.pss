@@ -3,7 +3,8 @@ offs = up down left right (used as temporary visual offsets for animation, can c
 hor = left right
 ver = up down
 
-x = 0 1 (bool)
+x  = 0 1 (bool)
+x2 = 0 1 (bool, separate tag group, to use in the same line)
 
 ( notUp = left down right )
 ( notLeft = up down right )
