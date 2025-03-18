@@ -14,7 +14,9 @@ dirs x [ again_col ] [ was con:x:dirs:offs add con:x:dirs ]
 [ was again_gravity ]
 
 (queued moves)
-[ pusher:1 was again_move:> add pusher_move:> ]
+[ con:x:> pusher:1 was again_move add pusher_move:> ]
+( the turn before, charged it)
+[ was again_charge_pusher add again_move ]
 
 (queued flying)
 [ con:x:v no con:x:> was again_fly:> add now_fly:v ] (reorient in a pipe corner)
@@ -103,7 +105,12 @@ down [ init ] [ was screen_border | add screen_border ]
 (pushers pass along their marker so that they push from the tail end)
 [ pusher_move:> con:1:> | no pusher_move:dirs add pusher_move:> ]
 + [ con:x:> was pusher_move:perpendicular add pusher_move:> | no pusher_move:< pusher_move:> ] (turn to face next connection)
-[ pusher_move:> no con:1:> add snake_move:> ]
+[    con:0:>                 was pusher_move:> add action.pusher_move:> snake_move:> ] (open end)
+[ no con:x:> con:x:v con:x:^ was pusher_move:> add action.pusher_move:> snake_move:> ] (closed end)
+
+(if the pushers can't find a tail end - another pusher is pushing there? - then just collide.)
+[ was pusher_move:> add action.pusher_move:> | was action.pusher_move:dirs ]
+[ was stationary.pusher_move:> pusher:1 add pusher:0 col_move:> ] sfx2 (collision sound)
 [ was pusher_move:> ]
 
 (push block/ item in front)
@@ -377,8 +384,8 @@ dirs [ col_move:dirs con:1:> | add col_move:dirs ]
 
 (----QUEUE PUSHES FROM MOVERS----)
 
-(pushers will start movement into that direction if they are enabled)
-[ pusher:1 con:x:> no again_gravity add again_move:> ]
+(pushers will start movement if they are enabled)
+[ pusher:1 no again_gravity again_move add again_charge_pusher ]
 
 
 
@@ -406,6 +413,7 @@ dirs [ col_move:dirs con:1:> | add col_move:dirs ]
 
 (pusher at block end, points at tail)
 x2 [ pusher:x2 con:x:> no con:x:v con:x:^ con:x:< add vs_pusher:x2:> ]
+[ again_charge_pusher was vs_pusher:1:> add vs_charge_pusher:> ]
 
 (direction for eye)
 [ player_facing:> ] [ player add vs_player:> ] 
@@ -433,6 +441,7 @@ dirs [ col_item:> was vs_player_end:dirs add vs_player_end:dirs:> ]
 
 dirs x [ col_move:> was con:x:dirs       add con:x:dirs:> ]
 dirs x [ col_move:> was vs_pusher:x:dirs add vs_pusher:x:dirs:> ]
+dirs x [ col_head:> was vs_pusher:x:dirs add vs_pusher:x:dirs:> ]
 
 dirs [ col_move:> was vs_con_lowest:dirs       add vs_con_lowest:dirs:> ]
 dirs [ col_move:> was vs_block_edge:dirs       add vs_block_edge:dirs:> ]
@@ -456,7 +465,8 @@ dirs [ col_move:> was vs_meta_pipe_closed:dirs add vs_meta_pipe_closed:dirs:> ]
 [ again_fly:> gp_items ] -> again
 
 (move multiblock after there was space for it)
-[ again_move:> ] -> again
+[ again_charge_pusher ] -> again
+[ again_move ] -> again
 
 (to go back from the collision animation to default state)
 [ was col_move:dirs/col_item:dirs/col_head:dirs add again_col ] again

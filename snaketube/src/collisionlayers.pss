@@ -75,7 +75,7 @@ vs_meta_pipe:dirs:offs, vs_meta_pipe_closed:dirs:offs
 vs_player:dirs, vs_player:dirs:offs, vs_player_end:dirs, vs_player_end:dirs:offs
 --
 pusher:x
-vs_pusher:x:dirs, vs_pusher:x:dirs:offs
+vs_pusher:x:dirs, vs_pusher:x:dirs:offs, vs_charge_pusher:dirs
 --
 screen_border
 --
@@ -100,7 +100,7 @@ follow:dirs
 discard_follow
 
 (movement conflicts and collision)
-dirs -> again_move:dirs
+again_move, again_charge_pusher
 dirs -> try_move:dirs
 dirs -> try_follow:dirs
 dirs -> try_move_dest:dirs
