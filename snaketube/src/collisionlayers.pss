@@ -1,9 +1,7 @@
 background
 --
-
 hole
 --
-
 dirs -> vs_hole_edge_1:dirs
 dirs -> vs_hole_edge_2:dirs
 --
@@ -11,10 +9,10 @@ dirs -> vs_hole_inner_corner:dirs
 --
 dirs -> vs_hole_outer_corner:dirs
 --
-
 meta_exit, spawnpoint
 --
 
+(solid)
 wall
 --
 dirs -> vs_wall_con:dirs
@@ -37,7 +35,7 @@ vs_outside
 vs_meta_arrow:dirs
 --
 
-(block: STATIONARY)
+(blocks)
 dirs -> vs_con_lowest:dirs
 --
 vs_block_base
@@ -53,7 +51,7 @@ vs_con_end
 vs_meta_pipe:dirs, vs_meta_pipe_closed:dirs
 --
 
-(block: ANIMATED)
+(blocks, animated. always in front)
 dirs -> vs_con_lowest:dirs:offs
 --
 vs_block_base:offs
@@ -71,12 +69,14 @@ vs_con_end:offs
 vs_meta_pipe:dirs:offs, vs_meta_pipe_closed:dirs:offs
 --
 
-(top layer)
+(items on blocks)
 vs_player:dirs, vs_player:dirs:offs, vs_player_end:dirs, vs_player_end:dirs:offs
 --
 pusher:x
-vs_pusher:x:dirs, vs_pusher:x:dirs:offs, vs_charge_pusher:dirs
+vs_pusher:x:dirs, vs_pusher:x:dirs:offs
 --
+
+(UI)
 screen_border
 --
 restart_hint, undo_hint
@@ -85,10 +85,11 @@ restart_hint, undo_hint
 
 (INVISIBLE MARKERS)
 
+init
 block
 player
 player_facing:dirs
-init
+supported
 
 (move)
 snake_move:dirs, was_snake_moved:dirs
@@ -100,14 +101,12 @@ follow:dirs
 discard_follow
 
 (movement conflicts and collision)
-again_move, again_charge_pusher
 dirs -> try_move:dirs
 dirs -> try_follow:dirs
 dirs -> try_move_dest:dirs
 dirs -> col_move:dirs, col_head:dirs
 dirs -> col_item:dirs
 dirs -> discard_move:dirs
-snake_source
 
 (fly)
 dirs -> try_fly_dest:dirs
@@ -117,5 +116,5 @@ try_bounce
 (again)
 again_col
 again_exit, again_spawn
-supported
+again_pusher
 again_gravity

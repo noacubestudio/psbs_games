@@ -1,5 +1,25 @@
 (% filter relaxRules %)
 
+(----SUBROUTINES----)
+
+(turn continued from last turn without input)
+[ gp_again        ] -> gosub handle_queued_from_last_turn
+(init subroutine is done once, then the marker is removed.)
+[ init            ] -> gosub initialize_level
+(main game turn)
+(flight subroutine currently isn't exactly just for flying and basically has to always be done if the player is visible.)
+(redrawing visuals has do always be done.)
+[ moving player   ] -> gosub handle_player_input
+[ gp_move_trigger ] -> gosub handle_block_movement
+[ player          ] -> gosub handle_flight
+[ background      ] -> gosub redraw_visuals
+(start another turn to continue animation/ flying etc.)
+[ gp_again        ] -> gosub queue_again
+
+
+
+(=====================================================================================)
+subroutine handle_queued_from_last_turn
 (----AGAIN TURN----)
 (do these in an again turn if the markers were placed in the previous turn)
 
@@ -13,10 +33,10 @@ dirs x [ again_col ] [ was con:x:dirs:offs add con:x:dirs ]
 [ hole again_gravity no again_fly:dirs was gp_items ] (items get removed if not flying)
 [ was again_gravity ]
 
-(queued moves)
-[ con:x:> pusher:1 was again_move add pusher_move:> ]
-( the turn before, charged it)
-[ was again_charge_pusher add again_move ]
+(pushers activated last turn push once)
+[ con:x:> pusher:1 was again_pusher add pusher_move:> ]
+(other pushers need to be activated first)
+[ again_pusher was pusher:0 add pusher:1 ]
 
 (queued flying)
 [ con:x:v no con:x:> was again_fly:> add now_fly:v ] (reorient in a pipe corner)
@@ -33,46 +53,52 @@ dirs [ was again_fly:dirs add now_fly:dirs ]
 
 
 
+(=====================================================================================)
+subroutine initialize_level
 (----INIT----)
 (do these at the start of the first turn, then never again)
 
-(arrows)
-[ init ] [ spawnpoint con:0:< | wall add vs_meta_arrow:< ]
-[ init ] [ meta_exit  con:0:< | wall add vs_meta_arrow:> ]
+(connect blocks)
+[ was con:0:> add con:1:> | was con:0:< add con:1:< ]
 
 (connect walls)
-[ init ] [ wall add vs_wall_con:> ]
-[ init ] [ wall was vs_wall_con:> | no wall ]
+[ wall add vs_wall_con:> ]
+[ wall was vs_wall_con:> | no wall ]
 
 (wall edge)
-[ init ] [ wall add vs_wall_inner:> vs_wall_edge:> del vs_outside | no wall ]
-[ init ] [ vs_wall_inner:v | wall no vs_wall_inner:v add vs_wall_inner_corner:> del vs_outside ]
+[ wall add vs_wall_inner:> vs_wall_edge:> del vs_outside | no wall ]
+[ vs_wall_inner:v | wall no vs_wall_inner:v add vs_wall_inner_corner:> del vs_outside ]
+[ vs_wall_inner:^ add vs_wall_edge_2:^ | vs_wall_inner:^ add vs_wall_edge_1:^ ]
 
-[ init ] [ vs_wall_inner:^ add vs_wall_edge_2:^ | vs_wall_inner:^ add vs_wall_edge_1:^ ]
+(arrows)
+[ spawnpoint con:0:< | wall add vs_meta_arrow:< ]
+[ meta_exit  con:0:< | wall add vs_meta_arrow:> ]
 
 (decoration)
-[ init ] [ wall_deco_s was vs_wall_inner:> add vs_wall_deco_s:> ]
-[ init ] [ wall_deco_m was vs_wall_inner:> add vs_wall_deco_m:> ]
+[ wall_deco_s was vs_wall_inner:> add vs_wall_deco_s:> ]
+[ wall_deco_m was vs_wall_inner:> add vs_wall_deco_m:> ]
 
 (put screen_border in bottom left edge)
 [ was stationary.init add action.init ] [ add screen_border ] (do once)
-down [ init ] [ was screen_border | add screen_border ]
+down [ was screen_border | add screen_border ]
 
 (hole border)
-[ init ] [ hole add vs_hole_edge_1:> vs_hole_edge_2:> | no hole ]
-[ init ] [ hole no vs_hole_edge_2:^ | was vs_hole_edge_1:^ ]
-[ init ] [ was vs_hole_edge_2:^ | hole no vs_hole_edge_1:^ ]
-[ init ] [ was vs_hole_edge_2:< vs_hole_edge_1:^ add vs_hole_outer_corner:^ ]
-[ init ] [ hole no vs_hole_edge_1:> vs_hole_outer_corner:> | no hole add vs_hole_inner_corner:^ ]
+[ hole add vs_hole_edge_1:> vs_hole_edge_2:> | no hole ]
+[ hole no vs_hole_edge_2:^ | was vs_hole_edge_1:^ ]
+[ was vs_hole_edge_2:^ | hole no vs_hole_edge_1:^ ]
+[ was vs_hole_edge_2:< vs_hole_edge_1:^ add vs_hole_outer_corner:^ ]
+[ hole no vs_hole_edge_1:> vs_hole_outer_corner:> | no hole add vs_hole_inner_corner:^ ]
 
 (from a spawnpoint, the player appears)
-[ init ] [ spawnpoint player add again_spawn ]
+[ spawnpoint was player add stationary.player again_spawn ] (still works without run_rules_on_level_start for testing)
 
 (remove init) 
 [ was init ]
 
 
 
+(=====================================================================================)
+subroutine handle_player_input
 (----PLAYER INPUT----)
 
 (all moves start from within a block)
@@ -82,11 +108,13 @@ down [ init ] [ was screen_border | add screen_border ]
 (moving in a block starts snake movement)
 [ was >.player add stationary.player snake_move:> ] [ was player_facing:dirs add player_facing:> ]
 
-(in addition to player movement, some moves by other objects can be queued from the last turn)
-(see again section at the top)
+(pushers move when player moves)
+[ snake_move:dirs ] [ con:x:> pusher:1 add pusher_move:> ]
 
 
 
+(=====================================================================================)
+subroutine handle_block_movement
 (----MOVE OBJECTS----)
 
 ( 
@@ -103,10 +131,9 @@ down [ init ] [ was screen_border | add screen_border ]
 (INITIAL MOVE)
 
 (pushers pass along their marker so that they push from the tail end)
-[ pusher_move:> con:1:> | no pusher_move:dirs add pusher_move:> ]
-+ [ con:x:> was pusher_move:perpendicular add pusher_move:> | no pusher_move:< pusher_move:> ] (turn to face next connection)
-[    con:0:>                 was pusher_move:> add action.pusher_move:> snake_move:> ] (open end)
-[ no con:x:> con:x:v con:x:^ was pusher_move:> add action.pusher_move:> snake_move:> ] (closed end)
+[ con:1:> was pusher_move:dirs add pusher_move:> | no pusher_move:dirs add pusher_move:> ]
+[    con:0:>                 was stationary pusher_move:dirs add action.pusher_move:> snake_move:> ] (open end)
+[ no con:x:> con:x:v con:x:^ was            pusher_move:>    add action.pusher_move:> snake_move:> ] (closed end)
 
 (if the pushers can't find a tail end - another pusher is pushing there? - then just collide.)
 [ was pusher_move:> add action.pusher_move:> | was action.pusher_move:dirs ]
@@ -120,20 +147,14 @@ down [ init ] [ was screen_border | add screen_border ]
 
 (SPREAD PUSH MARKERS)
 
-(push markers do not spread through connections with a player controlling it)
-(detect these tiles first)
-[ player con:x:> no con:x:< con:x:v con:x:^ add snake_source ]
-
 (items and blocks can push each other, unless there is an open side and they won't collide)
-dirs [ push:dirs con:1:> no snake_source | con:1:< no snake_source add push:dirs ] (through multiblocks)
+dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through multiblocks)
 + [ push:>            | block            add push:>      ] (block to block)
 + [ push:> no con:x:> | gp_items         add item_push:> ] (closed block to item outside)
 + [ item_push:>       | gp_items         add item_push:> ] (item to item)
 + [ item_push:>       | block no con:x:< add push:>      ] (item outside to closed block)
 + [ push:> gp_items   no con:x:< add item_push:> ] (item inside pushed block)
 + [ item_push:> block no con:x:> add push:>      ] (block around pushed item)
-
-[ was snake_source ]
 
 (count item pushes as any other push from now on)
 [ no block was item_push:> add push:> ]
@@ -212,7 +233,7 @@ dirs [ push:dirs con:1:> no snake_source | con:1:< no snake_source add push:dirs
   [ try_move:> add col_move:> | col_move:> ]
 + dirs [ col_move:dirs con:1:> | con:1:< add col_move:dirs ]
 + dirs [ follow:> add discard_follow | snake_move:dirs col_move:dirs ]
-+ [ discard_follow con:1:> | con:1:< no snake_move:dirs add discard_follow ] (spread, including from block head)
++ [ discard_follow con:1:> | con:1:< no player add discard_follow ] (spread, including from block head)
 + [ snake_move:dirs was discard_follow ] (but don't leave on block head)
 + [ discard_follow was try_follow:dirs ]
 + [ try_follow:> add col_move:> | snake_move:> col_move:dirs ]
@@ -238,7 +259,6 @@ dirs [ push:dirs con:1:> no snake_source | con:1:< no snake_source add push:dirs
 
 (remove temp markers used in the movement planning, which is now over)
 [ was follow:dirs/discard_move:dirs/discard_follow/try_move:dirs/try_follow:dirs ]
-
 
 
 (MOVE CAN HAPPEN)
@@ -308,14 +328,13 @@ dirs [ was_snake_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixed
 )
 
 (dragged or pushed pusher tries to push)
-[ was_pushed:>/was_snake_moved:>/was_snake_moved:perpendicular con:x:> was pusher:0 add pusher:1 ]
+[ was_pushed:>/was_snake_moved:>/was_snake_moved:perpendicular con:x:> pusher:0 add again_pusher ]
 
 (remove markers for actually doing the movement)
 [ was was_pushed:dirs/was_snake_moved:dirs/was_item_pushed:dirs ]
 
 
-
-(----AFTER MOVE IS DONE----)
+(AFTER MOVE IS DONE)
 
 (reconnect cuts)
 [ was con:0:> add con:1:> | was con:0:< add con:1:< ]
@@ -329,6 +348,12 @@ dirs [ was_snake_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixed
 [ hole block no supported add again_gravity ]
 [ hole gp_items no again_fly:dirs now_fly:dirs supported add again_gravity ]
 
+
+
+(=====================================================================================)
+subroutine handle_flight
+(----PREPARE FLIGHT----)
+
 (fall into meta pipes)
 (don't fall in when currently spawning, about to fly out or flying out.)
 [ player meta_exit/spawnpoint block no con:x:v con:x:^ con:x:< again_spawn now_fly:> again_fly:> add again_exit ]
@@ -337,8 +362,7 @@ dirs [ was_snake_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixed
 [ player block no con:x:< ] [ was player_facing:> add player_facing:v ] 
 
 
-
-(----FLY----)
+(FLY)
 
 (check what should fly this turn) 
 (do something with each flying item now)
@@ -372,7 +396,8 @@ dirs [ was_snake_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixed
 (move to empty space)
 [ was gp_items now_fly:> | no gp_items now_fly:dirs add gp_items again_fly:> ]
 
-(----FLYING DONE----)
+
+(FLYING DONE)
 
 (player faces direction of flying)
 [ player again_fly:> ] [ was player_facing:dirs add player_facing:> ]
@@ -382,13 +407,8 @@ dirs [ col_move:dirs con:1:> | add col_move:dirs ]
 
 
 
-(----QUEUE PUSHES FROM MOVERS----)
-
-(pushers will start movement if they are enabled)
-[ pusher:1 no again_gravity again_move add again_charge_pusher ]
-
-
-
+(=====================================================================================)
+subroutine redraw_visuals
 (----VISUAL ONLY----)
 
 [ was gp_temporary_visuals ]
@@ -413,7 +433,6 @@ dirs [ col_move:dirs con:1:> | add col_move:dirs ]
 
 (pusher at block end, points at tail)
 x2 [ pusher:x2 con:x:> no con:x:v con:x:^ con:x:< add vs_pusher:x2:> ]
-[ again_charge_pusher was vs_pusher:1:> add vs_charge_pusher:> ]
 
 (direction for eye)
 [ player_facing:> ] [ player add vs_player:> ] 
@@ -427,7 +446,7 @@ x2 [ pusher:x2 con:x:> no con:x:v con:x:^ con:x:< add vs_pusher:x2:> ]
 [ block no con:x:v con:x:^ con:x:> meta_exit spawnpoint was vs_player:> add vs_player_end:> ]
 
 
-(----ACTIVATE COLLISION VARIANTS----)
+(ACTIVATE COLLISION VARIANTS)
 
 (always animate items on a colliding block cell)
 [ gp_items col_move:>/col_head:> add col_item:> ]
@@ -448,11 +467,16 @@ dirs [ col_move:> was vs_block_edge:dirs       add vs_block_edge:dirs:> ]
 dirs [ col_move:> was vs_meta_pipe:dirs        add vs_meta_pipe:dirs:> ]
 dirs [ col_move:> was vs_meta_pipe_closed:dirs add vs_meta_pipe_closed:dirs:> ]
 
-
 (extend forwards)
 [ col_head:> is vs_con_end add vs_block_col:> ] 
 
+(can remove markers now, make sure the again turn to undo the visual is queued)
+[ was col_move:dirs/col_item:dirs/col_head:dirs add again_col ]
 
+
+
+(=====================================================================================)
+subroutine queue_again
 (----START AGAIN TURNS----)
 
 (fall into hole/exit after shown over it)
@@ -461,14 +485,7 @@ dirs [ col_move:> was vs_meta_pipe_closed:dirs add vs_meta_pipe_closed:dirs:> ]
 (come out of spawn)
 [ again_spawn ] -> sfx8 again (appear sound)
 
-(fly again)
-[ again_fly:> gp_items ] -> again
-
-(move multiblock after there was space for it)
-[ again_charge_pusher ] -> again
-[ again_move ] -> again
-
-(to go back from the collision animation to default state)
-[ was col_move:dirs/col_item:dirs/col_head:dirs add again_col ] again
+(fly again/ activated pusher pushes once/ end collision animation)
+[ again_fly:>/again_pusher/again_col ] -> again
 
 (% endfilter %)
