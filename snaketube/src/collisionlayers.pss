@@ -92,7 +92,7 @@ player_facing:dirs
 supported
 
 (move)
-snake_move:dirs, was_snake_moved:dirs
+player_move:dirs, was_player_moved:dirs
 pusher_move:dirs
 dirs -> push:dirs, was_pushed:dirs
 dirs -> item_push:dirs, was_item_pushed:dirs

@@ -1106,7 +1106,7 @@ was_item_pushed:dirs
 lightgreen
 copy: item_push:dirs
 
-snake_move:dirs
+player_move:dirs
 #FF9000
 ................
 ................
@@ -1128,11 +1128,11 @@ rot:up:dirs
 
 pusher_move:dirs
 #eeff38
-copy: snake_move:dirs
+copy: player_move:dirs
 
-was_snake_moved:dirs
+was_player_moved:dirs
 #00B0FF
-copy: snake_move:dirs
+copy: player_move:dirs
 
 try_move:dirs
 #FF9000

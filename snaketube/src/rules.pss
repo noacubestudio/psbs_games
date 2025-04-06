@@ -10,7 +10,7 @@
 (flight subroutine currently isn't exactly just for flying and basically has to always be done if the player is visible.)
 (redrawing visuals has do always be done.)
 [ moving player   ] -> gosub handle_player_input
-[ gp_move_trigger ] -> gosub handle_block_movement
+[ gp_move_sources ] -> gosub handle_block_movement
 [ player          ] -> gosub handle_flight
 [ background      ] -> gosub redraw_visuals
 (start another turn to continue animation/ flying etc.)
@@ -33,10 +33,9 @@ dirs x [ again_col ] [ was con:x:dirs:offs add con:x:dirs ]
 [ hole again_gravity no again_fly:dirs was gp_items ] (items get removed if not flying)
 [ was again_gravity ]
 
-(pushers activated last turn push once)
-[ con:x:> pusher:1 was again_pusher add pusher_move:> ]
-(other pushers need to be activated first)
+(activate pushers)
 [ again_pusher was pusher:0 add pusher:1 ]
+[ was again_pusher ]
 
 (queued flying)
 [ con:x:v no con:x:> was again_fly:> add now_fly:v ] (reorient in a pipe corner)
@@ -106,10 +105,10 @@ subroutine handle_player_input
 [ con:x:> was >.player add stationary.player now_fly:> ] [ was player_facing:dirs add player_facing:> ]
 
 (moving in a block starts snake movement)
-[ was >.player add stationary.player snake_move:> ] [ was player_facing:dirs add player_facing:> ]
+[ was >.player add stationary.player player_move:> ] [ was player_facing:dirs add player_facing:> ]
 
 (pushers move when player moves)
-[ snake_move:dirs ] [ con:x:> pusher:1 add pusher_move:> ]
+[ player_move:> ] [ con:x:> pusher:1 add pusher_move:> ]
 
 
 
@@ -118,9 +117,9 @@ subroutine handle_block_movement
 (----MOVE OBJECTS----)
 
 ( 
-- a block with a snake_move moves as the head of a snake
+- a block with a player_move moves as the head of a snake
 - multiblocks and items in front get pushed
-- tail follows, also using snake_move. if the tail got pushed by the snake itself, then it is treated as a connected block (split from head).
+- tail follows, also using player_move. if the tail got pushed by the snake itself, then it is treated as a connected block (split from head).
 
 - collisions or conflicts (multiple attempts to move into same tile) will prevent movement from happening, collision animation will show the problem.
 - collisions are cashed so that auto-moving snakes don't try the same movement over and over and refreshed when needed.
@@ -130,19 +129,19 @@ subroutine handle_block_movement
 
 (INITIAL MOVE)
 
-(pushers pass along their marker so that they push from the tail end)
+(pushers push from the open or closed tail end)
 [ con:1:> was pusher_move:dirs add pusher_move:> | no pusher_move:dirs add pusher_move:> ]
-[    con:0:>                 was stationary pusher_move:dirs add action.pusher_move:> snake_move:> ] (open end)
-[ no con:x:> con:x:v con:x:^ was            pusher_move:>    add action.pusher_move:> snake_move:> ] (closed end)
+[    con:0:>                 was stationary pusher_move:dirs add action.pusher_move:> ] (open end)
+[ no con:x:> con:x:v con:x:^ was            pusher_move:>    add action.pusher_move:> ] (closed end)
+[ was stationary pusher_move:dirs ]
 
-(if the pushers can't find a tail end - another pusher is pushing there? - then just collide.)
-[ was pusher_move:> add action.pusher_move:> | was action.pusher_move:dirs ]
-[ was stationary.pusher_move:> pusher:1 add pusher:0 col_move:> ] sfx2 (collision sound)
-[ was pusher_move:> ]
+(wip: remove pusher move at the end of movement phase. maybe combine with snake move before that.)
+(keep around so that everything including pushes can have player-movement priority)
+(maybe an extra tile to indicate 'this is secondary, never has priority' that only gets placed alongside the actual)
 
 (push block/ item in front)
-[ snake_move:> | block    add push:> ]
-[ snake_move:> | gp_items add item_push:> ]
+[ player_move:>/pusher_move:> | block add push:> ]
+( player_move:> | gp_items add item_push:> ) ( WIP, unused )
 
 
 (SPREAD PUSH MARKERS)
@@ -162,7 +161,7 @@ dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through 
 
 
 (COLLISION)
-[ push:>/snake_move:> add try_move:> ]
+[ push:>/player_move:>/pusher_move:> add try_move:> ]
 
 (with wall)
 [ try_move:> add col_move:> | wall ] sfx2 (collision sound)
@@ -179,8 +178,8 @@ dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through 
 + dirs [ discard_move:dirs con:1:> | con:1:< add discard_move:dirs ]
 
 (remember collisions and no longer check these for conflicts, as they already won't move)
-[ col_move:>     del try_move:> push:> snake_move:> ]
-[ discard_move:> del try_move:> push:> snake_move:> ]
+[ col_move:>     del try_move:> push:> player_move:> pusher_move:> ]
+[ discard_move:> del try_move:> push:> player_move:> pusher_move:> ]
 [ was discard_move:dirs ]
 
 (pushers deactivate)
@@ -197,16 +196,18 @@ dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through 
 )
 
 (add follow markers inside moving snakes that point to the tile nearer to the front)
-[ con:1:> snake_move:dirs | snake_move:dirs ] -> log connected adjacent snake movers!
-[ con:1:> no follow:dirs snake_move:dirs add follow:> | con:1:< snake_move:dirs/follow:dirs ]
+[ con:1:> gp_move_sources | gp_move_sources ] -> log connected adjacent snake movers!
+[ con:1:> no follow:dirs gp_move_sources add follow:> | con:1:< gp_move_sources/follow:dirs ]
+
+[ was pusher_move:> add player_move:> ] (WIP, should actually have different try_move markers so that player has priority.)
 
 (potential conflict: object pushing into a single-tile moving block)
 (if the moving block can actually move and doesn't have its own conflict, then the object will have room to move into it.)
 (the try_follow:> markers are placed for now so this will be checked later)
 (no pushing through the block head will happen if it can escape, and neither if the try_follow isn't working)
-[ try_move:> no con:1:>            add col_move:>   | snake_move:< ] sfx2 (always has to collide)
-[ try_move:> no con:1:> col_move:> add try_follow:> | snake_move:> add discard_follow ]
-[ try_move:> no con:1:> col_move:> add try_follow:> | snake_move:perpendicular add discard_move:> discard_follow ] (tail won't follow, if present)
+[ try_move:> no con:1:>            add col_move:>   | player_move:< ] sfx2 (always has to collide)
+[ try_move:> no con:1:> col_move:> add try_follow:> | player_move:> add discard_follow ]
+[ try_move:> no con:1:> col_move:> add try_follow:> | player_move:perpendicular add discard_move:> discard_follow ] (tail won't follow, if present)
 
 (object pushing into tail of moving block)
 (the entire tail will be pushed and not follow the try_move)
@@ -218,37 +219,37 @@ dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through 
 [ was try_move_dest:dirs ]
 
 (conflict at non-block-moving tile pushed into multiple directions)
-[ try_move:> try_move:^ no follow:dirs snake_move:dirs add col_move:> col_move:^ ] sfx2
-[ try_move:> try_move:< no follow:dirs snake_move:dirs add col_move:> col_move:< ] sfx2
+[ try_move:> try_move:^ no follow:dirs player_move:dirs add col_move:> col_move:^ ] sfx2
+[ try_move:> try_move:< no follow:dirs player_move:dirs add col_move:> col_move:< ] sfx2
 
 (stop all pushing that can't happen due to a conflict)
 (in front)
-[ col_move:>     | try_move:> no snake_move:> col_move:> add discard_move:> ]
-[ discard_move:> | try_move:> no snake_move:> col_move:> add discard_move:> ]
-+ dirs [ discard_move:dirs con:1:> | con:1:< no snake_move:dirs add discard_move:dirs ]
+[ col_move:>     | try_move:> no player_move:> col_move:> add discard_move:> ]
+[ discard_move:> | try_move:> no player_move:> col_move:> add discard_move:> ]
++ dirs [ discard_move:dirs con:1:> | con:1:< no player_move:dirs add discard_move:dirs ]
 
 (behind conflicts, spread collision. these tiles will show a collision animation.)
 (try_follow will be cancelled)
 (discard_follow will be spread, which can cause additional try_moves to fail, leading to more discard_follow)
   [ try_move:> add col_move:> | col_move:> ]
 + dirs [ col_move:dirs con:1:> | con:1:< add col_move:dirs ]
-+ dirs [ follow:> add discard_follow | snake_move:dirs col_move:dirs ]
++ dirs [ follow:> add discard_follow | player_move:dirs col_move:dirs ]
 + [ discard_follow con:1:> | con:1:< no player add discard_follow ] (spread, including from block head)
-+ [ snake_move:dirs was discard_follow ] (but don't leave on block head)
++ [ player_move:dirs was discard_follow ] (but don't leave on block head)
 + [ discard_follow was try_follow:dirs ]
-+ [ try_follow:> add col_move:> | snake_move:> col_move:dirs ]
++ [ try_follow:> add col_move:> | player_move:> col_move:dirs ]
 + [ try_follow:> add col_move:> | discard_follow ]
 + dirs [ discard_follow try_move:dirs pusher:1 add col_move:dirs ] sfx2 (if there is a pusher, then nothing moves)
 
 (clear the movement)
-[ col_move:> del push:>/snake_move:> ]
-[ discard_move:> del push:>/snake_move:> ]
+[ col_move:> del push:>/player_move:> ]
+[ discard_move:> del push:>/player_move:> ]
 
 (deactivate pushers)
 [ col_move:>/discard_move:> was pusher:1 add pusher:0 ]
 
 (block can move)
-[ follow:> no discard_follow add snake_move:> ]
+[ follow:> no discard_follow add player_move:> ]
 
 (don't visualize multi-directional collision)
 [ was col_move:> col_move:v ]
@@ -263,10 +264,10 @@ dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through 
 
 (MOVE CAN HAPPEN)
 (sound)
-[ snake_move:dirs ] -> sfx0 (sound)
+[ player_move:dirs ] -> sfx0 (sound)
 
 (split movement into item and block movement again)
-[ push:>/snake_move:> gp_items add item_push:> ]
+[ push:>/player_move:> gp_items add item_push:> ]
 [ gp_items no block was push:> ]
 
 (actually do the movement)
@@ -281,36 +282,36 @@ endloop
 
 (block parts)
 startloop
-  [     push:> was gp_block | no push:dirs snake_move:dirs add gp_block ]
-  [ was push:>  no gp_block | no push:dirs snake_move:dirs add was_pushed:> ] sfx3 (pushed)
-  [     snake_move:> was gp_block | no push:dirs snake_move:dirs add gp_block ]
-  [ was snake_move:>  no gp_block | no push:dirs snake_move:dirs add was_snake_moved:> ]
+  [     push:> was gp_block | no push:dirs player_move:dirs add gp_block ]
+  [ was push:>  no gp_block | no push:dirs player_move:dirs add was_pushed:> ] sfx3 (pushed)
+  [     player_move:> was gp_block | no push:dirs player_move:dirs add gp_block ]
+  [ was player_move:>  no gp_block | no push:dirs player_move:dirs add was_player_moved:> ]
 endloop
 
 (item pushed sound)
-[ was_item_pushed:dirs no was_snake_moved:dirs ] sfx3 (pushed)
+[ was_item_pushed:dirs no was_player_moved:dirs ] sfx3 (pushed)
 
 (fix the connections of the turning pieces )
 (former "forward" connection should now point at the front again )
 (if that one already exist, just keep it )
-dirs [ was_snake_moved:< | was_snake_moved:dirs                                     is con:1:< add fixed_tail_con:< ]
-dirs [ was_snake_moved:< | was_snake_moved:dirs no fixed_tail_con:< was con:1:dirs add con:1:< add fixed_tail_con:< ]
+dirs [ was_player_moved:< | was_player_moved:dirs                                     is con:1:< add fixed_tail_con:< ]
+dirs [ was_player_moved:< | was_player_moved:dirs no fixed_tail_con:< was con:1:dirs add con:1:< add fixed_tail_con:< ]
 (cut at end faces backwards)
-dirs [ was_snake_moved:< no pusher:x was con:0:dirs add con:0:> | no fixed_tail_con:< ]
+dirs [ was_player_moved:< no pusher:x was con:0:dirs add con:0:> | no fixed_tail_con:< ]
 (unchanged connections face backwards)
-dirs [ was_snake_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixed_tail_con:> ]
+dirs [ was_player_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixed_tail_con:> ]
 [ was fixed_tail_con:dirs ]
 
 (a moved cut next to a stationary one will make a sound because it reconnects )
-[ was_pushed:dirs/was_snake_moved:dirs con:0:> | con:0:< no was_pushed:dirs was_snake_moved:dirs] -> sfx5
+[ was_pushed:dirs/was_player_moved:dirs con:0:> | con:0:< no was_pushed:dirs was_player_moved:dirs] -> sfx5
 
 (new cuts are created, this makes a splitting sound )
-[ was_pushed:dirs/was_snake_moved:dirs was con:1:> add con:0:> | no con:1:< ] sfx1
-[ was con:1:> add con:0:> | no con:1:< was_pushed:dirs/was_snake_moved:dirs ] sfx1
+[ was_pushed:dirs/was_player_moved:dirs was con:1:> add con:0:> | no con:1:< ] sfx1
+[ was con:1:> add con:0:> | no con:1:< was_pushed:dirs/was_player_moved:dirs ] sfx1
 
 (moved item starts flying if there is space)
 (
-  [ gp_items was_snake_moved:> was_item_pushed:dirs con:x:> no again_fly:dirs add again_fly:> | no gp_items ]
+  [ gp_items was_player_moved:> was_item_pushed:dirs con:x:> no again_fly:dirs add again_fly:> | no gp_items ]
   [ gp_items was_item_pushed:> con:x:>         no again_fly:dirs add again_fly:> ]
   [ gp_items was_item_pushed:> con:0:< con:x:v no again_fly:dirs add again_fly:v ]
   [ gp_items was_item_pushed:> con:0:< con:x:^ no again_fly:dirs add again_fly:^ ]
@@ -318,20 +319,20 @@ dirs [ was_snake_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixed
   (immediately remove if it can't actually fly, only push)
   [ gp_items was_item_pushed:> was again_fly:> | block no con:x:< ]
   (prevent item flying into player in a closed block)
-  [ gp_items was_snake_moved:dirs was again_fly:> | block gp_items ]
+  [ gp_items was_player_moved:dirs was again_fly:> | block gp_items ]
 
-  (for snake_moved, perpendicular is fine too, as in when an item was dragged around a corner of the block)
-  [ was_snake_moved:perpendicular was_item_pushed:dirs con:x:> gp_items no again_fly:dirs add again_fly:> | no gp_items ]
+  (for player_moved, perpendicular is fine too, as in when an item was dragged around a corner of the block)
+  [ was_player_moved:perpendicular was_item_pushed:dirs con:x:> gp_items no again_fly:dirs add again_fly:> | no gp_items ]
 
   (if cut was moved into item, the item moves the other way)
   [ was_pushed:> con:0:> gp_items no was_item_pushed:dirs again_fly:dirs add again_fly:< ]
 )
 
 (dragged or pushed pusher tries to push)
-[ was_pushed:>/was_snake_moved:>/was_snake_moved:perpendicular con:x:> pusher:0 add again_pusher ]
+[ was_pushed:>/was_player_moved:>/was_player_moved:perpendicular con:x:> pusher:0 add again_pusher ]
 
 (remove markers for actually doing the movement)
-[ was was_pushed:dirs/was_snake_moved:dirs/was_item_pushed:dirs ]
+[ was was_pushed:dirs/was_player_moved:dirs/was_item_pushed:dirs ]
 
 
 (AFTER MOVE IS DONE)
