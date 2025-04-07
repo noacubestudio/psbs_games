@@ -96,12 +96,15 @@ down [ was screen_border | add screen_border ]
 subroutine handle_player_input
 (----PLAYER INPUT----)
 
-(all moves start from within a block)
-(move to empty side starts flight, this same turn)
-[ con:x:> was >.player add stationary.player now_fly:> ] [ was player_facing:dirs add player_facing:> ]
+(before the input is processed, get the direction to make the player face that way)
+[ >.player ] [ was player_facing:dirs add player_facing:> ]
 
-(moving in a block starts snake movement)
-[ was >.player add stationary.player player_move:> ] [ was player_facing:dirs add player_facing:> ]
+(player input is received while not flying, so the player is in a block.)
+(move to open side starts flight, this same turn)
+[ con:x:> was >.player add stationary.player now_fly:> ]
+
+(moving into another side starts snake movement)
+[ was >.player add stationary.player player_move:> ]
 
 
 
@@ -115,7 +118,6 @@ subroutine handle_block_movement
 - tail follows, also using player_move. if the tail got pushed by the snake itself, then it is treated as a connected block (split from head).
 
 - collisions or conflicts (multiple attempts to move into same tile) will prevent movement from happening, collision animation will show the problem.
-- collisions are cashed so that auto-moving snakes don't try the same movement over and over and refreshed when needed.
 
 - when the movement planning is done, actual movement rules transfers everything in those tiles over, tile by tile
 )
@@ -134,7 +136,7 @@ dirs [ push:dirs con:1:> no player vs_pusher:dirs pusher_move:dirs | con:1:< no 
 + [ pusher_move:> con:1:> |         no pusher_move:dirs add pusher_move:> ] (default: straight line)
 + [ pusher_move:> | block no con:x:< add push:> ] (pusher tail can itself push)
 
-(active pusher overwrites push)
+(cleanup: active pusher overwrites push)
 [ con:1:> pusher_move:> del push:dirs ]
 
 
@@ -147,7 +149,8 @@ dirs [ push:dirs con:1:> no player vs_pusher:dirs pusher_move:dirs | con:1:< no 
 (spread collision)
 (backpropagate collision markers, these will animate with bounce)
   [ try_move:> add col_move:> | col_move:> ]
-+ dirs [ col_move:dirs con:1:> | con:1:< add col_move:dirs ]
++ dirs [ con:1:> try_move:dirs add col_move:dirs | con:1:< col_move:dirs ] (solid multiblocks all get the spread)
++ [ con:1:> try_move:> add col_move:> | con:1:< col_move:dirs ] (face towards pushing end of pusher)
 
 (forward propagate stopping movement on the blocks that weren't going to be pushed anyway)
 (these won't show bump anim)
@@ -184,11 +187,14 @@ dirs [ push:dirs con:1:> no player vs_pusher:dirs pusher_move:dirs | con:1:< no 
 (no pushing through the block head will happen if it can escape, and neither if the try_follow isn't working)
 [ try_move:> no con:1:>            add col_move:>   | player_move:< ] sfx2 (always has to collide)
 [ try_move:> no con:1:> col_move:> add try_follow:> | player_move:> add discard_follow ]
+(extra stuff for multiple push directions, WIP)
+[ try_move:> no con:1:> col_move:>                  | player_move:v player add col_move:v ] (player pushing itself perpendicularily)
+[ try_move:> no con:1:> col_move:>                  | player_move:^ player add col_move:^ ] (player pushing itself perpendicularily)
 [ try_move:> no con:1:> col_move:> add try_follow:> | player_move:perpendicular add discard_move:> discard_follow ] (tail won't follow, if present)
 
 (object pushing into tail of moving block)
 (the entire tail will be pushed and not follow the try_move)
-[ try_move:> no con:1:> | follow:dirs add discard_follow ]
+[ try_move:> no con:1:> | follow:dirs no pusher add discard_follow ] (WIP, is the 'no pusher' really enough?)
 
 (conflict at empty tile, which is moved into from multiple directions)
 [ try_move:> | no block gp_items add try_move_dest:> ]
