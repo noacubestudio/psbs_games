@@ -29,13 +29,9 @@ dirs x [ again_col ] [ was con:x:dirs:offs add con:x:dirs ]
 [ was again_col ]
 
 (gravity)
-[ hole again_gravity del block con:x:dirs pusher:x ] (always remove these)
+[ hole again_gravity del block con:x:dirs pusher ] (always remove these)
 [ hole again_gravity no again_fly:dirs was gp_items ] (items get removed if not flying)
 [ was again_gravity ]
-
-(activate pushers)
-[ again_pusher was pusher:0 add pusher:1 ]
-[ was again_pusher ]
 
 (queued flying)
 [ con:x:v no con:x:> was again_fly:> add now_fly:v ] (reorient in a pipe corner)
@@ -107,9 +103,6 @@ subroutine handle_player_input
 (moving in a block starts snake movement)
 [ was >.player add stationary.player player_move:> ] [ was player_facing:dirs add player_facing:> ]
 
-(pushers move when player moves)
-[ player_move:> ] [ con:x:> pusher:1 add pusher_move:> ]
-
 
 
 (=====================================================================================)
@@ -127,37 +120,22 @@ subroutine handle_block_movement
 - when the movement planning is done, actual movement rules transfers everything in those tiles over, tile by tile
 )
 
-(INITIAL MOVE)
+(SPREAD PUSH AND PUSHER MOVEMENT)
 
-(pushers push from the open or closed tail end)
-[ con:1:> was pusher_move:dirs add pusher_move:> | no pusher_move:dirs add pusher_move:> ]
-[    con:0:>                 was stationary pusher_move:dirs add action.pusher_move:> ] (open end)
-[ no con:x:> con:x:v con:x:^ was            pusher_move:>    add action.pusher_move:> ] (closed end)
-[ was stationary pusher_move:dirs ]
+(initial push)
+[ player_move:> | block add push:> ]
 
-(wip: remove pusher move at the end of movement phase. maybe combine with snake move before that.)
-(keep around so that everything including pushes can have player-movement priority)
-(maybe an extra tile to indicate 'this is secondary, never has priority' that only gets placed alongside the actual)
+(pushes and pusher movement gets spread to more blocks)
+dirs [ push:dirs con:1:> no player vs_pusher:dirs pusher_move:dirs | con:1:< no player add push:dirs ] (through multiblocks)
++ [ push:> no vs_pusher:> pusher_move:> | block add push:> ] (block to block)
++ [ push:> pusher con:x:> add pusher_move:> ] (activate pusher)
++ [ pusher_move:> con:1:> | con:x:^ no pusher_move:dirs add pusher_move:^ ] (spread to tail)
++ [ pusher_move:> con:1:> | con:x:v no pusher_move:dirs add pusher_move:v ]
++ [ pusher_move:> con:1:> |         no pusher_move:dirs add pusher_move:> ] (default: straight line)
++ [ pusher_move:> | block no con:x:< add push:> ] (pusher tail can itself push)
 
-(push block/ item in front)
-[ player_move:>/pusher_move:> | block add push:> ]
-( player_move:> | gp_items add item_push:> ) ( WIP, unused )
-
-
-(SPREAD PUSH MARKERS)
-
-(items and blocks can push each other, unless there is an open side and they won't collide)
-dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through multiblocks)
-+ [ push:>            | block            add push:>      ] (block to block)
-+ [ push:> no con:x:> | gp_items         add item_push:> ] (closed block to item outside)
-+ [ item_push:>       | gp_items         add item_push:> ] (item to item)
-+ [ item_push:>       | block no con:x:< add push:>      ] (item outside to closed block)
-+ [ push:> gp_items   no con:x:< add item_push:> ] (item inside pushed block)
-+ [ item_push:> block no con:x:> add push:>      ] (block around pushed item)
-
-(count item pushes as any other push from now on)
-[ no block was item_push:> add push:> ]
-[ was item_push:> ]
+(active pusher overwrites push)
+[ con:1:> pusher_move:> del push:dirs ]
 
 
 (COLLISION)
@@ -182,9 +160,6 @@ dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through 
 [ discard_move:> del try_move:> push:> player_move:> pusher_move:> ]
 [ was discard_move:dirs ]
 
-(pushers deactivate)
-[ col_move:> was pusher:1 add pusher:0 ]
-
 
 (CONFLICTS)
 
@@ -199,7 +174,9 @@ dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through 
 [ con:1:> gp_move_sources | gp_move_sources ] -> log connected adjacent snake movers!
 [ con:1:> no follow:dirs gp_move_sources add follow:> | con:1:< gp_move_sources/follow:dirs ]
 
-[ was pusher_move:> add player_move:> ] (WIP, should actually have different try_move markers so that player has priority.)
+(convert pushers to same format now) (WIP?)
+[ con:1:> was pusher_move:> add follow:> ] 
+[         was pusher_move:> add player_move:> ]
 
 (potential conflict: object pushing into a single-tile moving block)
 (if the moving block can actually move and doesn't have its own conflict, then the object will have room to move into it.)
@@ -239,14 +216,10 @@ dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through 
 + [ discard_follow was try_follow:dirs ]
 + [ try_follow:> add col_move:> | player_move:> col_move:dirs ]
 + [ try_follow:> add col_move:> | discard_follow ]
-+ dirs [ discard_follow try_move:dirs pusher:1 add col_move:dirs ] sfx2 (if there is a pusher, then nothing moves)
 
 (clear the movement)
 [ col_move:> del push:>/player_move:> ]
 [ discard_move:> del push:>/player_move:> ]
-
-(deactivate pushers)
-[ col_move:>/discard_move:> was pusher:1 add pusher:0 ]
 
 (block can move)
 [ follow:> no discard_follow add player_move:> ]
@@ -266,21 +239,8 @@ dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through 
 (sound)
 [ player_move:dirs ] -> sfx0 (sound)
 
-(split movement into item and block movement again)
-[ push:>/player_move:> gp_items add item_push:> ]
-[ gp_items no block was push:> ]
-
 (actually do the movement)
 (use markers to move all items in those tiles)
-
-(items and their flying movement)
-startloop
-       [ item_push:> was gp_items     | no item_push:dirs add gp_items ]
-  dirs [ item_push:> was now_fly:dirs | no item_push:dirs add now_fly:dirs ]
-  [ was item_push:>  no gp_items      | no item_push:dirs add was_item_pushed:> ]
-endloop
-
-(block parts)
 startloop
   [     push:> was gp_block | no push:dirs player_move:dirs add gp_block ]
   [ was push:>  no gp_block | no push:dirs player_move:dirs add was_pushed:> ] sfx3 (pushed)
@@ -288,51 +248,26 @@ startloop
   [ was player_move:>  no gp_block | no push:dirs player_move:dirs add was_player_moved:> ]
 endloop
 
-(item pushed sound)
-[ was_item_pushed:dirs no was_player_moved:dirs ] sfx3 (pushed)
-
-(fix the connections of the turning pieces )
-(former "forward" connection should now point at the front again )
-(if that one already exist, just keep it )
+(fix the connections of the turning pieces)
+(former "forward" connection should now point at the front again)
+(if that one already exist, just keep it)
 dirs [ was_player_moved:< | was_player_moved:dirs                                     is con:1:< add fixed_tail_con:< ]
 dirs [ was_player_moved:< | was_player_moved:dirs no fixed_tail_con:< was con:1:dirs add con:1:< add fixed_tail_con:< ]
 (cut at end faces backwards)
-dirs [ was_player_moved:< no pusher:x was con:0:dirs add con:0:> | no fixed_tail_con:< ]
+dirs [ was_player_moved:< no pusher was con:0:dirs add con:0:> | no fixed_tail_con:< ]
 (unchanged connections face backwards)
 dirs [ was_player_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixed_tail_con:> ]
 [ was fixed_tail_con:dirs ]
 
-(a moved cut next to a stationary one will make a sound because it reconnects )
+(a moved cut next to a stationary one will make a sound because it reconnects)
 [ was_pushed:dirs/was_player_moved:dirs con:0:> | con:0:< no was_pushed:dirs was_player_moved:dirs] -> sfx5
 
-(new cuts are created, this makes a splitting sound )
+(new cuts are created, this makes a splitting sound)
 [ was_pushed:dirs/was_player_moved:dirs was con:1:> add con:0:> | no con:1:< ] sfx1
 [ was con:1:> add con:0:> | no con:1:< was_pushed:dirs/was_player_moved:dirs ] sfx1
 
-(moved item starts flying if there is space)
-(
-  [ gp_items was_player_moved:> was_item_pushed:dirs con:x:> no again_fly:dirs add again_fly:> | no gp_items ]
-  [ gp_items was_item_pushed:> con:x:>         no again_fly:dirs add again_fly:> ]
-  [ gp_items was_item_pushed:> con:0:< con:x:v no again_fly:dirs add again_fly:v ]
-  [ gp_items was_item_pushed:> con:0:< con:x:^ no again_fly:dirs add again_fly:^ ]
-  [ gp_items was_item_pushed:> no block        no again_fly:dirs add again_fly:> ]
-  (immediately remove if it can't actually fly, only push)
-  [ gp_items was_item_pushed:> was again_fly:> | block no con:x:< ]
-  (prevent item flying into player in a closed block)
-  [ gp_items was_player_moved:dirs was again_fly:> | block gp_items ]
-
-  (for player_moved, perpendicular is fine too, as in when an item was dragged around a corner of the block)
-  [ was_player_moved:perpendicular was_item_pushed:dirs con:x:> gp_items no again_fly:dirs add again_fly:> | no gp_items ]
-
-  (if cut was moved into item, the item moves the other way)
-  [ was_pushed:> con:0:> gp_items no was_item_pushed:dirs again_fly:dirs add again_fly:< ]
-)
-
-(dragged or pushed pusher tries to push)
-[ was_pushed:>/was_player_moved:>/was_player_moved:perpendicular con:x:> pusher:0 add again_pusher ]
-
 (remove markers for actually doing the movement)
-[ was was_pushed:dirs/was_player_moved:dirs/was_item_pushed:dirs ]
+[ was was_pushed:dirs/was_player_moved:dirs ]
 
 
 (AFTER MOVE IS DONE)
@@ -380,7 +315,7 @@ subroutine handle_flight
 [ gp_items was now_fly:> add again_fly:<           | gp_items was now_fly:<   add again_fly:> ] sfx0 (what about a perpendicular one? WIP)
 [ gp_items was now_fly:> add col_item:> try_bounce | gp_items is now_fly:dirs                 ] sfx0
 [ gp_items was now_fly:> add col_item:> try_bounce | gp_items no now_fly:dirs add again_fly:> ] sfx0
-[ gp_items was now_fly:> add col_item:> try_bounce | pusher:x                 add col_head:>  ] sfx7 (can't enter pusher pipe)
+[ gp_items was now_fly:> add col_item:> try_bounce | pusher                   add col_head:>  ] sfx7 (can't enter pusher pipe)
 
 (identify tiles multiple items want to fly to)
 [ was try_fly_dest:dirs ] (clean the markers from last time)
@@ -433,7 +368,7 @@ subroutine redraw_visuals
 [ block con:x:> no con:x:v con:x:^ con:x:< add vs_con_end ]
 
 (pusher at block end, points at tail)
-x2 [ pusher:x2 con:x:> no con:x:v con:x:^ con:x:< add vs_pusher:x2:> ]
+[ pusher con:x:> no con:x:v con:x:^ con:x:< add vs_pusher:> ]
 
 (direction for eye)
 [ player_facing:> ] [ player add vs_player:> ] 
@@ -453,20 +388,19 @@ x2 [ pusher:x2 con:x:> no con:x:v con:x:^ con:x:< add vs_pusher:x2:> ]
 [ gp_items col_move:>/col_head:> add col_item:> ]
 
 (animate tiles in collision by replacing them with offset variants)
-dirs [ col_item:> was vs_player:dirs     add vs_player:dirs:> ]
-dirs [ col_item:> was vs_player_end:dirs add vs_player_end:dirs:> ]
-
 [ col_move:> was vs_block_base add vs_block_base:> ] 
 [ col_move:> was vs_con_end    add vs_con_end:> ] 
 
-dirs x [ col_move:> was con:x:dirs       add con:x:dirs:> ]
-dirs x [ col_move:> was vs_pusher:x:dirs add vs_pusher:x:dirs:> ]
-dirs x [ col_head:> was vs_pusher:x:dirs add vs_pusher:x:dirs:> ]
-
+dirs [ col_item:> was vs_player:dirs           add vs_player:dirs:> ]
+dirs [ col_item:> was vs_player_end:dirs       add vs_player_end:dirs:> ]
+dirs [ col_move:> was vs_pusher:dirs           add vs_pusher:dirs:> ]
+dirs [ col_head:> was vs_pusher:dirs           add vs_pusher:dirs:> ]
 dirs [ col_move:> was vs_con_lowest:dirs       add vs_con_lowest:dirs:> ]
 dirs [ col_move:> was vs_block_edge:dirs       add vs_block_edge:dirs:> ]
 dirs [ col_move:> was vs_meta_pipe:dirs        add vs_meta_pipe:dirs:> ]
 dirs [ col_move:> was vs_meta_pipe_closed:dirs add vs_meta_pipe_closed:dirs:> ]
+
+dirs x [ col_move:> was con:x:dirs add con:x:dirs:> ]
 
 (extend forwards)
 [ col_head:> is vs_con_end add vs_block_col:> ] 
@@ -487,6 +421,6 @@ subroutine queue_again
 [ again_spawn ] -> sfx8 again (appear sound)
 
 (fly again/ activated pusher pushes once/ end collision animation)
-[ again_fly:>/again_pusher/again_col ] -> again
+[ again_fly:>/again_col ] -> again
 
 (% endfilter %)

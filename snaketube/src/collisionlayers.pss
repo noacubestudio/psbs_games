@@ -72,8 +72,8 @@ vs_meta_pipe:dirs:offs, vs_meta_pipe_closed:dirs:offs
 (items on blocks)
 vs_player:dirs, vs_player:dirs:offs, vs_player_end:dirs, vs_player_end:dirs:offs
 --
-pusher:x
-vs_pusher:x:dirs, vs_pusher:x:dirs:offs
+pusher
+vs_pusher:dirs, vs_pusher:dirs:offs
 --
 
 (UI)
@@ -95,7 +95,6 @@ supported
 player_move:dirs, was_player_moved:dirs
 pusher_move:dirs
 dirs -> push:dirs, was_pushed:dirs
-dirs -> item_push:dirs, was_item_pushed:dirs
 dirs -> fixed_tail_con:dirs
 follow:dirs
 discard_follow
@@ -116,5 +115,4 @@ try_bounce
 (again)
 again_col
 again_exit, again_spawn
-again_pusher
 again_gravity
