@@ -1015,6 +1015,18 @@ transparent
 init
 transparent
 
+init_theme_1
+transparent
+
+init_theme_2
+transparent
+
+init_theme_3
+transparent
+
+init_theme_4
+transparent
+
 player_facing:dirs
 transparent
 

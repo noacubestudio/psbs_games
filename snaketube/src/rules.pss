@@ -53,6 +53,12 @@ subroutine initialize_level
 (----INIT----)
 (do these at the start of the first turn, then never again)
 
+(set correct color palette)
+[ was init_theme_1 ] color_palette ega white #fff lightgray #ED963F darkgray #814621 black #151319 (connect/ turn)
+[ was init_theme_2 ] color_palette ega white #fff lightgray #85D338 darkgray #0C5E36 black #131916 (lead)
+[ was init_theme_3 ] color_palette ega white #fff lightgray #B077D3 darkgray #492C6C black #151319 (split)
+[ was init_theme_4 ] color_palette ega white #fff lightgray #AAB599 darkgray #41524C black #131916 (shift)
+
 (connect blocks)
 [ was con:0:> add con:1:> | was con:0:< add con:1:< ]
 

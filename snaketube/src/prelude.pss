@@ -1,9 +1,11 @@
 title [ UNTITLED WIP ]
 author noa
 run_rules_on_level_start
+runtime_metadata_twiddling
 again_interval 0.08
 
 sprite_size 16x16
+color_palette ega white #fff lightgray #6cd9b5 darkgray #036965 black #131916
 background_color ((color_black))
 text_color ((color_fg))
 author_color ((color_fg))

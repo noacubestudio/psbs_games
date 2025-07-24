@@ -1,8 +1,8 @@
 (# Palette #)
-(% set color_white    = "#ffffff" %)
-(% set color_fg       = "#6cd9b5" %)
-(% set color_bg       = "#036965" %)
-(% set color_black    = "#131916" %)
+(% set color_white    = "white" %)
+(% set color_fg       = "lightgray" %)
+(% set color_bg       = "darkgray" %)
+(% set color_black    = "black" %)
 
 (% include "prelude.pss" %)
 
