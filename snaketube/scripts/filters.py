@@ -139,11 +139,14 @@ class Filters(Extension):
         output = ""
         current_section = ""
         index_in_section = 0
+        section_index = 0
+        is_new_level = True
         for line in levels_string.splitlines():
             # get words following 'section ' 
             if line.strip().startswith("section"):
                 current_section = line.split("section")[1].strip()
                 index_in_section = 0
+                section_index += 1
                 continue
             # get words following 'level '
             if line.strip().startswith("level"):
@@ -154,6 +157,11 @@ class Filters(Extension):
                     level_name = str(index_in_section)
                 output += f"section {current_section} {level_name}\n"
                 output += f"level   {current_section} {level_name}\n"
+                is_new_level = True
                 continue
+            if line.strip().startswith("#") and is_new_level and section_index > 1:
+                # replace leading # with section index
+                line = line.replace("#", str(section_index - 1), 1)
+                is_new_level = False
             output += line + "\n"
         return output.strip()

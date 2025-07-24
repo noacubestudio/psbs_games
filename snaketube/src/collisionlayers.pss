@@ -86,7 +86,7 @@ restart_hint, undo_hint
 (INVISIBLE MARKERS)
 
 init
-init_theme_1, init_theme_2, init_theme_3, init_theme_4
+init_theme_1, init_theme_2, init_theme_3, init_theme_4, init_theme_5
 block
 player
 player_facing:dirs

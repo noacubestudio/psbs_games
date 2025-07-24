@@ -33,6 +33,7 @@ c = block and vs_block_base and con:0:right
 2 = wall and init_theme_2
 3 = wall and init_theme_3
 4 = wall and init_theme_4
+5 = wall and init_theme_5
 
 
 (these start the subroutine that triggers an again turn and the one that responds)
