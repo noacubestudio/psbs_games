@@ -1,18 +1,16 @@
-title [ UNTITLED WIP ]
+title [ Noa's Untitled Sokoban ]
 author noa
 run_rules_on_level_start
-runtime_metadata_twiddling
 again_interval 0.08
 
+level_select
+text_controls Arrow keys or WASD to move\nR to restart, Z to undo
+export_options notitle,nofooter,nopadding
+runtime_metadata_twiddling
+
 sprite_size 16x16
-color_palette ega white #fff lightgray #6cd9b5 darkgray #036965 black #131916
+color_palette ega white #fff lightgray #6cd9b5 darkgray #036965 black #15121c
 background_color ((color_black))
 text_color ((color_fg))
 author_color ((color_fg))
 title_color ((color_white))
-
-( flickscreen 16x12 )
-
-(PS Next specific:)
-level_select
-text_controls Arrow keys or WASD to move\nR to restart, Z to undo

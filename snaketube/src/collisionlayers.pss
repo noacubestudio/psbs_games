@@ -77,7 +77,7 @@ vs_pusher:dirs, vs_pusher:dirs:offs
 --
 
 (UI)
-screen_border
+screen_border, screen_border_chapter
 --
 restart_hint, undo_hint
 --

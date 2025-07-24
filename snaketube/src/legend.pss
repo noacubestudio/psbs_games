@@ -35,6 +35,9 @@ c = block and vs_block_base and con:0:right
 4 = wall and init_theme_4
 5 = wall and init_theme_5
 
+£ = wall and screen_border
+₤ = wall and screen_border_chapter
+
 
 (these start the subroutine that triggers an again turn and the one that responds)
 gp_again = again_col or again_exit or again_fly:dirs or again_gravity or again_spawn

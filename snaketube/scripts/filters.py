@@ -140,7 +140,7 @@ class Filters(Extension):
         current_section = ""
         index_in_section = 0
         section_index = 0
-        is_new_level = True
+        line_of_level = 0
         for line in levels_string.splitlines():
             # get words following 'section ' 
             if line.strip().startswith("section"):
@@ -157,11 +157,16 @@ class Filters(Extension):
                     level_name = str(index_in_section)
                 output += f"section {current_section} {level_name}\n"
                 output += f"level   {current_section} {level_name}\n"
-                is_new_level = True
+                line_of_level = 0
                 continue
-            if line.strip().startswith("#") and is_new_level and section_index > 1:
-                # replace leading # with section index
-                line = line.replace("#", str(section_index - 1), 1)
-                is_new_level = False
+            if line.strip().startswith("#"):
+                line_of_level += 1
+                if line_of_level == 1 and section_index > 1:
+                    # replace leading # with section index for color theming.
+                    line = line.replace("#", str(section_index - 1), 1)
+                elif line_of_level == 11:
+                    # replace final leading # with frame character.
+                    # first level of each section gets a different frame.
+                    line = line.replace("#", "£" if index_in_section > 0 else "₤", 1) 
             output += line + "\n"
         return output.strip()
