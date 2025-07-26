@@ -170,20 +170,6 @@ level
 #######@#######
 ###############
 ###############
-(
-    (different platform position - was maybe more tricky?)
-    ###############
-    ###############
-    #####@###@#####
-    ####...~..~####
-    ###p.ɔɔ~.ɔ~ǝ###
-    ####...~~~~####
-    ####..u~~~~####
-    ####.......####
-    #######@#######
-    ###############
-    ###############
-)
 
 (harder alternate - can mess up right at the start)
 (probably too similar to other one?)
@@ -217,7 +203,22 @@ level
 ###############
 ###############
 
-
+(
+    (alt with simple end, but kind of interesting somehow overall)
+    (goal was to maybe think of the end state faster but idk if it helps)
+    (... I could just display a skip level thing.)
+    ###############
+    ###############
+    #####....#n.###
+    ####@....#..$##
+    ####@.#.....###
+    #####.###.#####
+    ###.......#####
+    ##p.ɔ.#..~~####
+    ###...#..ɔ~ǝ###
+    ###############
+    ###############
+)
 
 
 (
@@ -433,21 +434,21 @@ level
 (WIP, something with the square from 4 corners?)
 
 level
-(make hook - using as pipe is blocked)
+(make hook - usage as path is prevented since it would fall)
 ###############
-###############
-#####...#$#####
-####..╔..n.####
-###@...‖.u~ǝ###
-####..‖...~####
-###p.ɔ.╝...@###
-####.......####
-#####$#...#####
-###############
+#######$#######
+#####....n#####
+####.....‖.ǝ###
+###...╝╔.u~~###
+##@~~.....~~@##
+###~~..‖‖...###
+###p.ɔ.....####
+#####.....#####
+######$$$######
 ###############
 
 level
-(make bigger path)
+(make path from many pieces)
 ###############
 ####$##$#######
 ###......#@####
@@ -533,47 +534,61 @@ level
 level
 (make longer twice)
 ###############
-###############
-######@@@######
-####~~~~~~ǝ####
-####~......####
-###p~ɔ╚╚..#####
-####~.....#####
-####~~~~ɔ######
-######@########
-###############
+#####$$########
+####~~~~══╗####
+###@~....#‖$###
+####~..╚..‖####
+###p~ɔ....╚ǝ###
+####~..╚..‖####
+###@~....#‖$###
+####~~~~ɔc╝####
+#####$$########
 ###############
 
 level
 (shape and combine)
-(this is now slightly redundant?)
+(make stick)
 ###############
-###############
-######..c╗ǝ####
-#####...nu~@###
-####....╝ɔ~@###
-####.......@###
-###p.═ɔ....####
-####......#####
-#####$$########
+#####$$$$######
+####...~~~~####
+###p.ɔ.~~o~ǝ###
+####...~~#~####
+####.......####
+###@..╗.╗..@###
+###@..u.u..@###
+####.......####
 ###############
 ###############
 
 level
-(attach snake to clean up the way)
-(bit unfocused?)
+(attach snake to block to be able to leave)
+(quite hard/sokoban-y, add skip prompt)
 ###############
 ###############
-#####$#########
-####..╗ǝ#$#####
+########$$#####
+####..╗═══ǝ####
+#####.n....####
+#####.##╚..####
+####p.ɔ....@###
 #####......####
-####..##...####
-###p.ɔ.╚.c.@###
-####.......####
-#####$###$#####
+######@@#######
 ###############
 ###############
 
+(
+    (extra constrained, weird variation. would make neat GIF?)
+    ###############
+    ###############
+    ########$$#####
+    ###p.ɔ╗═══ǝ####
+    #####.n....####
+    ####@.##╚..$###
+    ####@.##...$###
+    #####......####
+    ######@@#######
+    ###############
+    ###############
+)
 
 
 (
@@ -646,10 +661,8 @@ level
 
 (PART 2: SELF-SPLIT)
 (
-    maybe it would be helpful to visualize and teach splitting more.
-    all four rotations and mirrors, plus the 2 different places the tail points to.
-    show how two very different paths produce the same shape...
-    also explore how different lengths can be combined and separated.
+    might be missing slower tutorialization of splitting
+    (length calc and specific shapes)
 )
 
 level

@@ -99,6 +99,11 @@ subroutine initialize_level
 subroutine handle_player_input
 (----PLAYER INPUT----)
 
+(action to open/close manual)
+[ was action.player add stationary.player ] [ screen_border no manual add manual ] [ gp_allow_manual ]
+[ was action.player add stationary.player ] [ screen_border was manual ]
+[ >.player ] [ screen_border was manual ] (any move should close manual)
+
 (before the input is processed, get the direction to make the player face that way)
 [ >.player ] [ was player_facing:dirs add player_facing:> ]
 

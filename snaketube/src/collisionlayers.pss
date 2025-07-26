@@ -81,6 +81,8 @@ screen_border, screen_border_chapter
 --
 restart_hint, undo_hint
 --
+manual
+--
 
 
 (INVISIBLE MARKERS)
