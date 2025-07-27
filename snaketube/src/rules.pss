@@ -73,8 +73,8 @@ subroutine initialize_level
 [ vs_wall_inner:^ add vs_wall_edge_2:^ | vs_wall_inner:^ add vs_wall_edge_1:^ ]
 
 (arrows)
-[ spawnpoint con:0:< | wall add vs_meta_arrow:< ]
-[ meta_exit  con:0:< | wall add vs_meta_arrow:> ]
+[ spawnpoint con:x:< | wall add vs_meta_arrow:< ]
+[ meta_exit  con:x:< | wall add vs_meta_arrow:> ]
 
 (decoration)
 [ wall_deco_s was vs_wall_inner:> add vs_wall_deco_s:> ]
