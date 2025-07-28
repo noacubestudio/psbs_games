@@ -56,9 +56,10 @@ subroutine initialize_level
 (set correct color palette)
 [ init_theme_1 ] -> color_palette ega white #fff lightgray #ED963F darkgray #814621 black #15121c (connect)
 [ init_theme_2 ] -> color_palette ega white #fff lightgray #F0527F darkgray #962260 black #15121c (turn)
-[ init_theme_3 ] -> color_palette ega white #fff lightgray #95CE3A darkgray #356B27 black #15121c (lead)
-[ init_theme_4 ] -> color_palette ega white #fff lightgray #BA79DA darkgray #513879 black #15121c (split)
-[ init_theme_5 ] -> color_palette ega white #fff lightgray #AAB599 darkgray #41524C black #15121c (shift)
+[ init_theme_3 ] -> color_palette ega white #fff lightgray #95CE3A darkgray #356B27 black #15121c (snake)
+[ init_theme_4 ] -> color_palette ega white #fff lightgray #BA79DA darkgray #513879 black #15121c (c)
+[ init_theme_5 ] -> color_palette ega white #fff lightgray #888EE6 darkgray #384689 black #15121c (self split)
+[ init_theme_6 ] -> color_palette ega white #fff lightgray #AAB599 darkgray #41524C black #15121c (complete)
 
 (connect blocks)
 [ was con:0:> add con:1:> | was con:0:< add con:1:< ]
