@@ -5,6 +5,7 @@ $ = wall and wall_deco_s
 Ʉ = wall and undo_hint
 Ɍ = wall and restart_hint
 Ɛ = wall and esc_hint
+χ = wall and action_hint
 
 p = block and vs_block_base and player and init and con:0:right and spawnpoint and vs_player:right
 * = block and vs_block_base and player and init and con:0:right and player_facing:right and vs_player_end:right
