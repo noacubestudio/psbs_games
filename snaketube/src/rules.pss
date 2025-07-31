@@ -281,6 +281,9 @@ dirs [ was_player_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixe
 [ was_pushed:dirs/was_player_moved:dirs was con:1:> add con:0:> | no con:1:< ] sfx1
 [ was con:1:> add con:0:> | no con:1:< was_pushed:dirs/was_player_moved:dirs ] sfx1
 
+(regenerate exit/entry)
+[ spawnpoint/meta_exit no block add block con:1:> | block add con:1:< ]
+
 (remove markers for actually doing the movement)
 [ was was_pushed:dirs/was_player_moved:dirs ]
 

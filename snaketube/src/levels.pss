@@ -1,46 +1,3 @@
-(# 
-    WIP (outdated) Overview for order and progression of mechanics to implement:
-
-    LAUNCHER
-        flying between launchers / moving as launcher
-            (reorient flight paths, move objects out of the way, move around corners, exit to recover self)
-        pushing launchers 
-            (move out of the way even if not enterable, position as a recovery target, position in way you could not have launched from)
-
-    HOLES
-        flying over holes
-            (get to places not accessible by moving, focus on recovery of player?)
-
-    CONNECTING BLOCKS
-        connect launchers
-            (avoid connection to get launchers past each other, connect together to make multiblock that can go over gaps)
-
-    PIPES
-        straight pipes
-            (connect together to fill holes, recover blocks, or just fly through)
-        curved pipes
-            (reorient flight path in tight spaces, connect, fill holes, recover)
-
-    SNAKES
-        move as a snake / flying out of snake
-            ()
-        
-    SPLITTING SNAKES
-        pushing self in multiblock - !! maybe only possible once len 2 snake !!
-            (create the necessary 1 tile gap, use to connect with exit)
-        pushing "C" as a snake
-            (move self while in a position you normally couldnt have over holes, specific flight path)
-        splitting and rebuilding snakes
-            (change parity!, change length, make blocks for recovery, bridges, pipes...)
-        using self as "C"
-            (move towards pipes as snake)
-
-    CLOSED SNAKES
-        use C-movement to connect with other snake
-            (recover snakes, switch sides in snakes, finally exit by splitting) 
-
-    https://www.asciiart.eu/text-to-ascii-art, using Bright font   
-#)
 (
 ..####....####...##..##..######..#####....####...##.....
 .##..##..##..##..###.##....##....##..##..##..##..##.....
@@ -307,7 +264,7 @@ level
 (introduce open pipes, make sure no extra end blocks in these levels to prevent snake movement showing up)
 
 level
-(create long block to push from a distance) (WIP)
+(create long block to push from a distance)
 ###############
 ###############
 ####$##.##.####
@@ -333,15 +290,29 @@ level
     ###.......‖ǝ###
     ###############
     ###############
+
+    (proof of concept)
+    ###############
+    ###############
+    #########~~~ǝ##
+    ####...oono~###
+    ###p.ɔ.o‖oo~###
+    ####...ooo‖~###
+    ####...‖ooo~###
+    ######.##..####
+    ######.....####
+    ###############
+    ###############
 )
 
 level
 (replace block with one you can fly through)
+(not a lot you can try here, but it seemed hard before...)
 ###############
 ######@@@######
-####..~....####
+####~~~....####
 ####c.~.~..@###
-####....~..####
+####....~~~####
 #######.#######
 ####...═.~~####
 ###p.ɔ...o~ǝ###
@@ -417,8 +388,6 @@ level
 #####@@########
 ###############
 ###############
-
-(WIP, something with the square from 4 corners?)
 
 level
 (make hook - usage as path is prevented since it would fall)
@@ -576,6 +545,8 @@ level
 
 section Hold
 
+(SPLIT IN U)
+
 level Start
 ###############
 #######$#######
@@ -589,10 +560,8 @@ level Start
 #######$#######
 ###############
 
-(PART 1: SPLIT IN C)
-
 level
-(use C to split to get shorter)
+(use U to split to get shorter)
 ###############
 ###############
 #####.....#####
@@ -606,7 +575,7 @@ level
 ###############
 
 level
-(fill C in correct order to still have space to even move)
+(fill U in correct place to still have space to leave after split)
 ###############
 ###############
 #####p.═╗ǝ#####
@@ -633,11 +602,8 @@ level
 ###############
 ###############
 
-
-(PART 2: SPLIT IN C, SHIFT IN LONG C)
-
 level
-(grow)
+(grow in U, consequences otherwise explored near the end)
 ###############
 ######$#$######
 #####~.~.~#####
@@ -650,23 +616,25 @@ level
 ######$$$######
 ###############
 
-level
-(make wider 'C' to push self to be oriented correctly over hole)
-(maybe really hard to discover the interaction here...)
-###############
-#######@@@#####
-####.......####
-###$..c╗~..$###
-####...‖~.~####
-###p.═ɔ#~~~ǝ###
-####...‖~.~####
-###$..c╝~..$###
-####.......####
-#######@@@#####
-###############
+(
+    (make wider 'U' to push self to be oriented correctly over hole)
+    (maybe really hard to discover the interaction here...)
+    (now added similar level in last area, where 4 long is fine)
+    ###############
+    #######@@@#####
+    ####.......####
+    ###$..c╗~..$###
+    ####...‖~.~####
+    ###p.═ɔ#~~~ǝ###
+    ####...‖~.~####
+    ###$..c╝~..$###
+    ####.......####
+    #######@@@#####
+    ###############
+)
 
 level
-(use split parts to make new C)
+(use split parts to make new U)
 ###############
 ####$$###$$####
 ###..═ɔ#c═..###
@@ -678,34 +646,6 @@ level
 ####.╚═╝...####
 ######$$$######
 ###############
-
-(
-    (fun idea, but has self closing early)
-    4##############
-    #####$$#$$#####
-    ###.........###
-    ###.....╔═╗.###
-    ###.....u.‖.###
-    ##p.ɔuo...‖.###
-    ###.....n.‖.###
-    ###.....╚═╝.###
-    ###.........###
-    ######$$$######
-    £##############
-
-    (approach extra piece correctly - but also makes 4 length early...)
-    4##############
-    ###############
-    #####....######
-    ####p.═╗.╗ǝ####
-    #####..u..#####
-    ####..╔ɔ...####
-    ####..‖....####
-    ####..‖....####
-    ####..╚ɔ...####
-    ###############
-    £##############
-)
 
 
 
@@ -721,8 +661,8 @@ level
 section Shed
 
 (SELF-SPLIT)
-(might be missing slower tutorialization of this kind of spliting!)
-(length calc and specific shapes)
+(might be missing slower tutorialization of this kind of splitting!)
+(requires calculating lengths remaining or even visualizing specific shapes)
 
 level Start
 ###############
@@ -736,21 +676,6 @@ level Start
 #######.#######
 ###############
 ###############
-
-(
-    (intro test)
-    ###############
-    ###############
-    ###############
-    ####*ǝ#╔══╗####
-    #######‖╔╗‖####
-    #####╔╗‖‖‖‖$###
-    ####nuu╚╝╚╝####
-    ####═══════####
-    ###############
-    ###############
-    ###############
-)
 
 level
 (split to make hook)
@@ -854,7 +779,7 @@ level
 )
 
 level
-(hard? split to make pipe that can reach exit without falling in)
+(split to make pipe that can reach exit without falling in)
 (actually needs to connect to the other pipe piece first and be pushed)
 ###############
 ###############
@@ -868,36 +793,6 @@ level
 ###############
 ###############
 
-(
-    (make long shape that is just used to push - broken, because level works as a snake)
-    ###############
-    ###############
-    ###........n###
-    ##p.═════ɔ..###
-    ###~~~...~~~###
-    ###~~~~~~~~~###
-    ###~~~~~~~~~###
-    ###~~~~#~~~~###
-    #####..u.~~~ǝ##
-    ###############
-    ###############
-)
-
-(
-    (25-03-10: this uses the entrance and exit pieces and is kinda unhinged minimal and difficult.)
-    (maybe keep.)
-    ###############
-    ###############
-    #####$$########
-    ####....#.ǝ####
-    ####.......####
-    ####..╔ɔ...####
-    ###p.═╝...#####
-    ####......#####
-    #####$$########
-    ###############
-    ###############
-)
 
 
 
@@ -925,83 +820,134 @@ level Start
 ###############
 ###############
 
-(RECONNECT VIA SELF PUSH)
-(COMBINATION OF BOTH SPLITTING METHODS)
+(SELF PUSH & SELF CLOSE)
 
 level
-(push self to connect without splitting)
+(close to get max length needed, then use U to split)
 ###############
 ###############
-######$$#######
-####..╔═╗.#####
-###@..╝.╝.#####
-####......═╗ǝ##
-####......#‖###
-######....═╝###
-####p.ɔ##$$####
-###############
-###############
-
-(WIP: try impossible self push that requires some other spacer block in between)
-
-level
-(get extra length into position first, use split to make right shape needed to leave)
-###############
-###############
-####p.╗########
-#####.‖.#~#####
-####@.u.ɔ~ǝ####
-#####...#~#####
-#####╔ɔ..~@####
-#####‖....@####
-#####‖....#####
-#####╚ɔ########
-###############
-
-level
-(push+close self first, because other kinds of recovery don't work)
-###############
-###############
-#####@@@#######
-###.╔═╗..#.ǝ###
-###.╚.‖..#╔.###
-###........####
-###...ɔ..#.####
-#####....######
-###p.ɔ#$#######
+####$##@@@@####
+###....~~...###
+##p.ɔ..~~.o.ǝ##
+###....~~...###
+###n╚ɔn~~...$##
+###╚══╝~~...###
+#####@@@@######
 ###############
 ###############
 
 level
-(actually move for a while as closed snake and use to navigate small spaces)
+(make U to approach end part)
 ###############
-###############
-##########@####
-###..#c╗#..╗###
-##$.n..‖#..╝ǝ##
-###....‖....###
-##p.╗.c╝....$##
-###.╚ɔ......###
-#######@@@#####
-###############
-###############
-
-level
-(this one uses hilbert curve path that needs to be followed)
-(can work as a temporary ending level)
-###############
-###.........###
-##@.╔════╗..ǝ##
-##@.‖nɔnɔ‖..###
-##@.‖nuɔu‖..@##
-##@.‖cncu‖..@##
-##@.‖nɔuɔ‖..@##
-###.╚╝c═╝‖..@##
-##p.....═╝..@##
-###.........###
+######@@@######
+####.......####
+####..╔═ɔ..####
+#####.....#####
+###p..══ɔ.ɔǝ###
+#####.....#####
+####..╚═ɔ..####
+####.......####
+######@@@######
 ###############
 
 (
+    (make 3+1, close self to recover)
+    (had multiple nintentional solutions...)
+    ###############
+    ###############
+    ####$$#########
+    ###....c╗.#####
+    ##p.═ɔ..‖.#.ǝ##
+    ###.═ɔ..‖.#╔###
+    ###....c╝...###
+    #####.....#.###
+    #######@@######
+    ###############
+    ###############
+)
+
+level
+(push self without splitting to connect)
+###############
+###############
+####p.═╗..ǝ####
+#######‖#######
+#####.....#####
+####...u...####
+###@.......@###
+####.╔.╔...####
+####.╚═╝...####
+#####$$$$$#####
+###############
+
+(
+    (neater layout? requires extra step and maybe less obvious overall)
+    ###############
+    ###############
+    ####p.═╗..ǝ####
+    #######.#######
+    #####..‖..#####
+    ####...u...####
+    ###@.......@###
+    ####..╔.╗..####
+    ####..╚═╝..####
+    #####$$$$$#####
+    ###############
+)
+(WIP: try wrong parity self push that requires some other spacer block in between)
+
+level
+(cut a corner instead of connecting everything)
+(then close self to be able to push it into position and recover)
+###############
+###############
+###p.ɔ#$$#.ǝ###
+#####......####
+####..╔╗.#.@###
+###$...‖.#.@###
+###$..═╝...####
+####......#####
+####c═....#####
+######$$$######
+###############
+
+(
+    (this one uses hilbert curve path that needs to be followed)
+    ###############
+    ###.........###
+    ##@.╔════╗..ǝ##
+    ##@.‖nɔnɔ‖..###
+    ##@.‖nuɔu‖..@##
+    ##@.‖cncu‖..@##
+    ##@.‖nɔuɔ‖..@##
+    ###.╚╝c═╝‖..@##
+    ##p.....═╝..@##
+    ###.........###
+    ###############
+)
+
+level
+(grow and eventually split)
+###############
+#####$$$$######
+###.~~~~~~..###
+###..~##~...@##
+###....##...@##
+###.╔ɔ..#...###
+###.╚╗..$...ǝ##
+##p.═╝..#...###
+###.....##@####
+####$$$########
+###############
+
+(THE END?)
+
+
+(
+    (unused ideas/ variations)
+
+    (something where you make a square out of 4 corners)
+
     (connect with entrance to get out at all)
     (WIP could keep growing with pipe pieces until finally being able to swap or close)
     ###############
@@ -1015,9 +961,7 @@ level
     ###p...═╝..####
     ###############
     ###############
-)
 
-(
     ###############
     #####........##
     ####p.ɔ......##
@@ -1029,9 +973,20 @@ level
     ###....══╝...##
     #######..######
     ###############
-)
 
-(
+    (fun idea? july 2025)
+    4##############
+    #####$$#$$#####
+    ###.........###
+    ###.....╔═╗.###
+    ###.....u.‖.###
+    ##p.ɔuo...‖.###
+    ###.....n.‖.###
+    ###.....╚═╝.###
+    ###.........###
+    ######$$$######
+    £##############
+
     (pretty difficult, maybe a bit unfocused)
     ###############
     ###############
@@ -1044,9 +999,21 @@ level
     ##.....~~~~u.ǝ#
     ###############
     ###############
-)
 
-(
+    (25-03-10: this uses the entrance and exit pieces and is kinda unhinged minimal and difficult.)
+    (doesn't work now given changed ending mechanic)
+    ###############
+    ###############
+    #####$$########
+    ####....#.ǝ####
+    ####.......####
+    ####..╔ɔ...####
+    ###p.═╝...#####
+    ####......#####
+    #####$$########
+    ###############
+    ###############
+
     (text from blocks)
     ###############
     #╔╗╔╗c╗nn╔╗##.#
@@ -1071,18 +1038,5 @@ level
     #...........═╝#
     #.*.nc.n......#
     #...╚══╝......#
-    ###############
-
-    (proof of concept)
-    ###############
-    ###############
-    #########~~~ǝ##
-    ####...oono~###
-    ###p.ɔ.o‖oo~###
-    ####...ooo‖~###
-    ####...‖ooo~###
-    ######.##..####
-    ######.....####
-    ###############
     ###############
 )
