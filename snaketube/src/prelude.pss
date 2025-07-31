@@ -1,14 +1,16 @@
 title nuworm
 author noa
+
 run_rules_on_level_start
 again_interval 0.08
 
 level_select
-text_controls Arrow keys or WASD to move\nR to restart, Z to undo
+skip_title_screen
+(text_controls Arrow keys or WASD to move\nR to restart, Z to undo)
 export_options notitle,nofooter,nopadding
-runtime_metadata_twiddling
-
 sprite_size 16x16
+
+runtime_metadata_twiddling
 color_palette ega white #fff lightgray #6cd9b5 darkgray #036965 black #15121c
 background_color ((color_black))
 text_color ((color_fg))

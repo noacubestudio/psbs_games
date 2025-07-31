@@ -100,6 +100,9 @@ subroutine initialize_level
 subroutine handle_player_input
 (----PLAYER INPUT----)
 
+(title screen, place level exit on input to trigger win and sound)
+[ was moving/action player add stationary.player meta_exit ] [ title_screen ]
+
 (action to open/close manual)
 [ was action.player add stationary.player ] [ screen_border no manual add manual ] [ gp_allow_manual ]
 [ was action.player add stationary.player ] [ screen_border was manual ]
