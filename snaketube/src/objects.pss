@@ -647,7 +647,7 @@ manual
 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000..
 translate:up:13
 
-meta_exit 
+room_exit 
 ((color_black))
 ................
 ................
@@ -666,11 +666,11 @@ meta_exit
 ................
 ................
 
-spawnpoint
+room_entry
 ((color_black))
-copy: meta_exit
+copy: room_exit
 
-vs_meta_pipe:dirs
+vs_exit:dirs
 ((color_bg))
 ................
 ................
@@ -690,17 +690,17 @@ vs_meta_pipe:dirs
 ................
 rot:up:dirs
 
-vs_meta_pipe:dirs:offs
+vs_exit:dirs:offs
 ((color_bg))
-copy: vs_meta_pipe:dirs translate:offs:2
+copy: vs_exit:dirs translate:offs:2
 
-vs_meta_pipe_closed:dirs
+vs_exit_closed:dirs
 ((color_fg))
-copy: vs_meta_pipe:dirs
+copy: vs_exit:dirs
 
-vs_meta_pipe_closed:dirs:offs
+vs_exit_closed:dirs:offs
 ((color_fg))
-copy: vs_meta_pipe:dirs translate:offs:2
+copy: vs_exit:dirs translate:offs:2
 
 undo_hint
 ((color_fg))
@@ -1018,7 +1018,7 @@ translate:left:1
 vs_outside
 ((color_bg))
 
-vs_meta_arrow:dirs
+vs_room_arrow:dirs
 ((color_fg))
 ................
 ................
@@ -1489,7 +1489,7 @@ transparent
 again_exit
 transparent
 
-again_spawn
+again_entry
 transparent
 
 again_fly:dirs

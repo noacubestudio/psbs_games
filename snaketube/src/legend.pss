@@ -20,10 +20,10 @@ $ = wall and wall_deco_s
 ₤ = wall and screen_border_chapter
 w = wall and title_screen
 
-p = block and vs_block_base and player and init and con:0:right and spawnpoint and vs_player:right
+p = block and vs_block_base and player and init and con:0:right and room_entry and vs_player:right
 * = block and vs_block_base and player and init and con:0:right and player_facing:right and vs_player_end:right
-ǝ = block and vs_block_base and meta_exit and con:0:left and vs_meta_pipe:left
-e = block and vs_block_base and meta_exit and con:0:up   and vs_meta_pipe:up
+ǝ = block and vs_block_base and room_exit and con:0:left and vs_exit:left
+e = block and vs_block_base and room_exit and con:0:up   and vs_exit:up
 
 o = block and vs_block_base
 u = block and vs_block_base and con:0:up
@@ -39,6 +39,7 @@ c = block and vs_block_base and con:0:right
 ╗ = block and vs_block_base and con:0:left  and con:0:down
 ╝ = block and vs_block_base and con:0:left  and con:0:up
 
+(WIP extra mechanic)
 ▲ = block and vs_block_base and pusher and con:0:up    and vs_pusher:up
 ▼ = block and vs_block_base and pusher and con:0:down  and vs_pusher:down
 ◄ = block and vs_block_base and pusher and con:0:left  and vs_pusher:left
@@ -46,7 +47,7 @@ c = block and vs_block_base and con:0:right
 
 
 (these start the subroutine that triggers an again turn and the one that responds)
-gp_again = again_col or again_exit or again_fly:dirs or again_gravity or again_spawn
+gp_again = again_col or again_exit or again_fly:dirs or again_gravity or again_entry
 (these start the subroutine that makes blocks move)
 gp_move_sources = player_move:dirs
 
@@ -63,4 +64,4 @@ gp_can_fall = block or con:x:dirs or pusher
 gp_allow_manual = init_theme_4 or init_theme_5 or init_theme_6
 
 (all of these are regenerated every turn and not supposed to be used on the left side of game logic rules)
-gp_temporary_visuals = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_block_base or vs_player:dirs or vs_block_base:offs or vs_player:dirs:offs or vs_block_edge:dirs or vs_block_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_meta_pipe:dirs or vs_meta_pipe:dirs:offs or vs_meta_pipe_closed:dirs or vs_meta_pipe_closed:dirs:offs or vs_wall_inner_corner_sharp:dirs or vs_block_col:dirs or vs_player_end:dirs or vs_player_end:dirs:offs or vs_pusher:dirs or vs_pusher:dirs:offs
+gp_temporary_visuals = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_block_base or vs_player:dirs or vs_block_base:offs or vs_player:dirs:offs or vs_block_edge:dirs or vs_block_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_exit:dirs or vs_exit:dirs:offs or vs_exit_closed:dirs or vs_exit_closed:dirs:offs or vs_wall_inner_corner_sharp:dirs or vs_block_col:dirs or vs_player_end:dirs or vs_player_end:dirs:offs or vs_pusher:dirs or vs_pusher:dirs:offs

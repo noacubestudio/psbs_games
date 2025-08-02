@@ -9,7 +9,7 @@ dirs -> vs_hole_inner_corner:dirs
 --
 dirs -> vs_hole_outer_corner:dirs
 --
-meta_exit, spawnpoint
+room_exit, room_entry
 --
 
 (solid)
@@ -28,11 +28,11 @@ dirs -> vs_wall_inner_corner:dirs
 dirs -> vs_wall_inner_corner_sharp:dirs
 --
 wall_deco_s, wall_deco_m
-dirs -> vs_wall_deco_s:dirs, vs_wall_deco_m:dirs
+dirs -> vs_wall_deco_s:dirs vs_wall_deco_m:dirs
 --
 vs_outside
 --
-vs_meta_arrow:dirs
+vs_room_arrow:dirs
 --
 
 (blocks)
@@ -48,7 +48,7 @@ dirs -> con:1:dirs
 --
 vs_con_end
 --
-vs_meta_pipe:dirs, vs_meta_pipe_closed:dirs
+vs_exit:dirs vs_exit_closed:dirs
 --
 
 (blocks, animated. always in front)
@@ -66,22 +66,22 @@ vs_block_col:dirs (extending block, on top existing tiles)
 --
 vs_con_end:offs
 --
-vs_meta_pipe:dirs:offs, vs_meta_pipe_closed:dirs:offs
+vs_exit:dirs:offs vs_exit_closed:dirs:offs
 --
 
 (items on blocks)
-vs_player:dirs, vs_player:dirs:offs, vs_player_end:dirs, vs_player_end:dirs:offs
+vs_player:dirs vs_player:dirs:offs vs_player_end:dirs vs_player_end:dirs:offs
 --
 pusher
-vs_pusher:dirs, vs_pusher:dirs:offs
+vs_pusher:dirs vs_pusher:dirs:offs
 --
 
 (UI)
 title_screen
 --
-screen_border, screen_border_chapter
+screen_border screen_border_chapter
 --
-restart_hint, undo_hint, esc_hint, action_hint
+restart_hint undo_hint esc_hint action_hint
 --
 manual
 --
@@ -90,16 +90,16 @@ manual
 (INVISIBLE MARKERS)
 
 init
-init_theme_1, init_theme_2, init_theme_3, init_theme_4, init_theme_5, init_theme_6
+init_theme_1 init_theme_2 init_theme_3 init_theme_4 init_theme_5 init_theme_6
 block
 player
 player_facing:dirs
 supported
 
 (move)
-player_move:dirs, was_player_moved:dirs
+player_move:dirs was_player_moved:dirs
 pusher_move:dirs
-dirs -> push:dirs, was_pushed:dirs
+dirs -> push:dirs was_pushed:dirs
 dirs -> fixed_tail_con:dirs
 follow:dirs
 discard_follow
@@ -108,16 +108,16 @@ discard_follow
 dirs -> try_move:dirs
 dirs -> try_follow:dirs
 dirs -> try_move_dest:dirs
-dirs -> col_move:dirs, col_head:dirs
+dirs -> col_move:dirs col_head:dirs
 dirs -> col_item:dirs
 dirs -> discard_move:dirs
 
 (fly)
 dirs -> try_fly_dest:dirs
-dirs -> again_fly:dirs, now_fly:dirs
+dirs -> again_fly:dirs now_fly:dirs
 try_bounce
 
 (again)
 again_col
-again_exit, again_spawn
+again_exit again_entry
 again_gravity

@@ -6,7 +6,6 @@ again_interval 0.08
 
 level_select
 skip_title_screen
-(text_controls Arrow keys or WASD to move\nR to restart, Z to undo)
 export_options notitle,nofooter,nopadding
 sprite_size 16x16
 

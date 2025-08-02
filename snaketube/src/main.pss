@@ -1,59 +1,58 @@
-(# Palette #)
-(% set color_white    = "white" %)
-(% set color_fg       = "lightgray" %)
-(% set color_bg       = "darkgray" %)
-(% set color_black    = "black" %)
+(nuworm by noa, 2023 - 2025)
 
-(% include "prelude.pss" %)
+(% set color_white = "white"     -%)
+(% set color_fg    = "lightgray" -%)
+(% set color_bg    = "darkgray"  -%)
+(% set color_black = "black"     -%)
+
+(% include "prelude.pss" +%)
 
 =====
 TAGS
 =====
 
-(% include "tags.pss" %)
+(% include "tags.pss" +%)
 
 ========
 OBJECTS
 ========
 
-(% include "objects.pss" %)
+(% include "objects.pss" +%)
 
 =======
 LEGEND
 =======
 
-(% include "legend.pss" %)
+(% include "legend.pss" +%)
 
 =======
 SOUNDS
 =======
 
-(% include "sounds.pss" %)
+(% include "sounds.pss" +%)
 
 ================
 COLLISIONLAYERS
 ================
 
-(% include "collisionlayers.pss" %)
+(% include "collisionlayers.pss" +%)
 
 ======
 RULES
 ======
 
-(% include "rules.pss" %)
+(% include "rules.pss" +%)
 
 ==============
 WINCONDITIONS
 ==============
 
-( I don't use win conditions at this point, instead starting the next level via rules )
+(I don't use win conditions at this point, instead starting the next level via rules)
 
 =======
 LEVELS
 =======
 
 (% filter organizeLevels %)
-(% include "levels.pss" %)
-
-(% include "levels-b.pss" %)
+(% include "levels.pss" +%)
 (% endfilter %)
