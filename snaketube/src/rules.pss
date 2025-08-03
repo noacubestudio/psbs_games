@@ -41,8 +41,10 @@ dirs [ was again_fly:dirs add now_fly:dirs ]
 
 (appearing/re-appearing from spawn)
 [ con:x:> was again_entry add again_fly:> player_facing:> player ] sfx8 (appear sound)
-(waited for entry and did init)
-[ no init was again_wait_entry add again_entry ]
+(waited for entry 3 times and did init)
+[ room_entry no init was again_wait_entry add again_entry | was again_wait_entry | was again_wait_entry ]
+(otherwise increment counter)
+right random [ again_wait_entry | no again_wait_entry add again_wait_entry ]
 
 (win level when exiting through meta exit)
 [ room_exit  was player again_exit ] win sfx4 (falling sound)

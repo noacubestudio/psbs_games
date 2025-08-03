@@ -161,9 +161,10 @@ class Filters(Extension):
                 continue
             if line.strip().startswith("#"):
                 line_of_level += 1
-                if line_of_level == 1 and section_index > 1:
+                skip_sections = 2
+                if line_of_level == 1 and section_index > skip_sections:
                     # replace leading # with section index for color theming.
-                    line = line.replace("#", str(section_index - 1), 1)
+                    line = line.replace("#", str(section_index - skip_sections), 1)
                 elif line_of_level == 11:
                     # replace final leading # with frame character.
                     # first level of each section gets a different frame.

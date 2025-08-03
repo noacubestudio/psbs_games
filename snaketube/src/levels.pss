@@ -1,3 +1,6 @@
+section > nuworm 
+
+level by noa
 (title screen)
 ###############
 ###############
@@ -21,9 +24,9 @@
 ........................................................
 )
 
-section Control
+section control
 
-level > Intro
+level > intro
 ###############
 #######$#######
 ######...######
@@ -186,9 +189,9 @@ level
 ........................................................
 )
 
-section Connect
+section connect
 
-level > Intro
+level > intro
 ###############
 ###############
 #######@#######
@@ -346,9 +349,9 @@ level
 ................................
 )
 
-section Turn
+section turn
 
-level > Intro
+level > intro
 ###############
 ###############
 #######@#######
@@ -444,9 +447,9 @@ level
 
 (NEW: BECOME SNAKE)
 
-section Trail
+section trail
 
-level > Intro
+level > intro
 ###############
 ###############
 #######@#######
@@ -557,11 +560,11 @@ level
 ................................
 )
 
-section Hold
+section hold
 
 (SPLIT IN U)
 
-level > Intro
+level > intro
 ###############
 #######$#######
 ######╔═╗######
@@ -672,13 +675,13 @@ level
 ................................
 )
 
-section Shed
+section shed
 
 (SELF-SPLIT)
 (might be missing slower tutorialization of this kind of splitting!)
 (requires calculating lengths remaining or even visualizing specific shapes)
 
-level > Intro
+level > intro
 ###############
 ###############
 #######.#######
@@ -819,9 +822,9 @@ level
 .................................................................
 )
 
-section Complete
+section complete
 
-level > Intro
+level > intro
 ###############
 ###############
 #######$#######
@@ -956,7 +959,7 @@ level
 
 (THE END?)
 
-level Ending
+level - ending
 ###############
 ####*══╗╔═╗####
 ###╔═╗╔╝╚╗╚╗###
