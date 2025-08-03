@@ -5,7 +5,6 @@
 (gosub handle_queued_from_last_turn: turn continued from last turn without input)
 (gosub initialize_level: once at init then never again)
 (gosub redraw_visuals: always)
-(gosub queue_again: start turn to continue anim/ flying etc)
 
 [ gp_again        ] -> gosub handle_queued_from_last_turn
 [ init            ] -> gosub initialize_level 
@@ -13,7 +12,11 @@
 [ gp_move_sources ] -> gosub handle_block_movement
 [ player          ] -> gosub handle_player_movement
 [ background      ] -> gosub redraw_visuals
-[ gp_again        ] -> gosub queue_again
+
+(----START AGAIN TURNS----)
+
+(fall into hole or exit, come out of entry, fly, end collision animation)
+[ gp_again ] -> again
 
 
 (=====================================================================================)
@@ -29,20 +32,22 @@ dirs x [ again_col ] [ was con:x:dirs:offs add con:x:dirs ]
 (gravity)
 [ hole again_gravity del block con:x:dirs pusher ] (always remove these)
 [ hole again_gravity no again_fly:dirs was gp_items ] (items get removed if not flying)
-[ was again_gravity ]
+[ was again_gravity ] sfx4 (falling sound)
 
 (queued flying)
 [ con:x:v no con:x:> was again_fly:> add now_fly:v ] (reorient in a pipe corner)
 [ con:x:^ no con:x:> was again_fly:> add now_fly:^ ] (reorient in a pipe corner)
 dirs [ was again_fly:dirs add now_fly:dirs ]
 
-(appearing from spawn)
-(respawn after trying to go back)
-[ con:x:> was again_entry add again_fly:> player_facing:> player ]
+(appearing/re-appearing from spawn)
+[ con:x:> was again_entry add again_fly:> player_facing:> player ] sfx8 (appear sound)
+(waited for entry and did init)
+[ no init was again_wait_entry add again_entry ]
+
 (win level when exiting through meta exit)
-[ room_exit  was player again_exit ] win
+[ room_exit  was player again_exit ] win sfx4 (falling sound)
 (if going back to spawn, player disappears and comes back later)
-[ room_entry was player again_exit add again_entry ]
+[ room_entry was player again_exit add again_entry ] sfx4 (falling sound)
 
 
 
@@ -87,7 +92,7 @@ subroutine initialize_level
 [ hole no vs_hole_edge_1:> vs_hole_outer_corner:> | no hole add vs_hole_inner_corner:^ ]
 
 (from a spawnpoint, the player appears)
-[ room_entry was player add stationary.player again_entry ] (still works without run_rules_on_level_start for testing)
+[ room_entry no again_wait_entry was player add stationary.player again_entry ] (still works without run_rules_on_level_start for testing)
 
 (remove init) 
 [ was init ]
@@ -277,8 +282,8 @@ dirs [ was_player_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixe
 [ was_pushed:dirs/was_player_moved:dirs was con:1:> add con:0:> | no con:1:< ] sfx1
 [ was con:1:> add con:0:> | no con:1:< was_pushed:dirs/was_player_moved:dirs ] sfx1
 
-(regenerate entry/ exit)
-[ room_entry/room_exit no block add block con:1:> | block add con:1:< ]
+(regenerate entry/ exit block)
+[ gp_exits no block add block con:1:> | block add con:1:< ]
 
 (remove markers for actually doing the movement)
 [ was was_pushed:dirs/was_player_moved:dirs ]
@@ -305,7 +310,7 @@ subroutine handle_player_movement
 
 (fall into meta pipes)
 (don't fall in when currently spawning, about to fly out or flying out.)
-[ player room_exit/room_entry block no con:x:v con:x:^ con:x:< again_entry now_fly:> again_fly:> add again_exit ]
+[ player gp_exits no con:x:v con:x:^ con:x:< again_entry again_wait_entry now_fly:> again_fly:> add again_exit ]
 
 (reset player direction if not valid)
 [ player block no con:x:< ] [ was player_facing:> add player_facing:v ] 
@@ -317,8 +322,8 @@ subroutine handle_player_movement
 (do something with each flying item now)
 
 (hit block end)
-[ player   block room_exit/room_entry no con:x:> was now_fly:> ] (stop before falling in the next turn)
-[ gp_items block                      no con:x:> was now_fly:> add col_head:> ] sfx7 (soft collision)
+[ player   block gp_exits no con:x:> was now_fly:> ] (stop before falling in the next turn)
+[ gp_items block          no con:x:> was now_fly:> add col_head:> ] sfx7 (soft collision)
 
 (hit wall/ block)
 [ gp_items was now_fly:> add col_item:> try_bounce | wall ] sfx0 (movement click)
@@ -366,7 +371,17 @@ subroutine redraw_visuals
 [ block add vs_block_base ]
 
 (outline towards other connected block part)
-[ con:1:> add vs_con_lowest:> ]
+[ block con:1:> add vs_con_lowest:> ]
+
+(clean edge on sides without connection)
+[ block no con:x:> add vs_block_edge:> ]
+
+(decoration on blocks with one connection)
+[ block con:x:> no con:x:v con:x:^ con:x:< add vs_con_end ]
+(pushers in blocks point at connection)
+[ pusher con:x:> no con:x:v con:x:^ con:x:< add vs_pusher:> ]
+(exit block decoration)
+[ block gp_exits add vs_exit ]
 
 (make wall corners temporarily sharper to match presence of a block with a sharp corner)
 [ con:0:> | was stationary.wall add <.wall ]
@@ -374,25 +389,11 @@ subroutine redraw_visuals
 [ v.wall | vs_wall_inner_corner:> add vs_wall_inner_corner_sharp:> ]
 [ was moving.wall add wall ]
 
-(clean edge on sides without cut/con)
-[ block no con:x:> add vs_block_edge:> ]
-
-(add decoration to center of block with exactly one rail)
-[ block con:x:> no con:x:v con:x:^ con:x:< add vs_con_end ]
-
-(pusher at block end, points at tail)
-[ pusher con:x:> no con:x:v con:x:^ con:x:< add vs_pusher:> ]
-
-(direction for eye)
+(player sprites. if not doing entry/exit but at block end, show big sprite )
 [ player_facing:> ] [ player add vs_player:> ] 
-[ player no vs_player:dirs add vs_player:right ]
-
-( meta connections - show as filled when entering the level and hide the player )
-[ room_entry/room_exit con:x:> no con:x:v con:x:^ con:x:< add vs_exit:< ]
-[ again_entry/again_exit was vs_exit:> add vs_exit_closed:> del vs_player:dirs ]
-
-(bigger player sprite if at end)
-[ block no con:x:v con:x:^ con:x:> room_exit room_entry was vs_player:> add vs_player_end:> ]
+[ vs_exit again_fly:> con:x:> was vs_player:> add vs_player_entering:> ]
+[ again_exit                  was vs_player:> add vs_player_exiting ]
+[ vs_con_end no again_fly:>   was vs_player:> add vs_player_end:> ]
 
 
 (ACTIVATE COLLISION VARIANTS)
@@ -401,8 +402,9 @@ subroutine redraw_visuals
 [ gp_items col_move:>/col_head:> add col_item:> ]
 
 (animate tiles in collision by replacing them with offset variants)
-[ col_move:> was vs_block_base add vs_block_base:> ] 
-[ col_move:> was vs_con_end    add vs_con_end:> ] 
+[ col_move:> was vs_block_base  add vs_block_base:> ] 
+[ col_move:> was vs_con_end     add vs_con_end:> ] 
+[ col_move:> was vs_exit        add vs_exit:> ] 
 
 dirs [ col_item:> was vs_player:dirs      add vs_player:dirs:> ]
 dirs [ col_item:> was vs_player_end:dirs  add vs_player_end:dirs:> ]
@@ -410,8 +412,6 @@ dirs [ col_move:> was vs_pusher:dirs      add vs_pusher:dirs:> ]
 dirs [ col_head:> was vs_pusher:dirs      add vs_pusher:dirs:> ]
 dirs [ col_move:> was vs_con_lowest:dirs  add vs_con_lowest:dirs:> ]
 dirs [ col_move:> was vs_block_edge:dirs  add vs_block_edge:dirs:> ]
-dirs [ col_move:> was vs_exit:dirs        add vs_exit:dirs:> ]
-dirs [ col_move:> was vs_exit_closed:dirs add vs_exit_closed:dirs:> ]
 
 dirs x [ col_move:> was con:x:dirs add con:x:dirs:> ]
 
@@ -420,20 +420,5 @@ dirs x [ col_move:> was con:x:dirs add con:x:dirs:> ]
 
 (can remove markers now, make sure the again turn to undo the visual is queued)
 [ was col_move:dirs/col_item:dirs/col_head:dirs add again_col ]
-
-
-
-(=====================================================================================)
-subroutine queue_again
-(----START AGAIN TURNS----)
-
-(fall into hole/exit)
-[ again_gravity/again_exit ] -> sfx4 again (falling sound)
-
-(come out of spawn)
-[ again_entry ] -> sfx8 again (appear sound)
-
-(fly again/ end collision animation)
-[ again_fly:>/again_col ] -> again
 
 (% endfilter %)

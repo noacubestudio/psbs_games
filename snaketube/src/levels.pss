@@ -4,10 +4,10 @@
 ###############
 ###############
 ###############
-#######*#######
+#######w#######
 ###############
 ###############
-####w##########
+###############
 ###############
 ###############
 
@@ -23,7 +23,7 @@
 
 section Control
 
-level Start
+level > Intro
 ###############
 #######$#######
 ######...######
@@ -188,7 +188,7 @@ level
 
 section Connect
 
-level Start
+level > Intro
 ###############
 ###############
 #######@#######
@@ -348,13 +348,13 @@ level
 
 section Turn
 
-level Start
+level > Intro
 ###############
 ###############
 #######@#######
 #####╔═══╗#####
 #####╚══╗‖#####
-####@*═╗‖‖@####
+#####*═╗‖‖@####
 #####╔╗‖‖‖#####
 #####╚╝e╚╝#####
 ###############
@@ -446,7 +446,7 @@ level
 
 section Trail
 
-level Start
+level > Intro
 ###############
 ###############
 #######@#######
@@ -561,7 +561,7 @@ section Hold
 
 (SPLIT IN U)
 
-level Start
+level > Intro
 ###############
 #######$#######
 ######╔═╗######
@@ -678,7 +678,7 @@ section Shed
 (might be missing slower tutorialization of this kind of splitting!)
 (requires calculating lengths remaining or even visualizing specific shapes)
 
-level Start
+level > Intro
 ###############
 ###############
 #######.#######
@@ -821,7 +821,7 @@ level
 
 section Complete
 
-level Start
+level > Intro
 ###############
 ###############
 #######$#######

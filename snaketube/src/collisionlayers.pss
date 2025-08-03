@@ -48,7 +48,7 @@ dirs -> con:1:dirs
 --
 vs_con_end
 --
-vs_exit:dirs vs_exit_closed:dirs
+vs_exit
 --
 
 (blocks, animated. always in front)
@@ -66,22 +66,22 @@ vs_block_col:dirs (extending block, on top existing tiles)
 --
 vs_con_end:offs
 --
-vs_exit:dirs:offs vs_exit_closed:dirs:offs
+vs_exit:offs
 --
 
 (items on blocks)
-vs_player:dirs vs_player:dirs:offs vs_player_end:dirs vs_player_end:dirs:offs
+vs_player:dirs vs_player:dirs:offs vs_player_end:dirs vs_player_end:dirs:offs vs_player_entering:dirs vs_player_exiting
 --
 pusher
 vs_pusher:dirs vs_pusher:dirs:offs
 --
 
 (UI)
-title_screen
---
 screen_border screen_border_chapter
 --
 restart_hint undo_hint esc_hint action_hint
+--
+title_screen
 --
 manual
 --
@@ -119,5 +119,5 @@ try_bounce
 
 (again)
 again_col
-again_exit again_entry
+again_exit again_entry again_wait_entry
 again_gravity

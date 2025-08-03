@@ -1,6 +1,8 @@
 . = background
 # = wall
 
+(walls with decoration/ text)
+
 $ = wall and wall_deco_s
 @ = wall and wall_deco_m
 
@@ -9,6 +11,7 @@ $ = wall and wall_deco_s
 Ɛ = wall and esc_hint
 χ = wall and action_hint
 
+(top left of level)
 1 = wall and init_theme_1
 2 = wall and init_theme_2
 3 = wall and init_theme_3
@@ -16,14 +19,20 @@ $ = wall and wall_deco_s
 5 = wall and init_theme_5
 6 = wall and init_theme_6
 
+(bottom left of level)
 £ = wall and screen_border
 ₤ = wall and screen_border_chapter
-w = wall and title_screen
 
-p = block and vs_block_base and player and init and con:0:right and room_entry and vs_player:right
-* = block and vs_block_base and player and init and con:0:right and player_facing:right and vs_player_end:right
-ǝ = block and vs_block_base and room_exit and con:0:left and vs_exit:left
-e = block and vs_block_base and room_exit and con:0:up   and vs_exit:up
+(entry/ exit)
+
+p = block and vs_block_base and con:0:right and  init and room_entry and player and vs_player:right
+* = block and vs_block_base and con:0:right and  init and room_entry and player and again_wait_entry
+w = block and title_screen                  and  init and player
+
+ǝ = block and vs_block_base and con:0:left and  room_exit and vs_exit:left
+e = block and vs_block_base and con:0:up   and  room_exit and vs_exit:up (unused)
+
+(blocks)
 
 o = block and vs_block_base
 u = block and vs_block_base and con:0:up
@@ -47,12 +56,15 @@ c = block and vs_block_base and con:0:right
 
 
 (these start the subroutine that triggers an again turn and the one that responds)
-gp_again = again_col or again_exit or again_fly:dirs or again_gravity or again_entry
+gp_again = again_col or again_exit or again_fly:dirs or again_gravity or again_entry or again_wait_entry
 (these start the subroutine that makes blocks move)
 gp_move_sources = player_move:dirs
 
 (on top layer in block or next to block, can fly through pipes)
 gp_items = player
+
+(player can try leaving each, sprite needs to adjust)
+gp_exits = room_entry or room_exit
 
 (always move with block)
 gp_block = block or con:x:dirs or again_fly:dirs or pusher or gp_items
@@ -64,4 +76,4 @@ gp_can_fall = block or con:x:dirs or pusher
 gp_allow_manual = init_theme_4 or init_theme_5 or init_theme_6
 
 (all of these are regenerated every turn and not supposed to be used on the left side of game logic rules)
-gp_temporary_visuals = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_block_base or vs_player:dirs or vs_block_base:offs or vs_player:dirs:offs or vs_block_edge:dirs or vs_block_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_exit:dirs or vs_exit:dirs:offs or vs_exit_closed:dirs or vs_exit_closed:dirs:offs or vs_wall_inner_corner_sharp:dirs or vs_block_col:dirs or vs_player_end:dirs or vs_player_end:dirs:offs or vs_pusher:dirs or vs_pusher:dirs:offs
+gp_temporary_visuals = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_block_base or vs_player:dirs or vs_block_base:offs or vs_player:dirs:offs or vs_block_edge:dirs or vs_block_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_exit or vs_exit:offs or vs_player_entering:dirs or vs_player_exiting or vs_wall_inner_corner_sharp:dirs or vs_block_col:dirs or vs_player_end:dirs or vs_player_end:dirs:offs or vs_pusher:dirs or vs_pusher:dirs:offs
