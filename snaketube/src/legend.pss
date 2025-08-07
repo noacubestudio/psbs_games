@@ -3,8 +3,8 @@
 
 (walls with decoration/ text)
 
-$ = wall and wall_deco_s
-@ = wall and wall_deco_m
+ω = wall and wall_deco
+@ = wall and wall_deco_big
 
 Ʉ = wall and undo_hint
 Ɍ = wall and restart_hint

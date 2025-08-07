@@ -83,8 +83,8 @@ subroutine initialize_level
 [ room_exit  con:x:< | wall add vs_room_arrow:> ]
 
 (decoration)
-[ wall_deco_s was vs_wall_inner:> add vs_wall_deco_s:> ]
-[ wall_deco_m was vs_wall_inner:> add vs_wall_deco_m:> ]
+[ wall_deco     was vs_wall_inner:> add vs_wall_deco:> ]
+[ wall_deco_big was vs_wall_inner:> add vs_wall_deco_big:> ]
 
 (hole border)
 [ hole add vs_hole_edge_1:> vs_hole_edge_2:> | no hole ]
