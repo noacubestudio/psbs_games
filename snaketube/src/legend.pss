@@ -56,7 +56,7 @@ c = block and vs_block_base and con:0:right
 
 
 (these start the subroutine that triggers an again turn and the one that responds)
-gp_again = again_col or again_exit or again_fly:dirs or again_gravity or again_entry or again_wait_entry
+gp_again = again_col or again_exit or again_fly:dirs or again_gravity or again_entry or again_wait_entry or again_undo or again_wait_undo
 (these start the subroutine that makes blocks move)
 gp_move_sources = player_move:dirs
 
@@ -76,4 +76,4 @@ gp_can_fall = block or con:x:dirs or pusher
 gp_allow_manual = init_theme_4 or init_theme_5 or init_theme_6
 
 (all of these are regenerated every turn and not supposed to be used on the left side of game logic rules)
-gp_temporary_visuals = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_block_base or vs_player:dirs or vs_block_base:offs or vs_player:dirs:offs or vs_block_edge:dirs or vs_block_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_exit or vs_exit:offs or vs_player_entering:dirs or vs_player_exiting or vs_wall_inner_corner_sharp:dirs or vs_block_col:dirs or vs_player_end:dirs or vs_player_end:dirs:offs or vs_pusher:dirs or vs_pusher:dirs:offs
+gp_temporary_visuals = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_block_base or vs_player:dirs or vs_block_base:offs or vs_player:dirs:offs or vs_block_edge:dirs or vs_block_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_exit or vs_exit:offs or vs_player_entering:dirs or vs_player_exiting or vs_wall_inner_corner_sharp:dirs or vs_block_col:dirs or vs_player_end:dirs or vs_player_end:dirs:offs or vs_pusher:dirs or vs_pusher:dirs:offs or vs_blink_arrow:dirs

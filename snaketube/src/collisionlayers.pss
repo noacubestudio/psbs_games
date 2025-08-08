@@ -33,6 +33,7 @@ dirs -> vs_wall_deco:dirs vs_wall_deco_big:dirs
 vs_outside
 --
 vs_room_arrow:dirs
+vs_blink_arrow:dirs
 --
 
 (blocks)
@@ -121,3 +122,4 @@ try_bounce
 again_col
 again_exit again_entry again_wait_entry
 again_gravity
+again_undo again_wait_undo

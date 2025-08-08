@@ -1094,6 +1094,10 @@ vs_room_arrow:dirs
 ................
 rot:up:dirs
 
+vs_blink_arrow:dirs
+((color_white))
+copy: vs_room_arrow:dirs
+
 hole ~
 ((color_black))
 
@@ -1549,6 +1553,12 @@ again_entry
 transparent
 
 again_wait_entry
+transparent
+
+again_undo
+transparent
+
+again_wait_undo
 transparent
 
 again_fly:dirs

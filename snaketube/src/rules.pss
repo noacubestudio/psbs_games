@@ -24,14 +24,20 @@ subroutine handle_queued_from_last_turn
 (----AGAIN TURN----)
 (do these in an again turn if the markers were placed in the previous turn)
 
+(undo a turn.)
+[ again_wait_undo ] -> undo
+(need to wait a bit more first, looks better)
+[ was again_undo add again_wait_undo ]
+
 (after collision animation, swap some tiles back)
 (all other animated tiles are reset every turn anyway)
 dirs x [ again_col ] [ was con:x:dirs:offs add con:x:dirs ]
 [ was again_col ]
 
 (gravity)
-[ hole again_gravity del block con:x:dirs pusher ] (always remove these)
-[ hole again_gravity no again_fly:dirs was gp_items ] (items get removed if not flying)
+[ hole again_gravity del block con:x:dirs pusher ] (always remove these, can't fly)
+[ hole again_gravity no again_fly:dirs was gp_items add again_undo ] (if player falls in, queue undo)
+[ hole again_gravity no again_fly:dirs was gp_items ] (other items also fall in)
 [ was again_gravity ] sfx4 (falling sound)
 
 (queued flying)
@@ -108,10 +114,10 @@ subroutine handle_player_input
 (title screen, place level exit on input to trigger win and sound)
 [ was moving/action player add stationary.player room_exit ] [ title_screen ]
 
-(action to open/close manual)
-[ was action.player add stationary.player ] [ screen_border no manual add manual ] [ gp_allow_manual ]
-[ was action.player add stationary.player ] [ screen_border was manual ]
-[ >.player ] [ screen_border was manual ] (any move should close manual)
+(action to open, any key to close manual)
+[ was action.player add stationary.player ] [ screen_border no manual add manual ] [ gp_allow_manual ] nosave
+[ was action.player add stationary.player ] [ screen_border was manual ] nosave
+[ was >.player      add stationary.player ] [ screen_border was manual ] nosave
 
 (before the input is processed, get the direction to make the player face that way)
 [ >.player ] [ was player_facing:dirs add player_facing:> ]
@@ -397,6 +403,10 @@ subroutine redraw_visuals
 [ again_exit                  was vs_player:> add vs_player_exiting ]
 [ vs_con_end no again_fly:>   was vs_player:> add vs_player_end:> ]
 
+(if the player is using exit or entry, highlight the right way forward)
+[ room_exit | vs_room_arrow:> add vs_blink_arrow:> ]
+[ player no vs_exit ] [ was vs_blink_arrow:dirs ]
+[ again_undo/again_wait_undo ] [ was vs_blink_arrow:dirs ] (no reason to also blink when player falls in hole)
 
 (ACTIVATE COLLISION VARIANTS)
 
