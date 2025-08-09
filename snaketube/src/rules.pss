@@ -403,10 +403,9 @@ subroutine redraw_visuals
 [ again_exit                  was vs_player:> add vs_player_exiting ]
 [ vs_con_end no again_fly:>   was vs_player:> add vs_player_end:> ]
 
-(if the player is using exit or entry, highlight the right way forward)
-[ room_exit | vs_room_arrow:> add vs_blink_arrow:> ]
-[ player no vs_exit ] [ was vs_blink_arrow:dirs ]
-[ again_undo/again_wait_undo ] [ was vs_blink_arrow:dirs ] (no reason to also blink when player falls in hole)
+(if the player is leaving, highlight the right way forward)
+[ vs_player_exiting ]            [ room_exit | vs_room_arrow:> add vs_blink_arrow:> ]
+[ con:x:< again_fly:> gp_exits ] [ room_exit | vs_room_arrow:> add vs_blink_arrow:> ]
 
 (ACTIVATE COLLISION VARIANTS)
 
