@@ -73,7 +73,8 @@ gp_block = block or con:x:dirs or again_fly:dirs or pusher or gp_items
 gp_can_fall = block or con:x:dirs or pusher
 
 (need one for the manual to be possible to view)
-gp_allow_manual = init_theme_4 or init_theme_5 or init_theme_6
+gp_show_manual_1 = init_theme_4 or init_theme_5 or init_theme_6
+gp_show_manual_2 = init_theme_5 or init_theme_6
 
 (all of these are regenerated every turn and not supposed to be used on the left side of game logic rules)
 gp_temporary_visuals = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_block_base or vs_player:dirs or vs_block_base:offs or vs_player:dirs:offs or vs_block_edge:dirs or vs_block_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_exit or vs_exit:offs or vs_player_entering:dirs or vs_player_exiting or vs_wall_inner_corner_sharp:dirs or vs_block_col:dirs or vs_player_end:dirs or vs_player_end:dirs:offs or vs_pusher:dirs or vs_pusher:dirs:offs or vs_blink_arrow:dirs

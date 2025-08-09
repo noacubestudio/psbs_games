@@ -109,15 +109,21 @@ subroutine initialize_level
 
 (=====================================================================================)
 subroutine handle_player_input
-(----PLAYER INPUT----)
+(----MENU INPUT----)
 
 (title screen, place level exit on input to trigger win and sound)
 [ was moving/action player add stationary.player room_exit ] [ title_screen ]
 
 (action to open, any key to close manual)
-[ was action.player add stationary.player ] [ screen_border no manual add manual ] [ gp_allow_manual ] nosave
-[ was action.player add stationary.player ] [ screen_border was manual ] nosave
-[ was >.player      add stationary.player ] [ screen_border was manual ] nosave
+(if possible this will open close both manual parts, otherwise only the first.)
+[ was action.player add stationary.player ] [ screen_border no manual_1 add manual_1 manual_2 ] [ gp_show_manual_2 ] nosave sfx6
+[ was action.player add stationary.player ] [ screen_border no manual_1 add manual_1          ] [ gp_show_manual_1 ] nosave sfx6
+[ was action.player add stationary.player ] [ screen_border was manual_1 manual_2 ] nosave sfx6
+[ was >.player      add stationary.player ] [ screen_border was manual_1 manual_2 ] nosave sfx6
+[ was action.player add stationary.player ] [ screen_border was manual_1 ] nosave sfx6
+[ was >.player      add stationary.player ] [ screen_border was manual_1 ] nosave sfx6
+
+(----PLAYER INPUT----)
 
 (before the input is processed, get the direction to make the player face that way)
 [ >.player ] [ was player_facing:dirs add player_facing:> ]
@@ -334,13 +340,13 @@ subroutine handle_player_movement
 [ gp_items block          no con:x:> was now_fly:> add col_head:> ] sfx7 (soft collision)
 
 (hit wall/ block)
-[ gp_items was now_fly:> add col_item:> try_bounce | wall ] sfx0 (movement click)
-[ gp_items was now_fly:> add col_item:> try_bounce | block no con:x:< add col_move:> ] sfx0
+[ gp_items was now_fly:> add col_item:> try_bounce | wall ] sfx7 (movement click)
+[ gp_items was now_fly:> add col_item:> try_bounce | block no con:x:< add col_move:> ] sfx7
 
 (hit other flying item/ stationary item)
-[ gp_items was now_fly:> add again_fly:<           | gp_items was now_fly:<   add again_fly:> ] sfx0 (what about a perpendicular one? WIP)
-[ gp_items was now_fly:> add col_item:> try_bounce | gp_items is now_fly:dirs                 ] sfx0
-[ gp_items was now_fly:> add col_item:> try_bounce | gp_items no now_fly:dirs add again_fly:> ] sfx0
+[ gp_items was now_fly:> add again_fly:<           | gp_items was now_fly:<   add again_fly:> ] sfx7 (what about a perpendicular one? WIP)
+[ gp_items was now_fly:> add col_item:> try_bounce | gp_items is now_fly:dirs                 ] sfx7
+[ gp_items was now_fly:> add col_item:> try_bounce | gp_items no now_fly:dirs add again_fly:> ] sfx7
 [ gp_items was now_fly:> add col_item:> try_bounce | pusher                   add col_head:>  ] sfx7 (can't enter pusher pipe)
 
 (identify tiles multiple items want to fly to)
