@@ -115,10 +115,9 @@ subroutine handle_player_input
 [ was moving/action player add stationary.player room_exit ] [ title_screen ]
 
 (action to open, any key to close manual)
-(if possible this will open close both manual parts, otherwise only the first.)
-[ was action.player add stationary.player ] [ screen_border no manual_2 add manual_2 ] [ gp_show_manual_2 ] nosave sfx6
-[ was action.player add stationary.player ] [ screen_border was manual_2 ] nosave sfx6
-[ was >.player      add stationary.player ] [ screen_border was manual_2 ] nosave sfx6
+[ was action.player add stationary.player ] [ screen_border no manual add manual ] [ gp_show_manual ] nosave sfx6
+[ was action.player add stationary.player ] [ screen_border was manual ] nosave sfx6
+[ was >.player      add stationary.player ] [ screen_border was manual ] nosave sfx6
 
 (----PLAYER INPUT----)
 
