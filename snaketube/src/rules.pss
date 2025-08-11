@@ -286,7 +286,7 @@ dirs [ was_player_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixe
 [ was fixed_tail_con:dirs ]
 
 (a moved cut next to a stationary one will make a sound because it reconnects)
-[ was_pushed:dirs/was_player_moved:dirs con:0:> | con:0:< no was_pushed:dirs was_player_moved:dirs] -> sfx5
+[ was_pushed:dirs/was_player_moved:dirs con:0:> | con:0:< no was_pushed:dirs no was_player_moved:dirs] -> sfx5
 
 (new cuts are created, this makes a splitting sound)
 [ was_pushed:dirs/was_player_moved:dirs was con:1:> add con:0:> | no con:1:< ] sfx1
