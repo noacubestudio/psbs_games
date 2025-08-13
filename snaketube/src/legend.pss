@@ -10,6 +10,7 @@
 Ɍ = wall and restart_hint
 Ɛ = wall and esc_hint
 χ = wall and action_hint
+Ŧ = wall and thank_you_hidden
 
 (top left of level)
 1 = wall and init_theme_1

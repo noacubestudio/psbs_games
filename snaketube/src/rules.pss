@@ -356,6 +356,11 @@ subroutine handle_player_movement
 (move to empty space)
 [ was gp_items now_fly:> | no gp_items now_fly:dirs add gp_items again_fly:> ]
 
+(if there's now_fly still, it's because the player is at the edge of the screen.)
+(just make it disappear.)
+[ was now_fly:> player ] [ was thank_you_hidden add thank_you ] (for ending)
+[ was now_fly:> player ]
+
 
 (FLYING DONE)
 
