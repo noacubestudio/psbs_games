@@ -65,12 +65,19 @@ subroutine initialize_level
 (do these at the start of the first turn, then never again)
 
 (set correct color palette)
-[ init_theme_1 ] -> color_palette ega white #fff lightgray #ED963F darkgray #814621 black #15121c (connect)
-[ init_theme_2 ] -> color_palette ega white #fff lightgray #F0527F darkgray #90245E black #15121c (turn)
-[ init_theme_3 ] -> color_palette ega white #fff lightgray #95CE3A darkgray #3B6830 black #15121c (snake)
-[ init_theme_4 ] -> color_palette ega white #fff lightgray #D586FC darkgray #5B3D8C black #15121c (c)
-[ init_theme_5 ] -> color_palette ega white #fff lightgray #97A5FF darkgray #3C4EA0 black #15121c (self split)
+[ init_theme_1 ] -> color_palette ega white #fff lightgray #F5B658 darkgray #894F2B black #15121c (unite)
+[ init_theme_2 ] -> color_palette ega white #fff lightgray #FD8274 darkgray #843043 black #15121c (turn)
+[ init_theme_3 ] -> color_palette ega white #fff lightgray #B7D358 darkgray #356B38 black #15121c (snake)
+[ init_theme_4 ] -> color_palette ega white #fff lightgray #DF8EFF darkgray #65458C black #15121c (split with U)
+[ init_theme_5 ] -> color_palette ega white #fff lightgray #98A7FF darkgray #4454A4 black #15121c (shed)
 [ init_theme_6 ] -> color_palette ega white #fff lightgray #B2C398 darkgray #41524C black #15121c (complete)
+
+(old)
+(lightgray #ED963F darkgray #814621)
+(lightgray #F0527F darkgray #90245E)
+(lightgray #95CE3A darkgray #3B6830)
+(lightgray #D586FC darkgray #5B3D8C)
+(lightgray #97A5FF darkgray #3C4EA0)
 
 (connect blocks)
 [ was con:0:> add con:1:> | was con:0:< add con:1:< ]
