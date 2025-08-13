@@ -72,13 +72,6 @@ subroutine initialize_level
 [ init_theme_5 ] -> color_palette ega white #fff lightgray #98A7FF darkgray #4454A4 black #15121c (shed)
 [ init_theme_6 ] -> color_palette ega white #fff lightgray #B2C398 darkgray #41524C black #15121c (complete)
 
-(old)
-(lightgray #ED963F darkgray #814621)
-(lightgray #F0527F darkgray #90245E)
-(lightgray #95CE3A darkgray #3B6830)
-(lightgray #D586FC darkgray #5B3D8C)
-(lightgray #97A5FF darkgray #3C4EA0)
-
 (connect blocks)
 [ was con:0:> add con:1:> | was con:0:< add con:1:< ]
 
@@ -292,12 +285,11 @@ dirs [ was_player_moved:< no pusher was con:0:dirs add con:0:> | no fixed_tail_c
 dirs [ was_player_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixed_tail_con:> ]
 [ was fixed_tail_con:dirs ]
 
-(a moved cut next to a stationary one will make a sound because it reconnects)
-[ was_pushed:dirs/was_player_moved:dirs con:0:> | con:0:< no was_pushed:dirs no was_player_moved:dirs] -> sfx5
+(turn into cut if no longer has matching connection)
+[ was con:1:> add con:0:> | no con:1:< ] sfx1
 
-(new cuts are created, this makes a splitting sound)
-[ was_pushed:dirs/was_player_moved:dirs was con:1:> add con:0:> | no con:1:< ] sfx1
-[ was con:1:> add con:0:> | no con:1:< was_pushed:dirs/was_player_moved:dirs ] sfx1
+(connect newly adjacent cuts)
+[ was con:0:> add con:1:> | was con:0:< add con:1:< ] sfx5
 
 (regenerate entry/ exit block)
 [ gp_exits no block add block con:1:> | block add con:1:< ]
@@ -307,9 +299,6 @@ dirs [ was_player_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixe
 
 
 (AFTER MOVE IS DONE)
-
-(reconnect cuts)
-[ was con:0:> add con:1:> | was con:0:< add con:1:< ]
 
 (find which multiblocks are partially not over a hole)
 [ was supported ]
