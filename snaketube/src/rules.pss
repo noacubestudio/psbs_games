@@ -68,10 +68,11 @@ subroutine initialize_level
 [ init_theme:1 ] -> color_palette ega white #fff lightgray #F5B658 darkgray #894F2B black #15121c (unite)
 [ init_theme:2 ] -> color_palette ega white #fff lightgray #FD8274 darkgray #843043 black #15121c (turn)
 [ init_theme:3 ] -> color_palette ega white #fff lightgray #B7D358 darkgray #356B38 black #15121c (snake)
-[ init_theme:4 ] -> color_palette ega white #fff lightgray #CEC479 darkgray #665C3C black #15121c (sidestep)
+[ init_theme:4 ] -> color_palette ega white #fff lightgray #CEC479 darkgray #665C3C black #15121c (side a)
 [ init_theme:5 ] -> color_palette ega white #fff lightgray #DF8EFF darkgray #65458C black #15121c (detach)
 [ init_theme:6 ] -> color_palette ega white #fff lightgray #98A7FF darkgray #4454A4 black #15121c (shed)
-[ init_theme:7 ] -> color_palette ega white #fff lightgray #B2C398 darkgray #41524C black #15121c (complete)
+[ init_theme:7 ] -> color_palette ega white #fff lightgray #98deff darkgray #447ea4 black #15121c (side b)
+[ init_theme:8 ] -> color_palette ega white #fff lightgray #B2C398 darkgray #41524C black #15121c (complete)
 
 (connect blocks)
 [ was con:0:> add con:1:> | was con:0:< add con:1:< ]
