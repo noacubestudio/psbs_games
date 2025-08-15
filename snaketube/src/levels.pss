@@ -498,7 +498,21 @@ level > intro
 (SHIFT AND GROW IN WIDE U)
 
 level
-(use shape in different directions to grow and to shift tail)
+(assemble blocks in wide U to grow and sidestep tail into position)
+###############
+###############
+####@#@##ωω####
+###.....╔...ǝ##
+##p.ɔ.═.~~~~###
+###..o..~~~~###
+###n...n....###
+###╚═══╝....###
+#########ωω####
+###############
+###############
+
+level
+(use shape in different directions to grow and sidestep)
 ###############
 ####ω#@@@#ω####
 ###.........###
@@ -556,6 +570,19 @@ level
     ###############
 )
 
+level
+(use sticks to shift further up, allowing connection)
+###############
+#####@###@#####
+###.........###
+##p.╗nn.##~~ǝ##
+###.u‖‖.#‖#ω###
+##...uu......##
+##...........##
+##n....n.....##
+##╚════╝.....##
+######ωωω######
+###############
 
 (
 .#####...######..######...####....####...##..##.
