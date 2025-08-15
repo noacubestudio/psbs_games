@@ -71,7 +71,7 @@ subroutine initialize_level
 [ init_theme:4 ] -> color_palette ega white #fff lightgray #CEC479 darkgray #665C3C black #15121c (side a)
 [ init_theme:5 ] -> color_palette ega white #fff lightgray #DF8EFF darkgray #65458C black #15121c (detach)
 [ init_theme:6 ] -> color_palette ega white #fff lightgray #98A7FF darkgray #4454A4 black #15121c (shed)
-[ init_theme:7 ] -> color_palette ega white #fff lightgray #98deff darkgray #447ea4 black #15121c (side b)
+[ init_theme:7 ] -> color_palette ega white #fff lightgray #5DD3F3 darkgray #226281 black #15121c (side b)
 [ init_theme:8 ] -> color_palette ega white #fff lightgray #B2C398 darkgray #41524C black #15121c (complete)
 
 (connect blocks)
