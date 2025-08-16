@@ -834,9 +834,6 @@ action_hint
 translate:up:1
 translate:left:3
 
-thank_you_hidden
-transparent
-
 thank_you
 ((color_fg))
 00...00....................00....
@@ -1141,7 +1138,7 @@ vs_blink_arrow:dirs
 ................
 rot:up:dirs
 
-hole ~
+hole
 ((color_black))
 
 vs_hole_edge_1:dirs

@@ -360,7 +360,6 @@ subroutine handle_player_movement
 
 (if there's now_fly still, it's because the player is at the edge of the screen.)
 (just make it disappear.)
-[ was now_fly:> player ] [ was thank_you_hidden add thank_you ] (for ending)
 [ was now_fly:> player ]
 
 

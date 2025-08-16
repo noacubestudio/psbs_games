@@ -8,6 +8,7 @@ level_select
 skip_title_screen
 export_options notitle,nofooter,nopadding
 sprite_size 16x16
+flickscreen 15x11
 
 runtime_metadata_twiddling
 color_palette ega white #fff lightgray #6cd9b5 darkgray #036965 black #15121c
