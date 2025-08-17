@@ -22,12 +22,11 @@
 6 = wall and init_theme:6
 7 = wall and init_theme:7
 8 = wall and init_theme:8
-9 = wall (ending should reuse initial theme?)
 
 (bottom left of level)
 £ = wall and screen_border
 ₤ = wall and screen_border_chapter
-Ғ = hole and screen_border
+Ғ = hole and screen_border_darker
 
 (entry/ exit)
 

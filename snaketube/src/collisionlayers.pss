@@ -78,7 +78,7 @@ vs_pusher:dirs vs_pusher:dirs:offs
 --
 
 (UI)
-screen_border screen_border_chapter
+screen_border screen_border_chapter screen_border_darker
 --
 restart_hint undo_hint esc_hint action_hint thank_you
 --

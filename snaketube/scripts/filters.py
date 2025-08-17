@@ -136,6 +136,9 @@ class Filters(Extension):
         return '\n'.join(linesArray)
     
     def organizeLevels(self, levels_string):
+        skip_sections = 2 # title and first section don't need a character
+        max_section_index = 8 + skip_sections
+
         output = ""
         current_section = ""
         index_in_section = 0
@@ -161,8 +164,7 @@ class Filters(Extension):
                 continue
             if line.strip().startswith("#"):
                 line_of_level += 1
-                skip_sections = 2
-                if line_of_level == 1 and section_index > skip_sections:
+                if line_of_level == 1 and section_index > skip_sections and section_index <= max_section_index:
                     # replace leading # with section index for color theming.
                     line = line.replace("#", str(section_index - skip_sections), 1)
                 elif line_of_level == 11:
