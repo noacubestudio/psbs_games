@@ -6,6 +6,7 @@ dirs -> vs_hole_edge_1:dirs
 dirs -> vs_hole_edge_2:dirs
 --
 dirs -> vs_hole_inner_corner:dirs
+dirs -> vs_hole_inner_corner_sharp:dirs
 --
 dirs -> vs_hole_outer_corner:dirs
 --
