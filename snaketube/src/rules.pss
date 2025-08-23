@@ -74,6 +74,9 @@ subroutine initialize_level
 [ init_theme:7 ] -> color_palette ega white #fff lightgray #FF7FB7 darkgray #783466 black #15121c (join)
 [ init_theme:8 ] -> color_palette ega white #fff lightgray #B0D194 darkgray #436557 black #15121c (complete)
 
+(add guides)
+[ gp_show_guide ] [ screen_border add shed_guide_cc shed_guide_nu ]
+
 (connect blocks)
 [ was con:0:> add con:1:> | was con:0:< add con:1:< ]
 
@@ -114,12 +117,8 @@ subroutine handle_player_input
 (----MENU INPUT----)
 
 (title screen, place level exit on input to trigger win and sound)
-[ was moving/action player add stationary.player room_exit ] [ title_screen ]
-
-(action to open, any key to close manual)
-[ was action.player add stationary.player ] [ screen_border no manual add manual ] [ gp_show_manual ] nosave sfx6
-[ was action.player add stationary.player ] [ screen_border was manual ] nosave sfx6
-[ was >.player      add stationary.player ] [ screen_border was manual ] nosave sfx6
+[ was moving player add stationary.player           ] [ title_screen ]
+[ was action player add stationary.player room_exit ] [ title_screen ]
 
 (----PLAYER INPUT----)
 
