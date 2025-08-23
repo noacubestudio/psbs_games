@@ -768,22 +768,21 @@ level
 
 level
 (split and combine to get required length)
-(also has a hook thing)
 ( 2 + 4 => 2 + 3P + 1 => 5 + 1 )
 ###############
-#####@###@#####
+#####ω###ω#####
 ###p~~~╗~~~ǝ###
 ####~##u##~####
-####.....#~####
 ####.......####
-####.....#~ω###
-####c═══.#~ω###
-####.......####
-#####ω###ω#####
+###ω.....‖.ω###
+###ω.....‖.ω###
+####.....‖.####
+#####....u.####
+######ωω#######
 ###############
 
 (
-    (more specific connection needed since can only use the bottom area)
+    (also had you make a hook to pull the worm)
     ###############
     #####@###@#####
     ###p~~~╗~~~ǝ###

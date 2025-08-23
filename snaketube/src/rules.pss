@@ -117,8 +117,8 @@ subroutine handle_player_input
 (----MENU INPUT----)
 
 (title screen, place level exit on input to trigger win and sound)
-[ was moving player add stationary.player           ] [ title_screen ]
 [ was action player add stationary.player room_exit ] [ title_screen ]
+[ was moving player add stationary.player           ] [ title_screen ]
 
 (----PLAYER INPUT----)
 
