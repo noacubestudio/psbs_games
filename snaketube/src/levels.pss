@@ -389,7 +389,7 @@ level
 ........................................
 )
 
-(NEW: BECOME SNAKE)
+(NEW: BECOME LONGER WORM)
 
 section 4.
 
@@ -436,7 +436,7 @@ level
 ###############
 
 level
-(turn corner blocking exit into snake so you can get away)
+(turn corner blocking exit into worm so you can get away)
 ###############
 ###############
 ######@@@######
@@ -1124,7 +1124,7 @@ level 0 'ending'
     (something where you make a square out of 4 corners)
 
     (fun idea? july 2025)
-    4##############
+    ###############
     #####ωω#ωω#####
     ###.........###
     ###.....╔═╗.###
@@ -1134,7 +1134,7 @@ level 0 'ending'
     ###.....╚═╝.###
     ###.........###
     ######ωωω######
-    £##############
+    ###############
 
     (pretty difficult, maybe a bit unfocused)
     ###############
@@ -1163,20 +1163,20 @@ level 0 'ending'
     ###############
     ###############
 
-    (text from blocks)
+    (text)
     ###############
-    #╔╗╔╗c╗nn╔╗##.#
-    #╚╗‖‖╔‖‖╗‖╝*.ɔ#
-    #╚╝uu╚╚uu╚╝##e#
-    ##╔ɔn╔╗nn######
-    ##╔ɔ‖╚╗cɔ######
-    ##u#u╚╝uu######
-    ###╔╗nn╔╗nn╔╗╔#
-    ###‖╝‖‖╚╗cɔ‖╝‖#
-    ###u#╚╝╚╝uu╚╝u#
     ###############
+    ##╔═╗n#n#######
+    ##‖#‖‖#‖##p.ǝ##
+    ##u#u╚═╝#######
+    ###############
+    ##nnn╔═╗╔ɔ╔═╗##
+    ##‖‖‖‖#‖‖#‖‖‖##
+    ##╚═╝╚═╝u#uuu##
+    ###############
+    £##############
 
-    (snake tricks, collection)
+    (worm tricks, collection)
     ###############
     #.......╔═╗...#
     #.c╗.n╔.unu...#
