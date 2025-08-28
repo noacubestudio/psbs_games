@@ -164,6 +164,8 @@ class Filters(Extension):
                 continue
             if line.strip().startswith("#"):
                 line_of_level += 1
+                if line_of_level > 11:
+                    line_of_level = 1
                 if line_of_level == 1 and section_index > skip_sections and section_index <= max_section_index:
                     # replace leading # with section index for color theming.
                     line = line.replace("#", str(section_index - skip_sections), 1)

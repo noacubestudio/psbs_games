@@ -63,7 +63,7 @@ c = block and vs_block_base and con:0:right
 (these start the subroutine that triggers an again turn and the one that responds)
 gp_again = again_col or again_exit or again_fly:dirs or again_gravity or again_entry or again_wait_entry or again_undo or again_wait_undo
 (these start the subroutine that makes blocks move)
-gp_move_sources = player_move:dirs
+gp_move_sources = player_move:dirs or block_fell
 
 (on top layer in block or next to block, can fly through pipes)
 gp_items = player

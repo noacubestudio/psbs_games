@@ -101,6 +101,7 @@ supported
 
 (move)
 player_move:dirs was_player_moved:dirs
+block_fell
 pusher_move:dirs
 dirs -> push:dirs was_pushed:dirs
 dirs -> fixed_tail_con:dirs

@@ -35,9 +35,12 @@ dirs x [ again_col ] [ was con:x:dirs:offs add con:x:dirs ]
 [ was again_col ]
 
 (gravity)
-[ hole again_gravity del block con:x:dirs pusher ] (always remove these, can't fly)
-[ hole again_gravity no again_fly:dirs was gp_items add again_undo ] (if player falls in, queue undo)
-[ hole again_gravity no again_fly:dirs was gp_items ] (other items also fall in)
+(fall to next level)
+down [ again_gravity was block    | | | | | | | | | | | no wall add block block_fell del con:x:dirs ]
+down [ again_gravity was gp_block | | | | | | | | | | | no wall add gp_block ]
+(regular fall)
+[ again_gravity was player add again_undo ] (if player falls in, queue undo)
+[ again_gravity del block con:x:dirs gp_items pusher ]
 [ was again_gravity ] sfx4 (falling sound)
 
 (queued flying)
@@ -146,8 +149,9 @@ subroutine handle_block_movement
 
 (SPREAD PUSH AND PUSHER MOVEMENT THROUGH BLOCKS)
 
-(initial push)
+(initial source of block movement)
 [ player_move:> | block add push:> ]
+[ was block_fell ] (no need to do anything with this, just update connections)
 
 (pushes and pusher movement gets spread to more blocks)
 dirs [ push:dirs con:1:> no player vs_pusher:dirs pusher_move:dirs | con:1:< no player add push:dirs ] (through multiblocks)

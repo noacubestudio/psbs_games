@@ -1661,3 +1661,6 @@ transparent
 
 try_move_dest:dirs
 transparent
+
+block_fell
+transparent
