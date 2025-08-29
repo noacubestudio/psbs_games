@@ -35,7 +35,7 @@ dirs x [ again_col ] [ was con:x:dirs:offs add con:x:dirs ]
 [ was again_col ]
 
 (gravity)
-(fall to next level)
+(fall to floor)
 down [ again_gravity was block    | | | | | | | | | | | no wall add block block_fell del con:x:dirs ]
 down [ again_gravity was gp_block | | | | | | | | | | | no wall add gp_block ]
 (regular fall)
@@ -78,7 +78,7 @@ subroutine initialize_level
 [ init_theme:8 ] -> color_palette ega white #fff lightgray #B0D194 darkgray #436557 black #15121c (complete)
 
 (add guides)
-[ gp_show_guide ] [ screen_border add shed_guide_cc shed_guide_nu ]
+( [ gp_show_guide ] [ screen_border add shed_guide_cc shed_guide_nu ] )
 
 (connect blocks)
 [ was con:0:> add con:1:> | was con:0:< add con:1:< ]
@@ -397,6 +397,9 @@ subroutine redraw_visuals
 [ pusher con:x:> no con:x:v con:x:^ con:x:< add vs_pusher:> ]
 (exit block decoration)
 [ block gp_exits add vs_exit ]
+
+(show from room below)
+up [ no wall | | | | | | | | | | | hole add vs_con_end ] (reusing a fitting sprite here)
 
 (make wall corners temporarily sharper to match presence of a block with a sharp corner)
 [ con:0:> | was stationary.wall add <.wall ]
