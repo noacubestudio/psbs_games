@@ -3,8 +3,10 @@ author noa
 
 run_rules_on_level_start
 again_interval 0.08
+key_repeat_interval 0.16 (default is 0.2)
 
 level_select
+level_select_solve_symbol ✓
 skip_title_screen
 export_options notitle,nofooter,nopadding
 sprite_size 16x16
