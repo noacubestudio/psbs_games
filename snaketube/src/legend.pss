@@ -23,10 +23,10 @@
 8 = wall and init_theme:8
 
 (bottom left of level)
-£ = wall and screen_border
-₤ = wall and screen_border_chapter
-Ғ = hole and screen_border_darker
-₣ = hole and screen_border_chapter_darker
+£ = wall and screen_border:up and screen_border:down and screen_border:left and screen_border:right
+₤ = wall and screen_border_chapter:up and screen_border_chapter:down and screen_border_chapter:left and screen_border_chapter:right
+Ғ = hole and screen_border_darker:up and screen_border_darker:down and screen_border_darker:left and screen_border_darker:right
+₣ = hole and screen_border_chapter_darker:up and screen_border_chapter_darker:down and screen_border_chapter_darker:left and screen_border_chapter_darker:right
 
 (entry/ exit)
 
