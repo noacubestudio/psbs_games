@@ -1389,7 +1389,7 @@ transparent
 init_theme:theme_n
 transparent
 
-player_facing:dirs
+global_flags_tile
 transparent
 
 col_move:dirs

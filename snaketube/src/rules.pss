@@ -49,7 +49,7 @@ down [ again_gravity was gp_block | | | | | | | | | | | no wall add gp_block ]
 dirs [ was again_fly:dirs add now_fly:dirs ]
 
 (appearing/re-appearing from spawn)
-[ con:x:> was again_entry add again_fly:> player_facing:> player ] sfx8 (appear sound)
+[ con:x:> was again_entry add again_fly:> player ] sfx8 (appear sound)
 (waited for entry 3 times and did init)
 [ room_entry no init was again_wait_entry add again_entry | was again_wait_entry | was again_wait_entry ]
 (otherwise increment counter)
@@ -110,6 +110,9 @@ subroutine initialize_level
 (from a spawnpoint, the player appears)
 [ room_entry no again_wait_entry was player add stationary.player again_entry ] (still works without run_rules_on_level_start for testing)
 
+(add a single tile where global level flags can be checked)
+random [ init add global_flags_tile ]
+
 (remove init) 
 [ was init ]
 
@@ -124,9 +127,6 @@ subroutine handle_player_input
 [ was moving player add stationary.player           ] [ title_screen ]
 
 (----PLAYER INPUT----)
-
-(before the input is processed, get the direction to make the player face that way)
-[ >.player ] [ was player_facing:dirs add player_facing:> ]
 
 (player input is received while not flying, so the player is in a block.)
 (move to open side starts flight, this same turn)
@@ -159,15 +159,14 @@ dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through 
 
 
 (COLLISION)
-[ push:>/player_move:> add try_move:> ]
 
-(with wall)
+(used also for conflicts, but for now just check walls)
+[ push:>/player_move:> add try_move:> ]
 [ try_move:> add col_move:> | wall ] sfx2 (collision sound)
 
-(spread collision)
-(backpropagate collision markers, these will animate with bounce)
+(spread collision backwards - animate all this later)
   [ try_move:> add col_move:> | col_move:> ]
-+ dirs [ con:1:> try_move:dirs add col_move:dirs | con:1:< col_move:dirs ] (solid multiblocks all get the spread)
++ dirs [ con:1:> col_move:dirs | con:1:< try_move:dirs no player add col_move:dirs ]
 
 (unused because push is always in one direction)
 (+ [ con:1:> try_move:> add col_move:> | con:1:< col_move:dirs ] (face towards pushing end of pusher))
@@ -176,7 +175,7 @@ dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through 
 (these won't show bump anim)
 [ col_move:>     | try_move:> no col_move:> add discard_move:> ]
 [ discard_move:> | try_move:> no col_move:> add discard_move:> ]
-+ dirs [ discard_move:dirs con:1:> | con:1:< add discard_move:dirs ]
++ dirs [ discard_move:dirs con:1:> | con:1:< no player add discard_move:dirs ]
 
 (remember collisions and no longer check these for conflicts, as they already won't move)
 [ col_move:>     del try_move:> push:> player_move:> ]
@@ -193,8 +192,8 @@ dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through 
 (removing follow markers on pushed blocks since they separate from the snake head)
 
 (add follow markers inside moving snakes that point to the tile nearer to the front)
-[ con:1:> gp_move_sources | gp_move_sources ] -> log connected adjacent snake movers!
-[ con:1:> no follow:dirs gp_move_sources add follow:> | con:1:< gp_move_sources/follow:dirs ]
+[ con:1:> player_move:dirs | player_move:dirs ] -> log connected adjacent snake movers!
+[ con:1:> no follow:dirs player_move:dirs add follow:> | con:1:< player_move:dirs/follow:dirs ]
 
 (potential conflict: object pushing into a single-tile moving block)
 (if the moving block can actually move and doesn't have its own conflict, then the object will have room to move into it.)
@@ -226,12 +225,15 @@ dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through 
 [ discard_move:> | try_move:> no player_move:> col_move:> add discard_move:> ]
 + dirs [ discard_move:dirs con:1:> | con:1:< no player_move:dirs add discard_move:dirs ]
 
+(note: the next section is done redundantly if there are multiple players and some had collision, not actually a conflict)
+(so I added more 'no player' checks to the collision spread here)
+
 (behind conflicts, spread collision. these tiles will show a collision animation.)
 (try_follow will be cancelled)
 (discard_follow will be spread, which can cause additional try_moves to fail, leading to more discard_follow)
   [ try_move:> add col_move:> | col_move:> ]
-+ dirs [ col_move:dirs con:1:> | con:1:< add col_move:dirs ]
-+ dirs [ follow:> add discard_follow | player_move:dirs col_move:dirs ]
++ dirs [ col_move:dirs con:1:> | con:1:< no player add col_move:dirs ]
++ dirs [ player_move:dirs col_move:dirs | follow:< no player add discard_follow ]
 + [ discard_follow con:1:> | con:1:< no player add discard_follow ] (spread, including from block head)
 + [ player_move:dirs was discard_follow ] (but don't leave on block head)
 + [ discard_follow was try_follow:dirs ]
@@ -249,8 +251,10 @@ dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through 
 [ was col_move:> col_move:v ]
 [ was col_move:> col_move:< ]
 
-(don't add to the undo queue if the player collided)
-[ player col_move:> ] -> nosave
+(don't add to the undo queue if player collided) (if another moved, skip this.)
+[ player col_move:> ] [ was global_flags_tile add action.global_flags_tile ] (collision)
+[ was action.global_flags_tile add global_flags_tile ] [ player_move:> ] (another player moved though)
+[ was action.global_flags_tile add global_flags_tile ] nosave
 
 (remove temp markers used in the movement planning, which is now over)
 [ was follow:dirs/discard_move:dirs/discard_follow/try_move:dirs/try_follow:dirs ]
@@ -313,9 +317,6 @@ subroutine handle_player_movement
 (don't fall in when currently spawning, about to fly out or flying out.)
 [ player gp_exits no con:x:v con:x:^ con:x:< again_entry again_wait_entry now_fly:> again_fly:> add again_exit ]
 
-(reset player direction if not valid)
-[ player block no con:x:< ] [ was player_facing:> add player_facing:v ] 
-
 
 (FLY)
 
@@ -357,9 +358,6 @@ subroutine handle_player_movement
 
 (FLYING DONE)
 
-(player faces direction of flying)
-[ player again_fly:> ] [ was player_facing:dirs add player_facing:> ]
-
 (spread collisions from bumping into items through flight ... unlike other collision this is only for the directly hit blocks)
 dirs [ col_move:dirs con:1:> | add col_move:dirs ]
 
@@ -399,11 +397,12 @@ up [ no wall | | | | | | | | | | | hole add vs_con_end ] (reusing a fitting spri
 [ vs_hole_inner_corner:> con:0:> add vs_hole_inner_corner_sharp:> ]
 [ vs_hole_inner_corner:> con:0:^ add vs_hole_inner_corner_sharp:> ]
 
-(player sprites. if not doing entry/exit but at block end, show big sprite )
-[ player_facing:> ] [ player add vs_player:> ] 
-[ vs_exit again_fly:> con:x:> was vs_player:> add vs_player_entering:> ]
-[ again_exit                  was vs_player:> add vs_player_exiting ]
-[ vs_con_end no again_fly:>   was vs_player:> add vs_player_end:> ]
+(player sprites while moving)
+[ player again_fly:> add vs_player:> ]
+[ player vs_exit again_fly:> con:x:> del vs_player:> add vs_player_entering:> ]
+[ player again_exit                  del vs_player:> add vs_player_exiting ]
+(player sprite at block end)
+[ player vs_con_end con:x:< no again_fly:dirs again_exit add vs_player_end:> ]
 
 (if the player is leaving, highlight the right way forward)
 [ vs_player_exiting ]            [ room_exit | vs_room_arrow:> add vs_blink_arrow:> ]

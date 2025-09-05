@@ -87,10 +87,10 @@ title_screen
 (INVISIBLE MARKERS)
 
 init
+global_flags_tile
 init_theme:theme_n
 block
 player
-player_facing:dirs
 supported
 
 (move)
