@@ -74,9 +74,6 @@ vs_exit:offs
 (items on blocks)
 vs_player:dirs vs_player:dirs:offs vs_player_end:dirs vs_player_end:dirs:offs vs_player_entering:dirs vs_player_exiting
 --
-pusher
-vs_pusher:dirs vs_pusher:dirs:offs
---
 
 (UI)
 dirs -> screen_border:dirs screen_border_split:dirs screen_border_chapter:dirs screen_border_darker:dirs screen_border_chapter_darker:dirs
@@ -99,7 +96,6 @@ supported
 (move)
 player_move:dirs was_player_moved:dirs
 block_fell
-pusher_move:dirs
 dirs -> push:dirs was_pushed:dirs
 dirs -> fixed_tail_con:dirs
 follow:dirs

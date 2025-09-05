@@ -40,7 +40,7 @@ down [ again_gravity was block    | | | | | | | | | | | no wall add block block_
 down [ again_gravity was gp_block | | | | | | | | | | | no wall add gp_block ]
 (regular fall)
 [ again_gravity was player add again_undo ] (if player falls in, queue undo)
-[ again_gravity del block con:x:dirs gp_items pusher ]
+[ again_gravity del block con:x:dirs ]
 [ was again_gravity ] sfx4 (falling sound)
 
 (queued flying)
@@ -147,27 +147,19 @@ subroutine handle_block_movement
 (collisions or conflicts (multiple attempts to move into same tile) will prevent movement from happening, collision animation will show the problem)
 (when the movement planning is done, actual movement rules transfers everything in those tiles over, tile by tile)
 
-(SPREAD PUSH AND PUSHER MOVEMENT THROUGH BLOCKS)
+(SPREAD PUSH MOVEMENT THROUGH BLOCKS)
 
 (initial source of block movement)
 [ player_move:> | block add push:> ]
 [ was block_fell ] (no need to do anything with this, just update connections)
 
-(pushes and pusher movement gets spread to more blocks)
-dirs [ push:dirs con:1:> no player vs_pusher:dirs pusher_move:dirs | con:1:< no player add push:dirs ] (through multiblocks)
-+ [ push:> no vs_pusher:> pusher_move:> | block add push:> ] (block to block)
-+ [ push:> pusher con:x:> add pusher_move:> ] (activate pusher)
-+ [ pusher_move:> con:1:> | con:x:^ no pusher_move:dirs add pusher_move:^ ] (spread to tail)
-+ [ pusher_move:> con:1:> | con:x:v no pusher_move:dirs add pusher_move:v ]
-+ [ pusher_move:> con:1:> |         no pusher_move:dirs add pusher_move:> ] (default: straight line)
-+ [ pusher_move:> | block no con:x:< add push:> ] (pusher tail can itself push)
-
-(cleanup: active pusher overwrites push)
-[ con:1:> pusher_move:> del push:dirs ]
+(pushes get spread to more blocks)
+dirs [ push:dirs con:1:> no player | con:1:< no player add push:dirs ] (through multiblocks)
++ [ push:> | block add push:> ] (block to block)
 
 
 (COLLISION)
-[ push:>/player_move:>/pusher_move:> add try_move:> ]
+[ push:>/player_move:> add try_move:> ]
 
 (with wall)
 [ try_move:> add col_move:> | wall ] sfx2 (collision sound)
@@ -176,7 +168,9 @@ dirs [ push:dirs con:1:> no player vs_pusher:dirs pusher_move:dirs | con:1:< no 
 (backpropagate collision markers, these will animate with bounce)
   [ try_move:> add col_move:> | col_move:> ]
 + dirs [ con:1:> try_move:dirs add col_move:dirs | con:1:< col_move:dirs ] (solid multiblocks all get the spread)
-+ [ con:1:> try_move:> add col_move:> | con:1:< col_move:dirs ] (face towards pushing end of pusher)
+
+(unused because push is always in one direction)
+(+ [ con:1:> try_move:> add col_move:> | con:1:< col_move:dirs ] (face towards pushing end of pusher))
 
 (forward propagate stopping movement on the blocks that weren't going to be pushed anyway)
 (these won't show bump anim)
@@ -185,8 +179,8 @@ dirs [ push:dirs con:1:> no player vs_pusher:dirs pusher_move:dirs | con:1:< no 
 + dirs [ discard_move:dirs con:1:> | con:1:< add discard_move:dirs ]
 
 (remember collisions and no longer check these for conflicts, as they already won't move)
-[ col_move:>     del try_move:> push:> player_move:> pusher_move:> ]
-[ discard_move:> del try_move:> push:> player_move:> pusher_move:> ]
+[ col_move:>     del try_move:> push:> player_move:> ]
+[ discard_move:> del try_move:> push:> player_move:> ]
 [ was discard_move:dirs ]
 
 
@@ -202,10 +196,6 @@ dirs [ push:dirs con:1:> no player vs_pusher:dirs pusher_move:dirs | con:1:< no 
 [ con:1:> gp_move_sources | gp_move_sources ] -> log connected adjacent snake movers!
 [ con:1:> no follow:dirs gp_move_sources add follow:> | con:1:< gp_move_sources/follow:dirs ]
 
-(convert pushers to same format now) (WIP?)
-[ con:1:> was pusher_move:> add follow:> ] 
-[         was pusher_move:> add player_move:> ]
-
 (potential conflict: object pushing into a single-tile moving block)
 (if the moving block can actually move and doesn't have its own conflict, then the object will have room to move into it.)
 (the try_follow:> markers are placed for now so this will be checked later)
@@ -219,10 +209,10 @@ dirs [ push:dirs con:1:> no player vs_pusher:dirs pusher_move:dirs | con:1:< no 
 
 (object pushing into tail of moving block)
 (the entire tail will be pushed and not follow the try_move)
-[ try_move:> no con:1:> | follow:dirs no pusher add discard_follow ] (WIP, is the 'no pusher' really enough?)
+[ try_move:> no con:1:> | follow:dirs add discard_follow ]
 
 (conflict at empty tile, which is moved into from multiple directions)
-[ try_move:> | no block gp_items add try_move_dest:> ]
+[ try_move:> | no block player add try_move_dest:> ]
 [ add col_move:> | try_move_dest:> try_move_dest:perpendicular/try_move_dest:< ] sfx2
 [ was try_move_dest:dirs ]
 
@@ -285,7 +275,7 @@ endloop
 dirs [ was_player_moved:< | was_player_moved:dirs                                     is con:1:< add fixed_tail_con:< ]
 dirs [ was_player_moved:< | was_player_moved:dirs no fixed_tail_con:< was con:1:dirs add con:1:< add fixed_tail_con:< ]
 (cut at end faces backwards)
-dirs [ was_player_moved:< no pusher was con:0:dirs add con:0:> | no fixed_tail_con:< ]
+dirs [ was_player_moved:< was con:0:dirs add con:0:> | no fixed_tail_con:< ]
 (unchanged connections face backwards)
 dirs [ was_player_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixed_tail_con:> ]
 [ was fixed_tail_con:dirs ]
@@ -311,8 +301,8 @@ dirs [ was_player_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixe
 [ supported con:1:> | con:1:< add supported ]
 
 (the rest fall into hole)
-[ hole block no supported add again_gravity ]
-[ hole gp_items no again_fly:dirs now_fly:dirs supported add again_gravity ]
+[ hole block  no supported add again_gravity ]
+[ hole player no again_fly:dirs now_fly:dirs supported add again_gravity ]
 
 
 
@@ -333,25 +323,24 @@ subroutine handle_player_movement
 (do something with each flying item now)
 
 (hit block end)
-[ player   block gp_exits no con:x:> was now_fly:> ] (stop before falling in the next turn)
-[ gp_items block          no con:x:> was now_fly:> add col_head:> ] sfx7 (soft collision)
+[ player block gp_exits no con:x:> was now_fly:> ] (stop before falling in the next turn)
+[ player block          no con:x:> was now_fly:> add col_head:> ] sfx7 (soft collision)
 
 (hit wall/ block)
-[ gp_items was now_fly:> add col_item:> try_bounce | wall ] sfx7 (movement click)
-[ gp_items was now_fly:> add col_item:> try_bounce | block no con:x:< add col_move:> ] sfx7
+[ player was now_fly:> add col_item:> try_bounce | wall ] sfx7 (movement click)
+[ player was now_fly:> add col_item:> try_bounce | block no con:x:< add col_move:> ] sfx7
 
-(hit other flying item/ stationary item)
-[ gp_items was now_fly:> add again_fly:<           | gp_items was now_fly:<   add again_fly:> ] sfx7 (what about a perpendicular one? WIP)
-[ gp_items was now_fly:> add col_item:> try_bounce | gp_items is now_fly:dirs                 ] sfx7
-[ gp_items was now_fly:> add col_item:> try_bounce | gp_items no now_fly:dirs add again_fly:> ] sfx7
-[ gp_items was now_fly:> add col_item:> try_bounce | pusher                   add col_head:>  ] sfx7 (can't enter pusher pipe)
+(hit other player)
+[ player was now_fly:> add again_fly:<           | player was now_fly:<   add again_fly:> ] sfx7 (what about a perpendicular one? WIP)
+[ player was now_fly:> add col_item:> try_bounce | player is now_fly:dirs                 ] sfx7
+[ player was now_fly:> add col_item:> try_bounce | player no now_fly:dirs add again_fly:> ] sfx7
 
-(identify tiles multiple items want to fly to)
+(identify tiles multiple players want to fly to)
 [ was try_fly_dest:dirs ] (clean the markers from last time)
-[ gp_items now_fly:> | add try_fly_dest:> ]
+[ player now_fly:> | add try_fly_dest:> ]
 [ was try_fly_dest:> was try_fly_dest:</try_fly_dest:perpendicular ]
 (bounce those items back instead)
-[ gp_items was now_fly:> add again_fly:< | no try_fly_dest:> ]
+[ player was now_fly:> add again_fly:< | no try_fly_dest:> ]
 
 (instead of colliding in place, player item will always bounce back)
 [ player was col_item:> try_bounce add again_fly:< ]
@@ -359,7 +348,7 @@ subroutine handle_player_movement
 
 (default flying:)
 (move to empty space)
-[ was gp_items now_fly:> | no gp_items now_fly:dirs add gp_items again_fly:> ]
+[ was player now_fly:> | no player now_fly:dirs add player again_fly:> ]
 
 (if there's now_fly still, it's because the player is at the edge of the screen.)
 (just make it disappear.)
@@ -393,8 +382,7 @@ subroutine redraw_visuals
 
 (decoration on blocks with one connection)
 [ block con:x:> no con:x:v con:x:^ con:x:< add vs_con_end ]
-(pushers in blocks point at connection)
-[ pusher con:x:> no con:x:v con:x:^ con:x:< add vs_pusher:> ]
+
 (exit block decoration)
 [ block gp_exits add vs_exit ]
 
@@ -423,8 +411,8 @@ up [ no wall | | | | | | | | | | | hole add vs_con_end ] (reusing a fitting spri
 
 (ACTIVATE COLLISION VARIANTS)
 
-(always animate items on a colliding block cell)
-[ gp_items col_move:>/col_head:> add col_item:> ]
+(always animate player on a colliding block cell)
+[ player col_move:>/col_head:> add col_item:> ]
 
 (animate tiles in collision by replacing them with offset variants)
 [ col_move:> was vs_block_base  add vs_block_base:> ] 
@@ -433,8 +421,6 @@ up [ no wall | | | | | | | | | | | hole add vs_con_end ] (reusing a fitting spri
 
 dirs [ col_item:> was vs_player:dirs      add vs_player:dirs:> ]
 dirs [ col_item:> was vs_player_end:dirs  add vs_player_end:dirs:> ]
-dirs [ col_move:> was vs_pusher:dirs      add vs_pusher:dirs:> ]
-dirs [ col_head:> was vs_pusher:dirs      add vs_pusher:dirs:> ]
 dirs [ col_move:> was vs_con_lowest:dirs  add vs_con_lowest:dirs:> ]
 dirs [ col_move:> was vs_block_edge:dirs  add vs_block_edge:dirs:> ]
 
