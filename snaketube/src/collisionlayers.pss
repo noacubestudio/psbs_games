@@ -38,7 +38,7 @@ vs_blink_arrow:dirs
 --
 
 (blocks)
-dirs -> vs_con_lowest:dirs
+dirs -> vs_con_sides:dirs
 --
 vs_block_base
 --
@@ -54,7 +54,7 @@ vs_exit
 --
 
 (blocks, animated. always in front)
-dirs -> vs_con_lowest:dirs:offs
+dirs -> vs_con_sides:dirs:offs
 --
 vs_block_base:offs
 --
@@ -106,7 +106,6 @@ dirs -> try_move:dirs
 dirs -> try_follow:dirs
 dirs -> try_move_dest:dirs
 dirs -> col_move:dirs col_head:dirs
-dirs -> col_item:dirs
 dirs -> discard_move:dirs
 
 (fly)

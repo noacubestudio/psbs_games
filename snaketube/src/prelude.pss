@@ -3,7 +3,8 @@ author noa
 
 run_rules_on_level_start
 again_interval 0.08
-key_repeat_interval 0.16 (default is 0.2)
+key_repeat_interval 0.16
+(default key repeat is 0.2 - I wish I could change it separately for the level select...)
 
 level_select
 level_select_solve_symbol ✓

@@ -599,7 +599,7 @@ con:1:dirs:offs
 ((color_fg)) ((color_bg))
 copy: con:1:dirs translate:offs:2
 
-vs_con_lowest:dirs
+vs_con_sides:dirs
 ((color_black))
 ..................
 00..............00
@@ -623,9 +623,9 @@ rot:up:dirs
 translate:down:1
 translate:left:1
 
-vs_con_lowest:dirs:offs
+vs_con_sides:dirs:offs
 ((color_black))
-copy: vs_con_lowest:dirs translate:offs:2
+copy: vs_con_sides:dirs translate:offs:2
 
 con:0:dirs
 ((color_fg)) ((color_black)) ((color_bg))
@@ -1393,9 +1393,6 @@ global_flags_tile
 transparent
 
 col_move:dirs
-transparent
-
-col_item:dirs
 transparent
 
 col_head:dirs

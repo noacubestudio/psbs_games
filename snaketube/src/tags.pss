@@ -1,9 +1,11 @@
-dirs = up down left right (logical/ visual directions of objects, usually for rotated sprite)
-offs = up down left right (used as temporary visual offsets for animation, can coexist with dirs)
-hor = left right
-ver = up down
+(custom directional tags)
+('dirs' are for movement and rotated sprites, 'offs' are for temporary offsets used for collision)
+(the directions are the same, but this allows using them in the same line)
+dirs = up down left right
+offs = up down left right
 
-x  = 0 1 (off/ on)
-x2 = 0 1 (use side by side, two separate vars that need to match on the same line)
+(boolean, used mostly for 'connected/not connected')
+x = 0 1
 
+(color themes)
 theme_n = 1 2 3 4 5 6 7 8

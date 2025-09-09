@@ -2,11 +2,9 @@
 # = wall
 ~ = hole
 
-(walls with decoration/ text)
-
+(decoration/ text)
 ω = wall and wall_deco
 @ = wall and wall_deco_big
-
 Ʉ = wall and undo_hint
 Ɍ = wall and restart_hint
 Ɛ = wall and esc_hint
@@ -28,45 +26,45 @@
 Ғ = hole and screen_border_darker:up and screen_border_darker:down and screen_border_darker:left and screen_border_darker:right
 ₣ = hole and screen_border_chapter_darker:up and screen_border_chapter_darker:down and screen_border_chapter_darker:left and screen_border_chapter_darker:right
 
-(entry/ exit)
+(entry)
+p = block and vs_block_base and con:0:right and init and room_entry and player and vs_player:right
+* = block and vs_block_base and con:0:right and init and room_entry and player and again_wait_entry
+w = block and title_screen                  and init and player
 
-p = block and vs_block_base and con:0:right and  init and room_entry and player and vs_player:right
-* = block and vs_block_base and con:0:right and  init and room_entry and player and again_wait_entry
-w = block and title_screen                  and  init and player
-
-ǝ = block and vs_block_base and con:0:left and  room_exit and vs_exit:left
-e = block and vs_block_base and con:0:up   and  room_exit and vs_exit:up (unused)
+(exit)
+ǝ = block and vs_block_base and con:0:left and room_exit and vs_exit:left
+e = block and vs_block_base and con:0:up   and room_exit and vs_exit:up (unused)
 
 (blocks)
-
 o = block and vs_block_base
 u = block and vs_block_base and con:0:up
 n = block and vs_block_base and con:0:down
 ɔ = block and vs_block_base and con:0:left
 c = block and vs_block_base and con:0:right
-
 ═ = block and vs_block_base and con:0:left and con:0:right
 ‖ = block and vs_block_base and con:0:up   and con:0:down
-
 ╚ = block and vs_block_base and con:0:right and con:0:up
 ╔ = block and vs_block_base and con:0:right and con:0:down
 ╗ = block and vs_block_base and con:0:left  and con:0:down
 ╝ = block and vs_block_base and con:0:left  and con:0:up
 
 
-(these start the subroutine that triggers an again turn and the one that responds)
+(--- GROUPS ---)
+
+(for again subroutines)
 gp_again = again_col or again_exit or again_fly:dirs or again_gravity or again_entry or again_wait_entry or again_undo or again_wait_undo
-(these start the subroutine that makes blocks move)
+
+(for subroutine updating block positions)
 gp_move_sources = player_move:dirs or block_fell
 
-(player can try leaving each, sprite needs to adjust)
+(player can try leaving level by flying on these)
 gp_exits = room_entry or room_exit
 
-(always move with block)
+(these always move with block)
 gp_block = block or con:x:dirs or player or again_fly:dirs
 
 (these items get removed with the block over holes)
 gp_can_fall = block or con:x:dirs
 
 (all of these are regenerated every turn and not supposed to be used on the left side of game logic rules)
-gp_temporary_visuals = vs_con_lowest:dirs or vs_con_lowest:dirs:offs or vs_block_base or vs_player:dirs or vs_block_base:offs or vs_player:dirs:offs or vs_block_edge:dirs or vs_block_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_exit or vs_exit:offs or vs_player_entering:dirs or vs_player_exiting or vs_wall_inner_corner_sharp:dirs or vs_hole_inner_corner_sharp:dirs or vs_block_col:dirs or vs_player_end:dirs or vs_player_end:dirs:offs or vs_blink_arrow:dirs
+gp_temporary_visuals = vs_con_sides:dirs or vs_con_sides:dirs:offs or vs_block_base or vs_player:dirs or vs_block_base:offs or vs_player:dirs:offs or vs_block_edge:dirs or vs_block_edge:dirs:offs or vs_con_end or vs_con_end:offs or vs_exit or vs_exit:offs or vs_player_entering:dirs or vs_player_exiting or vs_wall_inner_corner_sharp:dirs or vs_hole_inner_corner_sharp:dirs or vs_block_col:dirs or vs_player_end:dirs or vs_player_end:dirs:offs or vs_blink_arrow:dirs

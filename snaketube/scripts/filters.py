@@ -159,7 +159,7 @@ class Filters(Extension):
                     index_in_section += 1
                     level_name = str(index_in_section)
                 output += f"section {current_section}{level_name}\n"
-                output += f"level   {current_section}{level_name}\n"
+                # output += f"level   {current_section}{level_name}\n"
                 line_of_level = 0
                 continue
             if line.strip().startswith("#"):
