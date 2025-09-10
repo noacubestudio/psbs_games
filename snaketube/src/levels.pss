@@ -298,9 +298,9 @@ level
 ####..~~~~~####
 ###p.ɔ~o~o~ǝ###
 ####.~~.~.~####
-###ω.═..~═~####
+###ω...═~.~####
 ###ω.......####
-###ω.═...═.ω###
+###ω.═.═.═.ω###
 ####.......####
 ###############
 ###############
@@ -364,16 +364,30 @@ level
 level
 (use corner pipe to change axis of block)
 ###############
+#######ωω######
+#####......####
+####....##.####
+###p..ɔ.#c.ǝ###
+####.......####
+###ω.╔╗....ω###
+####.╚n....####
+####......#####
+######ωω#######
 ###############
-#######╔══╗####
-#####ω#~~~‖ω###
-####...~~~‖ω###
-###ω.n..~~╝####
-####.....ɔǝ####
-###p...ɔ.######
-####.....######
-###############
-###############
+(
+    (previous version)
+    ###############
+    ###############
+    #######╔══╗####
+    #####ω#~~~‖ω###
+    ####...~~~‖ω###
+    ###ω.n..~~╝####
+    ####.....ɔǝ####
+    ###p...ɔ.######
+    ####.....######
+    ###############
+    ###############
+)
 
 level
 (use corner to make replacement block face direction you can enter and leave with, use corner again to enter it)
@@ -492,20 +506,6 @@ level
 ###############
 
 level
-(turn corner blocking exit into worm so you can leave)
-###############
-###############
-######@@@######
-####......╗ǝ###
-####....~~~####
-###p..ɔ.ɔ..ω###
-####.......ω###
-####.......####
-######@@@######
-###############
-###############
-
-level
 (connect with extra, shape into hook to leave wall again, then use as hook)
 ###############
 ###############
@@ -520,18 +520,18 @@ level
 ###############
 
 level
-(attack block twice)
-(because corners have the same orientation, that requires flying through one in the process)
+(attach endpoint to the corners to make a 3 long)
+(requires flying through them to reorient the attachable part)
 ###############
-######@#@######
-#####~~~~~ǝ####
-######...######
-####.......####
-###p..ɔ.c..ω###
+###############
+#####ωωω#######
+####~~~~~~ǝ####
+####......#####
+###p.ɔ.n...####
 ####.......ω###
-####..╔.╔..####
-#####.....#####
+####..╝.╚..####
 ######@#@######
+###############
 ###############
 
 level
@@ -563,6 +563,22 @@ level
     ######@@@######
     ###############
 )
+
+level
+(use corner to turn the worm into the right axis needed)
+(use 180 turn contraption as a whole to then flip it.)
+(since the lengths are different, otherwise you can't get the right orientation)
+###############
+###############
+####╔╗#@#╔╗####
+####╚~~~~~╝####
+#####.....#####
+###p..ɔ═ɔ.‖ǝ###
+####.......####
+####.......####
+#####.....#####
+######ωωω######
+###############
 
 level
 (attach to make the worm that needs to leave long enough)
@@ -958,34 +974,21 @@ level
 ###############
 
 level
-(grow again, and then find a way to connect to the vertical one)
-(so also learning the side-stepping)
+(learn about side stepping to grow here)
+(then requires right shed to exit)
 ###############
-######ωωω######
-#####~~~~~ǝ####
-######...######
+###############
+####p.╗#.═ǝ####
+#####.u...#####
 ####.......####
-###p.ɔ.═.‖.ω###
-####.......ω###
-####.n..n..ω###
+###ω.......ω###
+###ω.n╔═n..ω###
 ####.╚══╝..####
-###############
+####.......####
+#######ω#######
 ###############
 
 (
-    (learn about connecting in wide U, use again at the bottom using the not-turning)
-    ###############
-    #####ω###ω#####
-    ####...#~~~ǝ###
-    ###p.ɔ.╔══╗####
-    ####...u..u####
-    ####.......####
-    ###ω.╔.....ω###
-    ###ω.......ω###
-    ####...#╚..####
-    ###############
-    ###############
-
     (not that interesting?)
     (use shape in different directions to grow and sidestep)
     ###############
