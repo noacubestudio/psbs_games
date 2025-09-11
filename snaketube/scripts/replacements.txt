@@ -1,0 +1,61 @@
+||| ___COMMENT___ |||
+ALLOW SKIPPING AGAIN WITH INPUTS 
+TODO: SHOULD NOT WORK IN FINAL LEVEL?
+TODO: LOOKS WEIRD WHEN PLAYER WOULD HAVE BOUNCED BACK?
+
+|||
+	    if (!againing && inputdir>=0) {
+			if (suppressInput) {
+				//suppressInput = false;
+				//goToPauseScreen();
+			} else if (inputdir===4 && ('noaction' in state.metadata)) {
+
+            } else {
+                pushInput(inputdir);
+                if (processInput(inputdir)) {
+                    redraw();
+                }
+	        }
+	       	return prevent(e);
+    	}
+|||
+		if (inputdir>=0) {
+			if (suppressInput) {
+			} else if (inputdir===4 && ('noaction' in state.metadata)) {
+			} else {
+				pushInput(inputdir);
+				while (againing) {
+					processInput(-1); // edit for nuworm to allow skipping again
+				}
+				if (processInput(inputdir)) {
+					redraw();
+				}
+			}
+			return prevent(e);
+		}
+
+||| ___COMMENT___ |||
+CORRECTLY GO TO THE RIGHT SECTION, DON'T RETURN TO THE FIRST SECTION WHEN OPENING THE LAST LEVEL
+
+|||
+			if(state.sections[i].firstLevel > curLevelNo) {
+				titleSelection = Math.max(0,i-1);
+				if (debugSwitch.includes('menu')) console.log(`gotoLevelSelect curLevelNo=${curLevelNo} titleSelection=${titleSelection}`);
+				break;
+			}
+|||
+			if (state.sections[i].firstLevel >= curLevelNo) {
+				titleSelection = i;
+				if (debugSwitch.includes('menu')) console.log(`gotoLevelSelect curLevelNo=${curLevelNo} titleSelection=${titleSelection}`);
+				break;
+			}
+
+||| ___COMMENT___ |||
+FASTER KEY REPEAT IN MENU
+
+|||
+	    var ticklength = throttle_movement ? repeatinterval : repeatinterval/(Math.sqrt(keybuffer.length));
+|||
+	    // for nuworm, made key repeat faster when in the level select screen
+	    var adapt_repeatinterval = titleMode == 2 ? repeatinterval / 2 : repeatinterval;
+	    var ticklength = throttle_movement ? adapt_repeatinterval : adapt_repeatinterval/(Math.sqrt(keybuffer.length));
