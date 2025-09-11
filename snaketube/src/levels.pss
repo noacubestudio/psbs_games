@@ -626,24 +626,22 @@ level
 ####ωω###ωω####
 ###############
 
-(
-    (fill U in correct place to still have space to leave after split)
-    (this would reveal the sidestepping...)
-    ###############
-    ###############
-    #####p.═╗ǝ#####
-    ########u######
-    #####..#..#####
-    ####ω..#o.#####
-    ####ω.....#####
-    #####.n..n#####
-    #####.╚══╝#####
-    ######ωωω######
-    ###############
-)
+level
+(split the right corner to leave. requires using the splitter facing outwards, which is neat)
+###############
+#####ωωω#######
+####.....#.ǝ###
+###........####
+##p.═ɔ...cɔ.###
+###..╔═══╗..###
+###..‖...‖..###
+###..u...u..###
+###.........###
+####ωω###ωω####
+###############
 
 level
-(split correct part to use as path)
+(split correct 2-long part to use as path)
 ###############
 ########ω######
 #####.....#####
@@ -754,6 +752,19 @@ level
 ###############
 
 (
+    (variation with more non-standard splitter needed)
+    ###############
+    ######ωωω######
+    ###...╔═╝...###
+    ###........╔ǝ##
+    ##p.══ɔ.....###
+    ###.......#####
+    ###.n.n.#.n####
+    ###.╚═╝##.‖n###
+    ########..╝╝###
+    #########ω#####
+    ###############
+
     (find way to split in wide U)
     (too easy to solve accidentally, to confusing to actually figure out?)
     (also shows sidestepping early)
@@ -1137,6 +1148,48 @@ level
 )
 
 level
+(use splitter twice to then make it into a joiner)
+###############
+########ωωω####
+###p.╗#~~~.ǝ###
+#####u#~#~#####
+#####.......###
+###.#.......ω##
+##ω.........ω##
+###.#..‖.‖..ω##
+###╚ɔ..╚═╝..###
+#######@@@#####
+###############
+
+(
+    (old ver. that features the self-sidestep but the initial trick is too easy)
+    ###############
+    #####@###@#####
+    ###p.═ɔ#~~~ǝ###
+    ####.#.#~#~####
+    ####.#..~#~####
+    ###ω.......ω###
+    ###ω.......ω###
+    ####╗.╔...‖####
+    ####╚═╝.╚═╝####
+    #######ω#######
+    ###############
+
+    (use two split corners to complete the shape and join)
+    ###############
+    ########ωωω####
+    ###p.╗#~~~.ǝ###
+    #####u#~#~#####
+    #####.......###
+    ###.#.......ω##
+    ##ω.........###
+    ###.#.n.n..‖###
+    ###╚ɔ.╚═╝.═╝###
+    #####@###@#####
+    ###############
+)
+
+level
 (make joinable U by first shedding the right part to connect)
 ###############
 ########ωω#####
@@ -1161,20 +1214,6 @@ level
 ####.....╚╗@###
 #####.....‖@###
 ######...╚╝####
-#######ω#######
-###############
-
-level
-(build the U shape with the inner opening, use the other one to get even longer)
-###############
-#####@###@#####
-###p.═ɔ#~~~ǝ###
-####.#.#~#~####
-####.#..~#~####
-###ω.......ω###
-###ω.......ω###
-####╗.╔...‖####
-####╚═╝.╚═╝####
 #######ω#######
 ###############
 
