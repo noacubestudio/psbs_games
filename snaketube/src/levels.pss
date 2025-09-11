@@ -68,21 +68,6 @@ level
 ###############
 ###############
 
-(
-    (small orientation maze w/ multiple solutions. used for thumbnail only)
-    ###############
-    ###############
-    ######ωω#######
-    #####....######
-    #####.##.######
-    ####p..ɔ..ǝ####
-    ######.##.#####
-    ######....#####
-    #######ωω######
-    ###############
-    ###############
-)
-
 level
 (enter, move out of the way and return)
 (show undo/ reset hint)
@@ -116,18 +101,32 @@ level
 (NEW: holes)
 
 level
-(fly over hole, place recovery block)
-(use recovery block ... to place recovery block)
+(fly over hole, move the block in a way that allows leaving it and also is not in the way)
+###############
+#######ω#ω#####
+#####.~~~~~####
+####..~n..~ǝ###
+####..~.~.~####
+###p.ɔ~...~####
+####..~~~~~####
+####.......####
+#####.....#####
+######ωωω######
+###############
+
+level
+(fly over hole, move block out the way again)
+(needs recovery block ... which needs a recovery block)
 (has level select info)
 ###############
-####Ɛ##########
-#######ωωω#####
-####...~~..####
-###p.ɔ.~~.ɔǝ###
-####.ɔ.~~~~####
-####....~~~####
-####..u....####
-#####ωωω#######
+###############
+#####ω##ωω#####
+####.......####
+###p.ɔ.~~~~####
+####...~.ɔ~ǝ###
+####c..~..~####
+####.u.~~~~####
+########ωω#####
 ###############
 ###############
 
@@ -147,43 +146,16 @@ level
 ###############
 
 (
-    (v1, ppl kind of stumbled into the setup at the end)
+    (small orientation maze w/ multiple solutions. used for thumbnail only)
     ###############
-    ###############
-    #####....#n.###
-    ####ω.......ω##
-    ####ω.#.....###
-    #####.###~#####
-    ###......~~####
-    ##p.ɔ.#..~~####
-    ###...#..o~ǝ###
-    ###############
-    ###############
-
-    (v2)
-    (simplified end with more room, but need one more block)
     ###############
     ######ωω#######
-    #####....#n.###
-    ####ω.......ω##
-    #####.#.....###
-    #####.#~~~#####
-    ###....~~~#####
-    ##p.ɔo..o~ǝ####
-    ###....~~~#####
-    ####ωω#########
-    ###############
-
-    (v3)
-    ###############
-    ####Ɛ##########
-    ########ωω#####
-    ####.......####
-    ####.....o.ω###
-    ###p.ɔ~~.u.####
-    ####..~~~~#####
-    ####.o..~~ǝ####
-    #####ωωω#######
+    #####....######
+    #####.##.######
+    ####p..ɔ..ǝ####
+    ######.##.#####
+    ######....#####
+    #######ωω######
     ###############
     ###############
 )
@@ -873,20 +845,6 @@ level
 ###############
 
 level
-(split and add the straight pipe to allow connecting to the other endpoint)
-###############
-###############
-#####p~~╗ǝ#####
-######~#‖######
-####~~~#╚ɔ.####
-###.~~......###
-##ωu~~.....═ω##
-###.~~......###
-####~~.....####
-#####ω###ω#####
-###############
-
-level
 (use split to setup turning pipe in advance)
 ###############
 ####ωω#########
@@ -898,6 +856,20 @@ level
 ###~#....#c.ǝ##
 ###uu.......###
 #########ωω####
+###############
+
+level
+(split and add the straight pipe to allow connecting to the other endpoint)
+###############
+###############
+#####p~~╗ǝ#####
+######~#‖######
+####~~~#╚ɔ.####
+###.~~......###
+##ωu~~.....═ω##
+###.~~......###
+####~~.....####
+#####ω###ω#####
 ###############
 
 level
@@ -957,21 +929,68 @@ level 0 'grow'
 #######ω#######
 ###############
 
-(SHIFT AND GROW IN WIDE U)
+(GROW IN WIDE U)
 
 level
-(forced to get shorter, find way to grow again)
+(need to become longer, as pieces can't be used to reach exit directly.)
+(make 2-wide self push gadget and use the other piece to grow)
 ###############
-####ωω###ωω####
-###....#....###
-##p.═ɔ.#....ǝ##
-###....ω~~~~###
-###....#....###
-###..c╗.....###
-###...‖n..n.###
-###..c╝╚══╝.###
+#####ω###ω#####
+####...#...####
+###p.ɔ.ω...ǝ###
+####...#~~~####
+###.........###
+###.‖.....‖.###
+###.╚═.═.═╝.###
+###.........###
+######@@@######
 ###############
+
+level
+(end up in square as only way to become length 2, then remove square)
 ###############
+##########ωω###
+##p.ɔ.#ω#...ǝ##
+###......~~~###
+##.‖..╔══~..~##
+#@.......~..~@#
+#@.‖..‖..~~~~@#
+##.‖..‖......##
+##.╚══╝.....###
+#######ω#######
+###############
+
+level
+(get shorter, then longer again with the piece previously split)
+(need to use the extra shape to transform the U to be a splitter/joiner)
+###############
+######@#@######
+####p.╗.~ɔǝ####
+######u##.#####
+####.......####
+###.........###
+###.........###
+###.n..nc═╗.###
+###.╚══╝..u.###
+#####ωωωωω#####
+###############
+
+(
+    (old intro: forced to get shorter, find way to grow again)
+    ###############
+    ####ωω###ωω####
+    ###....#....###
+    ##p.═ɔ.#....ǝ##
+    ###....ω~~~~###
+    ###....#....###
+    ###..c╗.....###
+    ###...‖n..n.###
+    ###..c╝╚══╝.###
+    ###############
+    ###############
+)
+
+(SIDESTEP IN WIDE U)
 
 level
 (learn about side stepping to grow here)
@@ -1003,20 +1022,6 @@ level
     #########ωω####
     ###############
 )
-
-level
-(end up in square as only way to become length 2, then remove square)
-###############
-##########ωω###
-##p.ɔ.#ω#...ǝ##
-###......~~~###
-##.‖..╔══~..~##
-#@.......~..~@#
-#@.‖..‖..~~~~@#
-##.‖..‖......##
-##.╚══╝.....###
-#######ω#######
-###############
 
 level
 (make U to approach end part)
@@ -1102,18 +1107,34 @@ level 0 'grow II'
 ###############
 
 level
-(use block and move in U to join it)
+(get really long. since connecting to the right U is blocked by the tail not turning, separate first in the left U)
 ###############
 ########ωω#####
-###p.ɔ#~~~~ǝ###
-#####.#.##.####
+###p.╗#~~~~ǝ###
+#####u#~##~####
 ####.......####
-###@..o....@###
-###@.......@###
-####..╔..‖.####
-#####.╚══╝#####
+###@.....╔╗@###
+###@╔ɔ....‖@###
+####‖.....‖####
+####╚ɔ...╚╝####
+######ωωω######
 ###############
-###############
+
+(
+    (prev. easier version)
+    (use block and move in U to join it)
+    ###############
+    ########ωω#####
+    ###p.ɔ#~~~~ǝ###
+    #####.#.##.####
+    ####.......####
+    ###@..o....@###
+    ###@.......@###
+    ####..╔..‖.####
+    #####.╚══╝#####
+    ###############
+    ###############
+)
 
 level
 (make joinable U by first shedding the right part to connect)
@@ -1174,7 +1195,8 @@ level
 )
 
 level
-(self push but don't end up stuck - need spacer)
+(self push to connect with blocks that need to be pulled, but avoid ending up stuck)
+(need spacer block that can disappear in the hole)
 ###############
 ###############
 ###@###@###@###
@@ -1188,8 +1210,8 @@ level
 ###############
 
 level
-(self push requires moving down twice but only 4 tall on the right)
-(go down on the left and make a spiral to push down)
+(self push needs to reach in the gap in the middle, but not enough vertical space there)
+(requires moving off to the side and push self down from there)
 ###############
 #####p.╗#######
 ###ω###‖##@@###
@@ -1261,17 +1283,17 @@ level
 ###############
 
 level
-(cut a corner instead of connecting everything)
-(then close self to be able to push it into position and recover)
+(make long worm into right splitter to get corner, then use to join with the endpoint)
+(close self allows pushing the corner in position and recovering)
 ###############
 ###############
-##p.ɔ#ωω###.ǝ##
-####.....##.###
-###...╔╗....@##
-##ω....‖.##.@##
-##ω...╚╝.##.@##
-###.........###
-###c═....######
+##p.╗#ωω###.ǝ##
+####u....##.###
+###.........@##
+##ω╔ɔ....##.@##
+##ω‖.....##.@##
+###╚══......###
+###......######
 ######ωω#######
 ###############
 
