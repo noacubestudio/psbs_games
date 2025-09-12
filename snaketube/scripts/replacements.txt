@@ -1,9 +1,8 @@
-||| ___COMMENT___ |||
-ALLOW SKIPPING AGAIN WITH INPUTS 
-TODO: SHOULD NOT WORK IN FINAL LEVEL?
-TODO: LOOKS WEIRD WHEN PLAYER WOULD HAVE BOUNCED BACK?
+⦶___COMMENT___⦶
+allow skipping 'again' with inputs 
+only outside the final level and when not holding the button, because that looked weird.
 
-|||
+⦶
 	    if (!againing && inputdir>=0) {
 			if (suppressInput) {
 				//suppressInput = false;
@@ -18,14 +17,16 @@ TODO: LOOKS WEIRD WHEN PLAYER WOULD HAVE BOUNCED BACK?
 	        }
 	       	return prevent(e);
     	}
-|||
-		if (inputdir>=0) {
+⦶
+		var havetowait = againing && (!justPressed || curLevel.section.includes("ending"));
+		if (!havetowait && inputdir>=0) {
 			if (suppressInput) {
 			} else if (inputdir===4 && ('noaction' in state.metadata)) {
 			} else {
 				pushInput(inputdir);
+				// edit for nuworm to allow skipping again
 				while (againing) {
-					processInput(-1); // edit for nuworm to allow skipping again
+					processInput(-1); 
 				}
 				if (processInput(inputdir)) {
 					redraw();
@@ -34,28 +35,85 @@ TODO: LOOKS WEIRD WHEN PLAYER WOULD HAVE BOUNCED BACK?
 			return prevent(e);
 		}
 
-||| ___COMMENT___ |||
-CORRECTLY GO TO THE RIGHT SECTION, DON'T RETURN TO THE FIRST SECTION WHEN OPENING THE LAST LEVEL
 
-|||
+⦶___COMMENT___⦶
+correctly go to the right section, don't return to the first section when opening the last level
+
+⦶
 			if(state.sections[i].firstLevel > curLevelNo) {
 				titleSelection = Math.max(0,i-1);
 				if (debugSwitch.includes('menu')) console.log(`gotoLevelSelect curLevelNo=${curLevelNo} titleSelection=${titleSelection}`);
 				break;
 			}
-|||
+⦶
 			if (state.sections[i].firstLevel >= curLevelNo) {
 				titleSelection = i;
 				if (debugSwitch.includes('menu')) console.log(`gotoLevelSelect curLevelNo=${curLevelNo} titleSelection=${titleSelection}`);
 				break;
 			}
 
-||| ___COMMENT___ |||
-FASTER KEY REPEAT IN MENU
 
-|||
+⦶___COMMENT___⦶
+faster key repeat in menu
+
+⦶
 	    var ticklength = throttle_movement ? repeatinterval : repeatinterval/(Math.sqrt(keybuffer.length));
-|||
+⦶
 	    // for nuworm, made key repeat faster when in the level select screen
 	    var adapt_repeatinterval = titleMode == 2 ? repeatinterval / 2 : repeatinterval;
 	    var ticklength = throttle_movement ? adapt_repeatinterval : adapt_repeatinterval/(Math.sqrt(keybuffer.length));
+
+
+⦶___COMMENT___⦶
+hide mute button
+
+⦶
+	TODO: UNUSED, WENT WITH PIXEL ICON INSTEAD
+
+	if (state.sounds.length==0){
+		killAudioButton();
+	} else {
+		showAudioButton();
+	}
+⦶
+	// if (state.sounds.length==0){
+	// 	killAudioButton();
+	// } else {
+	// 	showAudioButton();
+	// }
+
+	// nuworm edit - simply hide the button all the time. sorry, but it looked bad :P
+	killAudioButton();
+
+
+⦶___COMMENT___⦶
+pixel mute/unmute button
+
+⦶
+<div style = "z-index: 2; background: transparent; position: absolute; top: 0.5em; right: 1em;">
+    <img alt="mute" id="muteButton" width=32px height=32px onClick="muteAudio()" style="display:none" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAAIGSURBVFhH3ZchcsJAGIURiApEBbIH6BEqOQASWYHoESoQFcwgOAaiEsEBKip6BERlBQJRwQEqtu/tvj+TLMnAJpntTL+ZP/De7p/9k102YUCcc0tEbpbx4MHIAMcKQ2LM4ktmOCYH9gXIawXzQasLYGKnAphryErC53VJLiPvhNgjtog54tZ3bgDt7QpgTkyD/42Y+aQa2CG5APYvMdGnFTBC3COeEG8IY4M4uxtsSCqAfQ1ZhSdZATangdNCvhCVImheVQC6FFdKZHtkeQ8fB8QOsUCM5N0hPhBkQ8+gEQ5BXLUb+swSsu0cZXjFE/kswu7ElB6hCAeJS/isCDXZOcaIKeKdHvhBPKiN00F4l+zu1BaQtKkop1Ic5BCx8g3OfSJu5Fthj9LnBfB7Ckqzc/Dq1oihtA34LP0SpHuV7r0AYyXN6SC7SO+ley9gFpQ7SHNNkFifpP9fAcZaOvsUNC3ChbQtwq30eQGg88+QwLKNjRuS/e6toLl0bQGNsF+MmuwcdRuR7Ya2EfEJ6Z8JFOEQRK6tuHg8U4TDBdClr4eRn3uDRjhcCfsasgpPsgLs8uP4iBiryUMzqQDC/iXiFxJbA1zttg4IX9EqgxM2JBdAmBPT4Pf/SmYwr4y8PC+lBnMNWUn4vLbJBvNBtz8m4E//mtkGlK0IjhWG1Jj8EnRWMPhg8AvjeqPLyfe3igAAAABJRU5ErkJggg==" />
+    <img alt="unmute" id="unMuteButton" width=32px height=32px onClick="unMuteAudio()" style="display:none" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAABqElEQVRYR72XW3LDMAwDc7QerTdPRWjBoW1aedXZGUYUAIlqP9LpLbjf77+jvs3vfvgUvkDMmiPHzGxg9HTXEjNjsB6A0Nar+MxYg+UPFoH5ccLCauE+3Wmqvke+Pk5YWAl3sJuXGiSx3wfSOsMsrKRm4i6DJJAEktB+L1YW1oG4xyAJJIGUSOsMs7A2xB0GSSAJpA3Sz8xgYYnh/8R5g+ZKFG6Q9yAQ9dS3JEcEkkBqkb8K2X8EcYEkkE5RxkH6rkz7VT10uu3wwcbrcOipB+hEg62ZmlR9hbL1wEkJndgRMpVgif1+j3yH6LsSOtGALZAE0rUPwBJICfJ1D0A2ylamfDxXke8QfVfCGdak6pXpNkZBvkP0XeUl3hvkFiKfP8CwT5BPIfavD0iQBNJhEPJnDzCjr6Q31sMfI4P0/gPM6BP20ivTnSClxrZFvkP0WQ4YCQuImfzNYLfId4i+VqL0ExDfgNUi3yF6V6LkC3AsQW6R7xB9rZeHmzhrkFrkO0R/qHcZZ4Plv3sROARHv1mvImbG4GxixbucmDVHMjOauf8qY/jt9gdOODPsYZA1BAAAAABJRU5ErkJggg==" />
+</div>
+⦶
+<div style = "z-index: 2; background: transparent; position: absolute; top: 0px; right: 0px;">
+    <img alt="mute" id="muteButton" width=32px height=32px onClick="muteAudio()" style="display:none; image-rendering:pixelated" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAAD1JREFUGJVjFBWS+c+ABzAhc169fYxbAbIkMpsJm04xYVm4GIoVON0gJiyLIvjq7WO4GNwEZEXIbEZC3gQAFNAUTdoskesAAAAASUVORK5CYII=" />
+    <img alt="unmute" id="unMuteButton" width=32px height=32px onClick="unMuteAudio()" style="display:none; image-rendering:pixelated" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAAD1JREFUGJVjFBWS+c+ABzChC7x6+xiFZkKXFBOWhdMMDAwMLMiq0SVRTIBJYnUDLkm4ApixyEbDACMhbwIA5HQdTxiPcW4AAAAASUVORK5CYII=" />
+</div>
+
+⦶___COMMENT___⦶
+scale the level in all available integer steps, not only css pixel ones 
+(makes the level bigger on mobile fullscreen)
+
+⦶
+    canvas.width = canvas.parentNode.clientWidth;
+    canvas.height = canvas.parentNode.clientHeight;
+⦶
+	// custom factor for extra steps, but only if the area was small enough to begin with and not perfectly aligned
+	// seems to have a performance impact.
+	// 240 width is chosen specifically for nuworm.
+	var alreadyAligned = (canvas.parentNode.clientWidth % 240 == 0);
+	var tooBig = (canvas.parentNode.clientWidth * window.devicePixelRatio) > 3000;
+	var pixelFactor = window.devicePixelRatio ?? 1;
+	if (alreadyAligned || tooBig) pixelFactor = 1;
+    canvas.width = canvas.parentNode.clientWidth   * pixelFactor;
+    canvas.height = canvas.parentNode.clientHeight * pixelFactor;

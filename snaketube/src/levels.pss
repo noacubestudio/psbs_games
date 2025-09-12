@@ -1337,19 +1337,19 @@ level
 ###############
 
 level
-(length 1 and long snake can't solve level)
+(length 1 and long worm both can't exit level)
 (find a way to connect with other endpoint instead to become length 2)
-(requires making wide-U shape)
+(requires making joiner out of long worm)
 ###############
-#####ωωωωω#####
-####.╔═╗...####
-###..‖.‖....###
-##p.ɔu.u~~~.ǝ##
-######.##.#####
+########ωωω####
+###p.ɔ#╔══╗.###
+#####.#‖╔.‖.###
+###....╚╝~u.ǝ##
+##@.╔ɔ....#####
+##@.‖╔......###
+##@.╚╝....ɔ.@##
 ###.........###
-##@..╔ɔ╔.ɔ..@##
-###..╚═╝....###
-#####ωωωωω#####
+########ωωω####
 ###############
 
 level

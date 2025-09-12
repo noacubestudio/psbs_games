@@ -6,11 +6,12 @@ param (
 $inFile = Join-Path $ProjectPath "nuworm.html"
 $outFile = Join-Path $ProjectPath "index.html"
 $mapFile = ".\scripts\replacements.txt"
+$separator = "⦶"
 
 $mapContent = Get-Content $mapFile -Raw
-$parts = $mapContent -split "\|\|\|"
+
+$parts = $mapContent -split [regex]::Escape($separator)
 $parts = $parts | ForEach-Object { $_ -replace "`r", "" }
-# Remove anything before the first |||
 $parts = $parts[1..($parts.Count - 1)]
 if ($parts.Count % 2 -ne 0) {
     throw "replacements.txt has an odd number of sections!"
