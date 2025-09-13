@@ -4,7 +4,7 @@ author noa
 run_rules_on_level_start
 again_interval 0.08
 key_repeat_interval 0.18
-(default key repeat is 0.2, and I modify the exported html to get double the speed in level select.)
+(default key repeat is 0.2, and I modify the exported html to get -60ms in level select)
 
 level_select
 level_select_solve_symbol ✓

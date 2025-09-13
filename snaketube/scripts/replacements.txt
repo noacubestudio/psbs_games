@@ -60,7 +60,7 @@ faster key repeat in menu
 	    var ticklength = throttle_movement ? repeatinterval : repeatinterval/(Math.sqrt(keybuffer.length));
 ⦶
 	    // for nuworm, made key repeat faster when in the level select screen
-	    var adapt_repeatinterval = titleMode == 2 ? repeatinterval / 2 : repeatinterval;
+	    var adapt_repeatinterval = titleMode == 2 ? repeatinterval - 60 : repeatinterval;
 	    var ticklength = throttle_movement ? adapt_repeatinterval : adapt_repeatinterval/(Math.sqrt(keybuffer.length));
 
 

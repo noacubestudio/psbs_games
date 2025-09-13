@@ -1,6 +1,8 @@
 param (
-    [Parameter(Mandatory=$true)]
-    [string]$ProjectPath
+    [Parameter(Mandatory = $true)]
+    [string]$ProjectPath,
+
+    [switch]$Push
 )
 
 $inFile = Join-Path $ProjectPath "nuworm.html"
@@ -38,5 +40,8 @@ Write-Host "Made $totalReplacements replacements and saved to $outFile"
 if ($totalReplacements -eq 0) {
     throw "No replacements were made! Not pushing with butler."
 }
-
-butler push $outFile cubestudio/nuworm:web
+if ($Push) {
+    butler push $outFile cubestudio/nuworm:web
+} else {
+    Write-Host "Not pushing with butler, because -Push was not specified."
+}
