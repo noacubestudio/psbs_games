@@ -100,6 +100,7 @@ pixel mute/unmute button
     <img alt="unmute" id="unMuteButton" width=32px height=32px onClick="unMuteAudio()" style="display:none; image-rendering:pixelated" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAAD1JREFUGJVjFBWS+c+ABzChC7x6+xiFZkKXFBOWhdMMDAwMLMiq0SVRTIBJYnUDLkm4ApixyEbDACMhbwIA5HQdTxiPcW4AAAAASUVORK5CYII=" />
 </div>
 
+
 ⦶___COMMENT___⦶
 scale the level in all available integer steps, not only css pixel ones 
 (makes the level bigger on mobile fullscreen)
@@ -117,3 +118,27 @@ scale the level in all available integer steps, not only css pixel ones
 	if (alreadyAligned || tooBig) pixelFactor = 1;
     canvas.width = canvas.parentNode.clientWidth   * pixelFactor;
     canvas.height = canvas.parentNode.clientHeight * pixelFactor;
+
+
+⦶___COMMENT___⦶
+temporary fix as long as the cause for metadata sometimes being lost is unknown.
+could have used `backups[backups.length-1].metadata` but [0] should work fine in my case.
+
+⦶
+		if (lev.metadata === undefined) {
+			lev.metadata = deepClone(state.default_metadata);
+			consolePrint("RUNTIME METADATA TWIDDLING: Reloaded level state that did not have saved metadata. "+
+			"Likely this state was recovered from a CHECKPOINT. Using the default metadata instead.", true);
+		}
+⦶
+		if (lev.metadata === undefined) {
+			if (backups[0].metadata !== undefined) {
+				lev.metadata = deepClone(backups[0].metadata);
+				consolePrint("RUNTIME METADATA TWIDDLING: Reloaded level state that did not have saved metadata. "+
+				"Cause is unknown. Using the metadata of the first saved turn instead.", true);
+			} else {
+				lev.metadata = deepClone(state.default_metadata);
+				consolePrint("RUNTIME METADATA TWIDDLING: Reloaded level state that did not have saved metadata. "+
+				"Likely this state was recovered from a CHECKPOINT. Using the default metadata instead.", true);
+			}
+		}
