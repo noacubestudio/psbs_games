@@ -25,9 +25,12 @@ only outside the final level and when not holding the button, because that looke
 			} else {
 				pushInput(inputdir);
 				// edit for nuworm to allow skipping again
+				var was_muted = muted;
+				muted = 1;
 				while (againing) {
 					processInput(-1); 
 				}
+				muted = was_muted;
 				if (processInput(inputdir)) {
 					redraw();
 				}
