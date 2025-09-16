@@ -506,20 +506,22 @@ level
 ###############
 ###############
 
-level
-(shape worm into hook)
-(challenge: enter it in a way that keeps enough height to allow the shape to not touch ceiling)
-###############
-###############
-######@@@######
-####.....╔ɔ####
-###p.══ɔ.‖.@###
-####.......####
-####....##‖####
-######....‖ǝ###
-#######ωωω#####
-###############
-###############
+(
+    (shape worm into hook)
+    (challenge: enter it in a way that keeps enough height to allow the shape to not touch ceiling)
+    (can I make something more interesting based on this? maybe later, using extra mechanics?)
+    ###############
+    ###############
+    ######@@@######
+    ####.....╔ɔ####
+    ###p.══ɔ.‖.@###
+    ####.......####
+    ####....##‖####
+    ######....‖ǝ###
+    #######ωωω#####
+    ###############
+    ###############
+)
 
 level
 (shape and combine)
@@ -1307,18 +1309,18 @@ level
 ###############
 
 level
-(find way to close, then find way to split without falling in)
-(requires swapping sides twice)
+(close and stay one piece - requires swap)
+(split without falling into void to point at exit - requires swap)
 ###############
-#####@#########
-###╔══╗.##@####
-###u..u.#~.~ǝ##
-###.....ω~~~###
-##p.═ɔ.nω~~~ω##
-###....‖#~~~ω##
-####........###
-####.......####
-#####ωω##ω#####
+###############
+###╔═ɔ#~~#~~###
+##@‖.nω~~.~~ǝ##
+##@‖.‖#~~~~~###
+###╚ɔ‖#~~~~~@##
+###....~~~~~@##
+##p.═ɔ..~~~.@##
+###.........###
+########ωωω####
 ###############
 
 level

@@ -64,7 +64,7 @@ subroutine initialize_level
 [ init_theme:5 ] -> color_palette ega white #fff lightgray #98A7FF darkgray #4454A4 black #15121c (split II)
 [ init_theme:6 ] -> color_palette ega white #fff lightgray #DF8EFF darkgray #65458C black #15121c (grow)
 [ init_theme:7 ] -> color_palette ega white #fff lightgray #FF7FB7 darkgray #783466 black #15121c (grow II)
-[ init_theme:8 ] -> color_palette ega white #fff lightgray #B0D194 darkgray #436557 black #15121c (close)
+[ init_theme:8 ] -> color_palette ega white #fff lightgray #b1c4c4 darkgray #4c5a5e black #15121c (close)
 
 (show split guide when in the appropriate section)
 [ init_theme:5 ] [ was screen_border:dirs add screen_border_split:dirs ]
