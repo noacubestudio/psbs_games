@@ -40,10 +40,12 @@ down [ again_gravity was gp_block | | | | | | | | | | | no wall add gp_block ]
 [ con:x:^ no con:x:> was again_fly:> add now_fly:^ ]
 dirs [ was again_fly:dirs add now_fly:dirs ]
 
-(appearing/re-appearing from spawn. uses a counter of 3 adjacent again_wait_entry to make the wait longer)
+(appearing/re-appearing from spawn)
 [ con:x:> was again_entry add again_fly:> player ] sfx8
-[ room_entry no init was again_wait_entry add again_entry | was again_wait_entry | was again_wait_entry ]
-right random [ again_wait_entry | no again_wait_entry add again_wait_entry ]
+
+(initial appear in initial levels: extra wait)
+right random [ room_entry was again_wait_e add again_entry | no again_wait_e ]
+right random [            was again_wait_e                 | no again_wait_e ]
 
 (fall into entry/ exit)
 [ room_exit  was player again_exit ] win sfx4
@@ -96,9 +98,10 @@ subroutine initialize_level
 [ was vs_hole_edge_2:< vs_hole_edge_1:^ add vs_hole_outer_corner:^ ]
 [ hole no vs_hole_edge_1:> vs_hole_outer_corner:> | no hole add vs_hole_inner_corner:^ ]
 
-(from a spawnpoint, the player appears)
+(from a spawnpoint, the player appears. on chapter intros, delay this)
 (for testing: run_rules_on_level_start is not needed. initial move is removed.)
-[ room_entry no again_wait_entry was player add stationary.player again_entry ]
+[ room_entry was player add stationary.player again_entry ]
+right [ was again_entry add again_wait_e | add again_wait_e | add again_wait_e | add again_wait_e | add again_wait_e ] [ screen_border_chapter:dirs ]
 
 (add a single tile where global level flags can be checked)
 random [ init add global_flags_tile ]
@@ -300,7 +303,7 @@ subroutine handle_player_movement
 
 (fall into meta pipes)
 (don't fall in when currently spawning, about to fly out or flying out.)
-[ player gp_exits no con:x:v con:x:^ con:x:< again_entry again_wait_entry now_fly:> again_fly:> add again_exit ]
+[ player gp_exits no con:x:v con:x:^ con:x:< again_entry again_wait_e now_fly:> again_fly:> add again_exit ]
 
 
 (FLY)

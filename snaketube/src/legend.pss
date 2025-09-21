@@ -28,7 +28,6 @@
 
 (entry)
 p = block and vs_block_base and con:0:right and init and room_entry and player and vs_player:right
-* = block and vs_block_base and con:0:right and init and room_entry and player and again_wait_entry
 w = block and title_screen                  and init and player
 
 (exit)
@@ -52,7 +51,7 @@ c = block and vs_block_base and con:0:right
 (--- GROUPS ---)
 
 (for again subroutines)
-gp_again = again_col or again_exit or again_fly:dirs or again_gravity or again_entry or again_wait_entry or again_undo or again_wait_undo
+gp_again = again_col or again_exit or again_fly:dirs or again_gravity or again_entry or again_wait_e or again_undo or again_wait_undo
 
 (for subroutine updating block positions)
 gp_move_sources = player_move:dirs or block_fell

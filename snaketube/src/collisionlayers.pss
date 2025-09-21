@@ -115,6 +115,6 @@ try_bounce
 
 (again)
 again_col
-again_exit again_entry again_wait_entry
+again_exit again_entry again_wait_e
 again_gravity
 again_undo again_wait_undo
