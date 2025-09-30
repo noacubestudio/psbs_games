@@ -26,10 +26,12 @@ subroutine handle_queued_from_last_turn
 dirs x [ again_col ] [ was con:x:dirs:offs add con:x:dirs ]
 [ was again_col ]
 
-(fall after being unsupported. queue undo if player falls in)
-[ again_gravity was player add again_undo ]
-[ again_gravity del block con:x:dirs ]
-[ was again_gravity ] sfx4
+(fall into holes. queue undo if player falls in)
+[ was again_fall block_falling_2 ]
+[ again_fall was block_falling_1 add block_falling_2 ] sfx4
+[ again_fall was block player    add again_undo block_falling_2 ] sfx4
+[ again_fall was block           add block_falling_1 ]
+[ again_fall no block del con:x:dirs ]
 
 (keep flying. change orientation if needed)
 [ con:x:v no con:x:> was again_fly:> add now_fly:v ]
@@ -290,8 +292,8 @@ dirs [ was_player_moved:< no fixed_tail_con:dirs was con:1:dirs add con:1:> fixe
 [ supported con:1:> | con:1:< add supported ]
 
 (the rest fall into hole)
-[ hole block  no supported add again_gravity ]
-[ hole player no again_fly:dirs now_fly:dirs supported add again_gravity ]
+[ hole block  no supported add again_fall ]
+[ hole player no again_fly:dirs now_fly:dirs supported add again_fall ]
 
 
 

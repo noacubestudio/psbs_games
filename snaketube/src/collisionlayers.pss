@@ -10,6 +10,8 @@ dirs -> vs_hole_inner_corner_sharp:dirs
 --
 dirs -> vs_hole_outer_corner:dirs
 --
+block_falling_1, block_falling_2
+--
 room_exit, room_entry
 --
 
@@ -116,5 +118,5 @@ try_bounce
 (again)
 again_col
 again_exit again_entry again_wait_e
-again_gravity
+again_fall
 again_undo again_wait_undo
