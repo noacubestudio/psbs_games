@@ -18,7 +18,7 @@ only outside the final level and when not holding the button, because that looke
 	       	return prevent(e);
     	}
 ⦶
-		var havetowait = againing && (!justPressed || curLevel.section.includes("ending"));
+		var havetowait = againing && (!justPressed || curLevel.section.includes(".0"));
 		if (!havetowait && inputdir>=0) {
 			if (suppressInput) {
 			} else if (inputdir===4 && ('noaction' in state.metadata)) {
@@ -65,28 +65,6 @@ faster key repeat in menu
 	    // for nuworm, made key repeat faster when in the level select screen
 	    var adapt_repeatinterval = titleMode == 2 ? repeatinterval - 60 : repeatinterval;
 	    var ticklength = throttle_movement ? adapt_repeatinterval : adapt_repeatinterval/(Math.sqrt(keybuffer.length));
-
-
-⦶___COMMENT___⦶
-hide mute button
-
-⦶
-	TODO: UNUSED, WENT WITH PIXEL ICON INSTEAD
-
-	if (state.sounds.length==0){
-		killAudioButton();
-	} else {
-		showAudioButton();
-	}
-⦶
-	// if (state.sounds.length==0){
-	// 	killAudioButton();
-	// } else {
-	// 	showAudioButton();
-	// }
-
-	// nuworm edit - simply hide the button all the time. sorry, but it looked bad :P
-	killAudioButton();
 
 
 ⦶___COMMENT___⦶
@@ -145,3 +123,73 @@ could have used `backups[backups.length-1].metadata` but [0] should work fine in
 				"Likely this state was recovered from a CHECKPOINT. Using the default metadata instead.", true);
 			}
 		}
+
+
+⦶___COMMENT___⦶
+different text for the level select screen.
+idk why there would be a prompt to go to the title screen if the game skips it. instead, reinforce that selecting a level is keyboard controlled.
+also removing the buttons for next and prev since they don't work here anyway.
+
+also fixing the strange # in between the solve symbol and level name when selecting.
+
+⦶
+	titleImage[0] = (hoverLine == 0 ? "[  ESC:Back  ]" : " [ ESC:Back ] ").padEnd(TITLE_WIDTH);
+	if (levelSelectScrollPos > 0)
+		titleImage[2] = (hoverLine == 2 ? "[  PREV  ]" : "[ PREV ] ").padStart(TITLE_WIDTH);
+	if (levelSelectScrollPos + amountOfLevelsOnScreen < lines.length)
+		titleImage[12] = (hoverLine == 12 ? "[  NEXT  ]" : "[ NEXT ] ").padStart(TITLE_WIDTH);
+⦶
+	titleImage[0] = "      X or ENTER: select room";
+	titleImage[1] = "";
+	if (levelSelectScrollPos > 0)
+		titleImage[2]  = "      ...";
+	if (levelSelectScrollPos + amountOfLevelsOnScreen < lines.length)
+		titleImage[12] = "      ...";
+
+⦶
+			return (solved ? solved_symbol : " ") + "#" + name.padEnd(24);
+⦶
+			return (solved ? solved_symbol : " ") + " " + name.padEnd(24);
+
+
+⦶___COMMENT___⦶
+prevent escaping to title again when already on level select. in my game the title does not need to be shown.
+since the level select is the only thing, the mobile button should have more accurate text, also.
+
+⦶
+				if ((timer/1000>0.5 || titleMode > 1) && !quittingTitleScreen && justPressed) {
+
+					titleSelection = 0;
+					
+					timer = 0;
+					if(!titleScreen && state.metadata.level_select) {
+						titleSelection = null;
+						gotoLevelSelectScreen();
+					} else {
+						goToTitleScreen();
+					}
+
+					tryPlayTitleSound();
+					canvasResize();
+				}
+⦶
+				if ((timer/1000>0.5 || titleMode > 1) && !quittingTitleScreen && justPressed) {
+
+					if(!titleScreen && state.metadata.level_select) {
+						titleSelection = 0;
+						timer = 0;
+
+						titleSelection = null;
+						gotoLevelSelectScreen();
+
+						tryPlayTitleSound();
+						canvasResize();
+					} else {
+						// nuworm edit. prevent double ESC to reach the 'real' hidden title screen.
+						// goToTitleScreen();
+					}
+				}
+⦶
+            '  <div class="quit button">Quit to Menu</div>',
+⦶
+            '  <div class="quit button">Level Select</div>',

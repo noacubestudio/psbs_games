@@ -26,11 +26,7 @@ subroutine handle_queued_from_last_turn
 dirs x [ again_col ] [ was con:x:dirs:offs add con:x:dirs ]
 [ was again_col ]
 
-(fall to other floor after being unsupported)
-down [ again_gravity was block    | | | | | | | | | | | no wall add block block_fell del con:x:dirs ]
-down [ again_gravity was gp_block | | | | | | | | | | | no wall add gp_block ]
-
-(regular fall after being unsupported. queue undo if player falls in)
+(fall after being unsupported. queue undo if player falls in)
 [ again_gravity was player add again_undo ]
 [ again_gravity del block con:x:dirs ]
 [ was again_gravity ] sfx4
@@ -49,6 +45,7 @@ right random [            was again_wait_e                 | no again_wait_e ]
 
 (fall into entry/ exit)
 [ room_exit  was player again_exit ] win sfx4
+[ again_exit no player ] win sfx6 (final win sound)
 [ room_entry was player again_exit add again_entry ] sfx4
 
 
@@ -330,8 +327,8 @@ subroutine handle_player_movement
 [ was player now_fly:> | no player now_fly:dirs add player again_fly:> ]
 
 (if there's now_fly still, it's because the player is at the edge of the screen.)
-(just make it disappear.)
-[ was now_fly:> player ]
+(just make it disappear and win.)
+[ was now_fly:> player add again_exit ]
 
 
 (FLYING DONE)
@@ -366,9 +363,6 @@ subroutine redraw_visuals
 (do the same with hole edges)
 [ vs_hole_inner_corner:> con:0:> add vs_hole_inner_corner_sharp:> ]
 [ vs_hole_inner_corner:> con:0:^ add vs_hole_inner_corner_sharp:> ]
-
-(reuse a fitting sprite here to show that holes lead to floor below)
-up [ no wall | | | | | | | | | | | hole add vs_con_end ]
 
 (player sprites while moving)
 [ player again_fly:> add vs_player:> ]
