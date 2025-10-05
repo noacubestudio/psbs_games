@@ -139,7 +139,7 @@ also fixing the strange # in between the solve symbol and level name when select
 	if (levelSelectScrollPos + amountOfLevelsOnScreen < lines.length)
 		titleImage[12] = (hoverLine == 12 ? "[  NEXT  ]" : "[ NEXT ] ").padStart(TITLE_WIDTH);
 ⦶
-	titleImage[0] = "      X or ENTER: select room";
+	titleImage[0] = "      pick stage: x or enter";
 	titleImage[1] = "";
 	if (levelSelectScrollPos > 0)
 		titleImage[2]  = "      ...";

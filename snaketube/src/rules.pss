@@ -26,12 +26,13 @@ subroutine handle_queued_from_last_turn
 dirs x [ again_col ] [ was con:x:dirs:offs add con:x:dirs ]
 [ was again_col ]
 
-(fall into holes. queue undo if player falls in)
+(player falling into hole somewhere queues undo)
+[ was again_fall block_falling_2 player add again_undo ]
+
+(blocks falling into hole get animated and make a sound)
 [ was again_fall block_falling_2 ]
-[ again_fall was block_falling_1 add block_falling_2 ] sfx4
-[ again_fall was block player    add again_undo block_falling_2 ] sfx4
-[ again_fall was block           add block_falling_1 ]
-[ again_fall no block del con:x:dirs ]
+[ again_fall was block_falling_1 add block_falling_2 ]
+[ again_fall was block           add block_falling_1 del con:x:dirs ] sfx4
 
 (keep flying. change orientation if needed)
 [ con:x:v no con:x:> was again_fly:> add now_fly:v ]
