@@ -919,16 +919,15 @@ level 0 'grow'
 level
 (need to become longer, as pieces can't be used to reach exit directly.)
 (make 2-wide self push gadget and use the other piece to grow)
-(sort of red-herring ish...)
 ###############
 #####ω###ω#####
 ####...#...####
-###p.ɔ.ω...ǝ###
-####...#~~~####
-###.........###
-###.‖.....‖.###
-###.╚═.═.═╝.###
-###.........###
+###p.ɔ.#.~.ǝ###
+####.......####
+###....═....###
+###..‖...‖..###
+###..╚═.═╝..###
+####.......####
 ######@@@######
 ###############
 
@@ -1395,22 +1394,22 @@ level
 ###############
 
 level
-(get longer. requires making vertical endpoint, requires connecting first)
-(bit of a weird gadget for that, kind of tricky)
+(make a corner)
+(find way to use weird gadget to become 2 length - close in it first, split with it vertically, connect with the padding block, turn it, split again)
 ###############
-###############
-###p.ɔ.#~~.ǝ###
-####.......####
+######@@@######
+###.........###
+##p.ɔ.....#.ǝ##
 ###...‖.ɔ...###
 ##ω.........ω##
 ##ω..╔ɔ.c╗..ω##
-##ω..‖...‖..ω##
-###..╚═══╝..###
+###..‖...‖..###
+####.╚═══╝.####
 ###############
 ###############
 
 (
-    (prev. version about turning endpoint specifically)
+    (prev. version without the gadget, about making a regular wide U)
     ###############
     #####ωωω#######
     ###.........###
