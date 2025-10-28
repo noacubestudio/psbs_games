@@ -193,3 +193,67 @@ since the level select is the only thing, the mobile button should have more acc
             '  <div class="quit button">Quit to Menu</div>',
 ⦶
             '  <div class="quit button">Level Select</div>',
+
+⦶___COMMENT___⦶
+music support!
+⦶          #TODO - REMOVE THIS COMMENT TO RE-ENABLE THIS FEATURE.
+var muted=0;
+⦶
+var muted=0;
+var music=new Audio();
+var music_enabled=false;
+function initMusic() {
+	music.loop = true;
+	if (music.canPlayType("audio/ogg")) {
+		music.src = "music.ogg";
+	} else {
+		music.src = "music.mp3";
+	}
+}
+initMusic();
+document.addEventListener('mousedown', () => {
+  if (music_enabled) return;
+  music_enabled = true;
+  music.play()
+});
+
+⦶          #TODO - REMOVE THIS COMMENT TO RE-ENABLE THIS FEATURE.
+function muteAudio() {
+  muted=1; 
+  var mb = document.getElementById("muteButton");
+  var umb = document.getElementById("unMuteButton");
+  if (mb){
+    mb.style.display="none"; 
+    umb.style.display="block";
+  }
+}
+function unMuteAudio() {
+  muted=0; 
+  var mb = document.getElementById("muteButton");
+  var umb = document.getElementById("unMuteButton");
+  if (mb){
+    mb.style.display="block"; 
+    umb.style.display="none";
+  }
+}
+⦶
+function muteAudio() {
+  muted=1; 
+  music.pause();
+  var mb = document.getElementById("muteButton");
+  var umb = document.getElementById("unMuteButton");
+  if (mb){
+    mb.style.display="none"; 
+    umb.style.display="block";
+  }
+}
+function unMuteAudio() {
+  muted=0; 
+  music.play();
+  var mb = document.getElementById("muteButton");
+  var umb = document.getElementById("unMuteButton");
+  if (mb){
+    mb.style.display="block"; 
+    umb.style.display="none";
+  }
+}

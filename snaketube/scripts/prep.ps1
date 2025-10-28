@@ -6,7 +6,8 @@ param (
 )
 
 $inFile = Join-Path $ProjectPath "nuworm.html"
-$outFile = Join-Path $ProjectPath "index.html"
+$outFile = Join-Path $ProjectPath "dist\index.html"
+$outPath = Join-Path $ProjectPath "dist"
 $mapFile = ".\scripts\replacements.txt"
 $separator = "⦶"
 
@@ -41,7 +42,7 @@ if ($totalReplacements -eq 0) {
     throw "No replacements were made! Not pushing with butler."
 }
 if ($Push) {
-    butler push $outFile cubestudio/nuworm:web
+    butler push --if-changed $outPath cubestudio/nuworm:web
 } else {
     Write-Host "Not pushing with butler, because -Push was not specified."
 }

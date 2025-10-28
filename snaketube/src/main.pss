@@ -47,7 +47,7 @@ RULES
 WINCONDITIONS
 ==============
 
-(I don't use win conditions at this point, instead starting the next level via rules)
+(I don't use win conditions, instead starting the next level via rules)
 
 =======
 LEVELS

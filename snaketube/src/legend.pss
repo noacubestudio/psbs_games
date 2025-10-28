@@ -32,7 +32,6 @@ w = block and title_screen                  and init and player
 
 (exit)
 ǝ = block and vs_block_base and con:0:left and room_exit and vs_exit:left
-e = block and vs_block_base and con:0:up   and room_exit and vs_exit:up (unused)
 
 (blocks)
 o = block and vs_block_base
@@ -40,8 +39,8 @@ u = block and vs_block_base and con:0:up
 n = block and vs_block_base and con:0:down
 ɔ = block and vs_block_base and con:0:left
 c = block and vs_block_base and con:0:right
-═ = block and vs_block_base and con:0:left and con:0:right
-‖ = block and vs_block_base and con:0:up   and con:0:down
+═ = block and vs_block_base and con:0:left  and con:0:right
+‖ = block and vs_block_base and con:0:up    and con:0:down
 ╚ = block and vs_block_base and con:0:right and con:0:up
 ╔ = block and vs_block_base and con:0:right and con:0:down
 ╗ = block and vs_block_base and con:0:left  and con:0:down
