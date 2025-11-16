@@ -176,9 +176,7 @@ since the level select is the only thing, the mobile button should have more acc
 				if ((timer/1000>0.5 || titleMode > 1) && !quittingTitleScreen && justPressed) {
 
 					if(!titleScreen && state.metadata.level_select) {
-						titleSelection = 0;
 						timer = 0;
-
 						titleSelection = null;
 						gotoLevelSelectScreen();
 
